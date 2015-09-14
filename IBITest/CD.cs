@@ -12,7 +12,7 @@ namespace IBITest
         public void Getd()
         {
             SqlConnection cn = new SqlConnection("Data Source=(localdb)\\Projects;Initial Catalog=Database1;Integrated Security=True");//windows auth
-
+            cn.Open();
             MessageBox.Show(cn.State.ToString());
         }
 
