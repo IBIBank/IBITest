@@ -13,13 +13,15 @@ namespace IBITest.Controllers
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             CD obj = new CD();
             obj.Getd();
+
+            
             return View();
         }
 
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
-
+            
             return View();
         }
 
