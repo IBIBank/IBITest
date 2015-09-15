@@ -45,7 +45,7 @@ namespace IBITest.Layers.DAL
             bool res;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand(String.Format("SELECT BranchCode FROM Branch WHERE BranchLogInID = '{0}' " , BranchLogInID), connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT UserID FROM UserRoles WHERE UserID = '{0}' " , BranchLogInID), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -117,7 +117,17 @@ namespace IBITest.Layers.DAL
             else
                 bd.BranchCode = 1;
 
+            rd.Close();
+
+            cmd.CommandText = String.Format("SELECT MAX(Id) FROM UserRoles ");
+            
+            rd = cmd.ExecuteReader();
+            rd.Read();
+            int id = Convert.ToInt16(rd[0]) + 1;
+
             cn.Close();
+
+
             SqlConnection cn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
             string command = String.Format("INSERT INTO Branch VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", bd.BranchCode, bd.BranchName, bd.CityName, bd.Address, bd.ContactNumber, bd.BankerName, bd.BranchLogInID, bd.BranchLogInPassword, bd.Email);
 
@@ -126,7 +136,11 @@ namespace IBITest.Layers.DAL
             SqlCommand cmd2 = new SqlCommand(command,cn2);            
             int res = cmd2.ExecuteNonQuery();
 
-            cn.Close();
+            SqlCommand cmd3 = new SqlCommand(String.Format("INSERT INTO UserRoles VALUES('{0}','{1}', '{2}', '{3}'", id, bd.BranchLogInID, bd.BranchLogInPassword, "Banker"), cn2);
+            cmd3.ExecuteNonQuery();
+
+            cn2.Close();
+            
             if (res == 0)
                 return false;
             else
@@ -138,7 +152,8 @@ namespace IBITest.Layers.DAL
         {                       
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
             string command = String.Format("UPDATE Branch SET Address = '{0}', ContactNumber = '{1}', Email = '{2}', BranchPassword = '{3}' WHERE BranchCode = '{4}'",bd.Address,bd.ContactNumber,bd.Email,bd.BranchLogInPassword,bd.BranchCode) ;
-
+           
+            // update password in UserProfile
             cn.Open();
 
             SqlCommand cmd2 = new SqlCommand(command, cn);
