@@ -13,7 +13,9 @@ namespace IBITest
         {
             SqlConnection cn = new SqlConnection("Data Source=(localdb)\\Projects;Initial Catalog=Database1;Integrated Security=True");//windows auth
             cn.Open();
-            MessageBox.Show(cn.State.ToString());
+            cn.Close();
+
+           
         }
 
        
