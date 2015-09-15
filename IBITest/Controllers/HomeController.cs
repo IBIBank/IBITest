@@ -15,7 +15,11 @@ namespace IBITest.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-          
+            AdminDAL a = new AdminDAL();
+
+            //bool res = a.AddBranch(new BranchDetails { CityName = "Chenn", Address="add",BranchName="br12",BankerName="som",BranchLogInID="fdaf",BranchLogInPassword="pasa",ContactNumber="sfs",Email="sfd@.co"});
+            bool res = a.IsUniqueBranchLogInID("sadadaca");
+            System.Windows.Forms.MessageBox.Show(res.ToString());
             return View();
         }
 
