@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[UserRoles] (
+    [Id]       INT        NOT NULL,
+    [UserID]   NCHAR (20) NULL,
+    [Password] NCHAR (20) NULL,
+    [Role]     NCHAR (10) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+

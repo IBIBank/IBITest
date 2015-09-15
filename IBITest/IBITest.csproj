@@ -192,10 +192,12 @@
     <Compile Include="Layers\DAL\AdminDAL.cs" />
     <Compile Include="Layers\DAL\BankerDAL.cs" />
     <Compile Include="Layers\DAL\CommonDAL.cs" />
+    <Compile Include="Layers\DAL\CustomerDAL.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\BranchDetails.cs" />
     <Compile Include="Models\BranchDetailsViewModel.cs" />
     <Compile Include="Models\BranchMiniViewModel.cs" />
+    <Compile Include="Models\GenerateTokenViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

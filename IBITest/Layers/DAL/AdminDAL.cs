@@ -40,7 +40,66 @@ namespace IBITest.Layers.DAL
             return Convert.ToInt16(rd[0]);
         }
 
+        public bool IsUniqueBranchLogInID(string BranchLogInID)
+        {
+            bool res;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT BranchCode FROM Branch WHERE BranchLogInID = '{0}' " + BranchLogInID, connection);
+                connection.Open();
 
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                    res = false;
+                else
+                    res = true;
+
+                reader.Close();
+
+            }
+
+            return res;
+        }
+
+        public BranchDetails GetBranchDetails(Int64 BranchCode)
+        {
+            BranchDetails bd = new BranchDetails();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM Branch WHERE BranchCode = '{0}' " + BranchCode, connection);
+                connection.Open();
+
+                SqlDataReader rd = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (rd.HasRows)
+                {
+                    rd.Read();
+                    bd.BranchCode = Convert.ToInt64(rd[0]);
+                    bd.BranchName = rd[1].ToString();
+                    bd.CityName = rd[2].ToString();
+                    bd.Address = rd[3].ToString();
+                    bd.ContactNumber = rd[4].ToString();
+                    bd.BankerName = rd[5].ToString();
+                    bd.BranchLogInID = rd[6].ToString();
+                    bd.BranchLogInPassword = rd[7].ToString();
+                    bd.Email = rd[8].ToString();
+                }
+
+                else
+                    System.Windows.Forms.MessageBox.Show("Branch Details Read Failed");
+
+                rd.Close();
+
+            }
+
+            return bd;
+        }
+
+        
 
         public bool AddBranch(BranchDetails bd)
         {
@@ -52,12 +111,11 @@ namespace IBITest.Layers.DAL
 
             SqlDataReader rd = cmd.ExecuteReader();
             rd.Read();
-            Int64 BranchCode;
 
             if (rd.HasRows)
-                BranchCode = Convert.ToInt64(rd[0]) + 1;
+                bd.BranchCode = Convert.ToInt64(rd[0]) + 1;
             else
-                BranchCode = 1;
+                bd.BranchCode = 1;
 
             cn.Close();
             SqlConnection cn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
@@ -69,6 +127,26 @@ namespace IBITest.Layers.DAL
             int res = cmd2.ExecuteNonQuery();
 
             cn.Close();
+            if (res == 0)
+                return false;
+            else
+                return true;
+        }
+
+
+        public bool UpdateBranchDetails(BranchDetails bd)
+        {                       
+            SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
+            string command = String.Format("UPDATE Branch SET Address = '{0}', ContactNumber = '{1}', Email = '{2}', BranchPassword = '{3}' WHERE BranchCode = '{4}'",bd.Address,bd.ContactNumber,bd.Email,bd.BranchLogInPassword,bd.BranchCode) ;
+
+            cn.Open();
+
+            SqlCommand cmd2 = new SqlCommand(command, cn);
+            int res = cmd2.ExecuteNonQuery();
+            
+            cn.Close();
+
+
             if (res == 0)
                 return false;
             else
