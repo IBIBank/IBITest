@@ -35,7 +35,7 @@ namespace IBITest.Layers.DAL
         {
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
 
-            SqlCommand cmd = new SqlCommand("SELECT BranchCode, BranchName FROM Branch WHERE CityName = " + CityName, cn);
+            SqlCommand cmd = new SqlCommand(String.Format( "SELECT BranchCode, BranchName FROM Branch WHERE CityName = '{0}'" ,CityName), cn);
             cn.Open();
 
             SqlDataReader rd = cmd.ExecuteReader();
@@ -101,5 +101,43 @@ namespace IBITest.Layers.DAL
         }
 
 
+        public void Sync()
+        {
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                string cmdtxt = "DELETE FROM UserRoles";
+                SqlCommand command = new SqlCommand(cmdtxt, connection);
+                connection.Open();
+                int rowaff = command.ExecuteNonQuery();
+
+
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','admin','admin','admin')");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker','banker','banker')");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','customer','customer','customer')");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','banker2','banker','banker')");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("DELETE FROM Branch");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker1','banker1','banker','e@m.l')");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker1','banker2','banker','e@m.l')");
+                rowaff = command.ExecuteNonQuery();
+
+                if(rowaff==0)
+                    System.Windows.Forms.MessageBox.Show(rowaff.ToString());
+
+                //insert into user profile too !!
+            }
+        }
     }
 }
