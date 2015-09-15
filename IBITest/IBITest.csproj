@@ -184,17 +184,18 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CD.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\BankerController.cs" />
-    <Compile Include="Controllers\CommonBizController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Layers\DAL\AdminDAL.cs" />
+    <Compile Include="Layers\DAL\BankerDAL.cs" />
+    <Compile Include="Layers\DAL\CommonDAL.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\CommonBizModel.cs" />
+    <Compile Include="Models\BranchDetails.cs" />
+    <Compile Include="Models\BranchDetailsViewModel.cs" />
+    <Compile Include="Models\BranchMiniViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -308,12 +309,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\CommonBiz\Index.cshtml" />
-    <Content Include="Views\Shared\_IBIBankLayout.cshtml" />
-    <Content Include="Views\CommonBiz\Login.cshtml" />
-    <Content Include="Views\Admin\DashBoard.cshtml" />
-    <Content Include="Views\Banker\DashBoard.cshtml" />
-    <Content Include="Views\Customer\DashBoard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
