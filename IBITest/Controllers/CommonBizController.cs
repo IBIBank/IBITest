@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using IBITest.Models;
+using IBITest.Layers.DAL;
+using System.Windows.Forms;
 
 namespace IBITest.Controllers
 {
@@ -29,8 +31,19 @@ namespace IBITest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginCredentials model)
         {
-            string role = "admin";
-            if (role.Equals("admin"))
+            CommonDAL obj = new CommonDAL();
+            string role = obj.CheckRole(model.UserName, model.Password);
+            //MessageBox.Show(role);
+            //MessageBox.Show(role.Length.ToString());
+
+            if (role.Equals("Invalid"))
+            {
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                return View(model);
+                //return RedirectToAction("Login");
+            }
+
+            else if (role.Equals("admin"))
             {
                 return RedirectToAction("DashBoard", "Admin");
             }
