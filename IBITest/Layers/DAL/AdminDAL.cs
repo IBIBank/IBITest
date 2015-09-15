@@ -45,7 +45,7 @@ namespace IBITest.Layers.DAL
             bool res;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT BranchCode FROM Branch WHERE BranchLogInID = '{0}' " + BranchLogInID, connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT BranchCode FROM Branch WHERE BranchLogInID = '{0}' " , BranchLogInID), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -119,7 +119,7 @@ namespace IBITest.Layers.DAL
 
             cn.Close();
             SqlConnection cn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-            string command = String.Format("INSERT INTO Branch VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", BranchCode, bd.BranchName, bd.CityName, bd.Address, bd.ContactNumber, bd.BankerName, bd.BranchLogInID, bd.BranchLogInPassword, bd.Email);
+            string command = String.Format("INSERT INTO Branch VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", bd.BranchCode, bd.BranchName, bd.CityName, bd.Address, bd.ContactNumber, bd.BankerName, bd.BranchLogInID, bd.BranchLogInPassword, bd.Email);
 
             cn2.Open();
 

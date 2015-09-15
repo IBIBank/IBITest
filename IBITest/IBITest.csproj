@@ -184,6 +184,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CD.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BankerController.cs" />
+    <Compile Include="Controllers\CommonBizController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -197,6 +201,8 @@
     <Compile Include="Models\BranchDetails.cs" />
     <Compile Include="Models\BranchDetailsViewModel.cs" />
     <Compile Include="Models\BranchMiniViewModel.cs" />
+    <Compile Include="Models\CommonBizModel.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
