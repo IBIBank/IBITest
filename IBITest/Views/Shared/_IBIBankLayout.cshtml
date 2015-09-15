@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <h1>IBI Bank</h1>
+                </div>
+                <div class="float-right">
+                    <p>@DateTime.Today.DayOfWeek , @DateTime.Today.ToString("MMM") @DateTime.Today.Day, @DateTime.Today.Year</p>
+                </div>
+                
+            </div>
+            <div class="content-wrapper" style="clear:left;">
+                <div>
+                    <p>Welcome</p>
+                </div>
+            </div>
+    </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - IBI Bank</p>
+                </div>
+            </div>
+    </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
