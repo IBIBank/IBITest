@@ -78,21 +78,26 @@ namespace IBITest.Layers.DAL
 
         public string CheckRole(string UserID, string Password)
         {
+            string res;
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand(String.Format( "SELECT Role FROM UserRoles WHERE UserID = {0} AND Password = {1}", UserID,Password), cn);
+            SqlCommand cmd = new SqlCommand(String.Format( "SELECT Role FROM UserRoles WHERE UserID = '{0}' AND Password = '{1}'",  UserID,Password), cn);
             cn.Open();
             SqlDataReader rd = cmd.ExecuteReader();
 
             rd.Read();
 
-            cn.Close();
+            
 
             if (!rd.HasRows)
             {
-                return ("Invalid");
+                res =  String.Copy("Invalid");
             }
             else
-                return rd[0].ToString();
+                res = String.Copy(rd[0].ToString());
+
+            cn.Close();
+
+            return res;
         }
 
 
