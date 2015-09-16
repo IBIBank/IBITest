@@ -11,7 +11,6 @@ namespace IBITest.Controllers
 {
     public class CommonBizController : Controller
     {
-        //
         // GET: /CommonBiz/
         static List<Int64> BranchCode;
         public ActionResult Index()
@@ -131,7 +130,12 @@ namespace IBITest.Controllers
                 return View(model);
                 //return RedirectToAction("Login");
             }
-            else if (role.Equals("admin"))
+            
+            UserRole ur = new UserRole { UserID = model.UserName, Role = role};
+
+            Session["User"] = ur;
+
+            if (role.Equals("admin"))
             {
                 return RedirectToAction("DashBoard", "Admin");
             }
