@@ -2,11 +2,46 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function GetBranch(cityName)
+    {
+        alert("You selected" + cityName);
+        $.ajax(
+            {
+                type: "POST",
+                url: "CommonBiz/GetBranchForCity",
+                data: { "cityName": cityName },
+                success: function (data)
+                {
+                    alert("Function got called successfully");
+                    //var elm = document.getElementById("branchList");
+                    $("#branchList").empty();
+                    $("#branchList").append("<option>--Select--</option>");
+                    for (var x = 0; x < data.length; x++)
+                    {
+                        //$("#ddlcity").appendChild("<option>" + data[x] + "</option>")
+                        $("#branchList").append("<option>" + data[x] + "</option>");
+                    }
 
+                },
+                error: function()
+                {
+                    alert("Something went wrong calling function")
+                }
+
+            }
+        )
+
+    }
+</script>
 @Html.ActionLink("Login", "Login","CommonBiz")
 <h1>View Branch Details</h1>
 <div>
-    <p style="float:left;">Select city</p>
-    
-</div>
+    <p>Select city</p>
+    @Html.DropDownList( "CityDropDownList", new SelectList( @ViewBag.cityList ),"--Select--",new {@onchange="javascript:GetBranch(this.value)"})
+    <p>Select Branch<p>
+    @Html.DropDownList("BranchDropDownList",new SelectList( new List<string>() ),"--Select--", new { @id="branchList" })
+        
+ </div> 
 
