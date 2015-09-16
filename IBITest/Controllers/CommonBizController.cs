@@ -13,30 +13,76 @@ namespace IBITest.Controllers
     {
         //
         // GET: /CommonBiz/
-
+        static List<Int64> BranchCode;
         public ActionResult Index()
         {
-            CommonDAL cd = new CommonDAL();
+            BankCountryModel objbankcountrymodel = new BankCountryModel();
+            objbankcountrymodel.CityModel = new List<City>();
+            objbankcountrymodel.BranchModel = new List<Branch>();
+            objbankcountrymodel.CityModel = GetAllCities();
 
-            cd.Sync();
-
-            List<string> cityList = cd.GetCityList();
-            
-            //foreach (string v in cityList)
-            //      MessageBox.Show(v);
-            ViewBag.cityList = cityList;
-            return View();
+            return View(objbankcountrymodel);
         }
-        public JsonResult GetBranchForCity(string cityName)
+
+        [HttpPost]
+        public ActionResult GetBranchNamebyCity(int cityid)
         {
-            //CommonDAL cd = new CommonDAL();
-            MessageBox.Show("Hey Ajax method called me");
-            //List<BranchMiniViewModel> bmvm = new List<BranchMiniViewModel>();
-            List<string> branchList = new List<string>{"branch3","branch4"};
-            //bmvm = cd.GetBranchesInCity(cityName);
-            return Json(branchList);
+            List<Branch> objbranch = new List<Branch>();
+            objbranch = GetAllBranch(cityid);
+           // SelectList obgbranch = new SelectList(objbranch, "Id", "BranchName", 0);
+            return Json(objbranch);
+        }
+
+        [HttpPost]
+        public ActionResult GetBranchDetails()
+        {
+            CommonDAL cd = new CommonDAL();
+            BranchDetailsViewModel objbranch = new BranchDetailsViewModel();
+            objbranch = cd.GetBranchDetails(BranchCode[0]);
+            return Json(objbranch);
+        }
+
+        public List<City> GetAllCities()
+        {
+            List<City> objcity = new List<City>();
+            CommonDAL cd = new CommonDAL();
+            List<string> listcity = cd.GetCityList();
+            int id = 1;
+
+            foreach (string v in listcity)
+            {
+                objcity.Add(new City { Id = id++, CityName = v });
+            }
+
+            return objcity;
+        }
+
+        public List<Branch> GetAllBranch(int cityid)
+        {
+            List<Branch> objbranch = new List<Branch>();
+            BranchCode = new List<Int64>();
+            CommonDAL cd = new CommonDAL();
+            List<string> listcity = cd.GetCityList();
+
+            string city = listcity[cityid-1];
+
+            List<BranchMiniViewModel> bmvm = new List<BranchMiniViewModel>();
+            int id =1;
+            bmvm = cd.GetBranchesInCity(city);
+
+            foreach (BranchMiniViewModel b in bmvm)
+            {
+                objbranch.Add(new Branch {Id = id++, BranchName = b.BranchName });
+                BranchCode.Add(b.BranchCode);
+            }
+
+            return objbranch;
 
         }
+
+         
+        
+
         //
         // GET: /Account/Login
         public ActionResult Login()

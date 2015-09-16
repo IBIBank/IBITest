@@ -1,47 +1,97 @@
-﻿@{
+﻿@using IBITest.Models
+@model IBITest.Models.BankCountryModel
+
+
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script>
-    function GetBranch(cityName)
-    {
-        alert("You selected" + cityName);
-        $.ajax(
-            {
-                type: "POST",
-                url: "CommonBiz/GetBranchForCity",
-                data: { "cityName": cityName },
-                success: function (data)
-                {
-                    alert("Function got called successfully");
-                    //var elm = document.getElementById("branchList");
-                    $("#branchList").empty();
-                    $("#branchList").append("<option>--Select--</option>");
-                    for (var x = 0; x < data.length; x++)
-                    {
-                        //$("#ddlcity").appendChild("<option>" + data[x] + "</option>")
-                        $("#branchList").append("<option>" + data[x] + "</option>");
-                    }
 
-                },
-                error: function()
-                {
-                    alert("Something went wrong calling function")
+@Html.ActionLink("Login", "Login","CommonBiz")
+<h1>View Branch Details</h1>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script >
+    function GetCity(_cityId) {
+        var procemessage = "<option value='0'> Processing..</option>";
+        $("#ddlcity").html(procemessage).show();
+        var url = "/CommonBiz/GetBranchNamebyCity/";
+
+        $.ajax({
+            url: url,
+            data: { cityid: _cityId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                $("#ddlbranch").find('option').remove().end();
+                $("#ddlbranch").append("<option>" + "--Select--" + "</option>");
+                for (var x = 0; x < data.length; x++) {
+                    $("#ddlbranch").append("<option>" + data[x].BranchName + "</option>");
                 }
-
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
             }
-        )
+        });
+
+    }
+
+    function GetBranch(_branchId) {
+       
+        var url = "/CommonBiz/GetBranchDetails/";
+
+        $.ajax({
+            url: url,
+            data: { branchid: _branchId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var trhtml = "<tr> <td>"+data.BranchName +"</td> <td> " +data.CityName+ "</td> <td>" + data.Address + "</td><td> "+data.ContactNumber +"</td><td> "+data.Email +"</td> </tr>";
+                $('#mytable tbody > tr').remove();
+                $('#mytable').append(trhtml);
+                
+            },
+            error: function (reponse) {
+                
+                alert("error : " + reponse);
+            }
+        });
 
     }
 </script>
-@Html.ActionLink("Login", "Login","CommonBiz")
-<h1>View Branch Details</h1>
-<div>
-    <p>Select city</p>
-    @Html.DropDownList( "CityDropDownList", new SelectList( @ViewBag.cityList ),"--Select--",new {@onchange="javascript:GetBranch(this.value)"})
-    <p>Select Branch<p>
-    @Html.DropDownList("BranchDropDownList",new SelectList( new List<string>() ),"--Select--", new { @id="branchList" })
-        
- </div> 
 
+<div>
+    <p>Select City</p>
+    
+   @Html.DropDownList("ddlstate", new SelectList(Model.CityModel, "Id", "CityName"), "--Select--", new { @id = "ddlstate", @style = "width:200px;", @onchange = "javascript:GetCity(this.value);" })
+    <p>Select Branch</p>
+   @Html.DropDownList("ddlbranch", new SelectList(Model.BranchModel, "Id", "BranchName"), "--Select--", new { @id = "ddlbranch", @style = "width:200px;" , @onchange = "javascript:GetBranch(this.value);" })
+    
+<br />
+    <br />
+
+ <table id ="mytable" class ="display">
+     <thead>
+         <tr>
+             <th>Branch Name</th>
+             <th>City Name</th>
+             <th>Address</th>
+             <th>Contact Number</th>
+             <th>Email</th>
+         </tr>
+     </thead>
+     <tbody>
+
+
+     </tbody>
+
+ </table>
+</div>
+
+<br />
+<br />
+<div>
+
+    <input id="Text1" type="text"/>
+    <input id="Button1" type="button" value="Submit Token" />
+</div>
