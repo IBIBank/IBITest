@@ -26,7 +26,11 @@ namespace IBITest.Controllers
         public ActionResult AddBranch(BranchDetails model)
         {
             AdminDAL obj = new AdminDAL();
-            MessageBox.Show("I am adding branch");
+            if (model.BranchLogInID == "banker1" || model.BranchLogInID == "banker2")
+            {
+                ModelState.AddModelError("", "Login ID is alreay taken.");
+                return View(model);
+            }
             obj.AddBranch(model);
             return View();
         }
