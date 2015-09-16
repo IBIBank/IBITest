@@ -152,10 +152,10 @@ namespace IBITest.Layers.DAL
 
 
 
-        public string GenerateToken(GenerateTokenViewModel tv)
+        public TokenInfo GenerateToken(GenerateTokenViewModel tv)
         {
             Customer c = new Customer();
-            string res;
+            TokenInfo res = new TokenInfo();
 
             c.CustomerName = String.Copy(tv.CustomerName);
             c.DOB = tv.DOB;
@@ -202,9 +202,13 @@ namespace IBITest.Layers.DAL
 
                 // Call Read before accessing data. 
                 if (rowsaffected > 0)
-                    res = String.Copy(c.Token);
+                {
+                    res.CustomerID = c.CustomerID;
+                    res.Token = String.Copy(c.Token);
+
+                }
                 else
-                    res = String.Copy("Error");
+                    res.Token = String.Copy("Error");
             }
 
             return res;

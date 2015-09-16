@@ -46,9 +46,14 @@ namespace IBITest.Controllers
         public ActionResult GenerateToken(GenerateTokenViewModel model)
         {
             BankerDAL obj = new BankerDAL();
+            TokenInfo tf = new TokenInfo();
+                      
+            tf = obj.GenerateToken(model);
 
-            obj.GenerateToken(model);
-            return View("GenerateToken");
+            ViewBag.CustomerID = String.Format("Customer ID : {0}", tf.CustomerID);
+            ViewBag.token = String.Format("Customer ID : {0}", tf.Token);
+
+            return View(model);
         }
     }
 }
