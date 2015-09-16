@@ -42,6 +42,29 @@ namespace IBITest.Layers.DAL
         }
 
 
+        public bool ValidateToken(string token)
+        {
+            bool res;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT * FROM Customer WHERE Token = '{0}' ", token), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                    res = true;
+     
+                else
+                    res = false;
+
+                reader.Close();
+            }
+
+            return res;
+        }
+
         public bool IsUniqueUserID(string UserID)
         {
             bool res;

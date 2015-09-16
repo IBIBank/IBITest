@@ -20,7 +20,7 @@ namespace IBITest.Controllers
             syncobj.Sync();
             BankCountryModel objbankcountrymodel = new BankCountryModel();
             objbankcountrymodel.CityModel = new List<City>();
-            objbankcountrymodel.BranchModel = new List<Branch>();
+            objbankcountrymodel.BranchModel = new List<BranchL>();
             objbankcountrymodel.CityModel = GetAllCities();
 
             return View(objbankcountrymodel);
@@ -30,14 +30,10 @@ namespace IBITest.Controllers
         public ActionResult ValidateToken(string token)
         {
             bool IsValid = true;
-            if (token == "420")
-            {
-                IsValid = false;
-            }
-            else
-            {
-                IsValid = true;
-            }
+            CustomerDAL cd = new CustomerDAL();
+            
+            IsValid = cd.ValidateToken(token);
+
             if (IsValid)
             {
                 return RedirectToAction("FinishRegistration", "Customer");
@@ -56,7 +52,7 @@ namespace IBITest.Controllers
         [HttpPost]
         public ActionResult GetBranchNamebyCity(int cityid)
         {
-            List<Branch> objbranch = new List<Branch>();
+            List<BranchL> objbranch = new List<BranchL>();
             objbranch = GetAllBranch(cityid);
            // SelectList obgbranch = new SelectList(objbranch, "Id", "BranchName", 0);
             return Json(objbranch);
@@ -86,9 +82,9 @@ namespace IBITest.Controllers
             return objcity;
         }
 
-        public List<Branch> GetAllBranch(int cityid)
+        public List<BranchL> GetAllBranch(int cityid)
         {
-            List<Branch> objbranch = new List<Branch>();
+            List<BranchL> objbranch = new List<BranchL>();
             BranchCode = new List<Int64>();
             CommonDAL cd = new CommonDAL();
             List<string> listcity = cd.GetCityList();
@@ -101,7 +97,7 @@ namespace IBITest.Controllers
 
             foreach (BranchMiniViewModel b in bmvm)
             {
-                objbranch.Add(new Branch {Id = id++, BranchName = b.BranchName });
+                objbranch.Add(new BranchL {Id = id++, BranchName = b.BranchName });
                 BranchCode.Add(b.BranchCode);
             }
 
