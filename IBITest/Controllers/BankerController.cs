@@ -13,7 +13,7 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
-            return View();
+            return View("GenerateToken");
         }
 
     }

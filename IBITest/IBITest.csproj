@@ -341,6 +341,7 @@
     <Content Include="Views\CommonBiz\Index.cshtml" />
     <Content Include="Views\CommonBiz\Login.cshtml" />
     <Content Include="Views\Customer\DashBoard.cshtml" />
+    <Content Include="Views\Banker\GenerateToken.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

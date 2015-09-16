@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,7 +10,9 @@ namespace IBITest.Models
     {
         public Int64 CustomerID { get; set; }
         public string CustomerName { get; set; }
+      
         public DateTime DOB { get; set; }
+      
         public string UserID { get; set; }
         public string Password { get; set; }
         public string PermanentAddress { get; set; }
