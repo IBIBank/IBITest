@@ -11,10 +11,146 @@ namespace IBITest.Layers.DAL
 {
     public class BankerDAL
     {
-        public void GetNewAccountRequests()
+        public int GetNoOfBranchTransferRequests()
         {
-           
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM BranchTransferRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    count = Convert.ToInt16(reader[0]);
+                }
+
+                else
+                    count = 0;
+
+                reader.Close();
+            }
+            return count;
         }
+
+
+        public int GetNoOfLoanRequests()
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM LoanRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    count = Convert.ToInt16(reader[0]);
+                }
+
+                else
+                    count = 0;
+
+                reader.Close();
+            }
+            return count;
+        }
+
+
+
+        public int GetNoOfNewAccountRequests()
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM NewAccountRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    count = Convert.ToInt16(reader[0]);
+                }
+
+                else
+                    count = 0;
+
+                reader.Close();
+            }
+            return count;
+        }
+
+
+
+
+        public int GetNoOfClosureRequests()
+        {
+            int count = 0;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM ClosingRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    count = Convert.ToInt16(reader[0]);
+                }
+
+                else
+                    count = 0;
+
+                reader.Close();
+            }
+            return count;
+        }
+
+
+        public BranchDetailsViewModel GetSelfBranchDetails(string BankerID)
+        {            
+            BranchDetailsViewModel bd = new BranchDetailsViewModel();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT BranchName,CityName,Address,ContactNumber, Email FROM Branch WHERE BranchLogInID = '{0}'",BankerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    bd.BranchName = reader[0].ToString();
+                    bd.CityName = reader[1].ToString();
+                    bd.Address = reader[2].ToString();
+                    bd.ContactNumber = reader[3].ToString();
+                    bd.Email = reader[4].ToString();
+                }
+
+                else
+                    System.Windows.Forms.MessageBox.Show("Error in accessing Branch Table");
+
+                reader.Close();
+            }
+
+            return bd;
+        }
+
+
+
 
         public string GenerateToken(GenerateTokenViewModel tv)
         {

@@ -15,6 +15,23 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
+            BankerDAL bd = new BankerDAL();
+            ViewBag.user = (Session["User"] as UserRole).UserID;
+
+            ViewBag.acctrf = bd.GetNoOfBranchTransferRequests();
+            ViewBag.loan = bd.GetNoOfLoanRequests();
+            ViewBag.newacc = bd.GetNoOfNewAccountRequests();
+            ViewBag.accclo = bd.GetNoOfClosureRequests();
+
+            BranchDetailsViewModel bm = bd.GetSelfBranchDetails(ViewBag.user);
+
+            ViewBag.selfbranchname = bm.BranchName;
+            ViewBag.selfbranchAdddress = bm.Address;
+            ViewBag.selfbranchnameCity = bm.CityName;
+            ViewBag.selfbranchnameContactNo = bm.ContactNumber;
+            ViewBag.selfbranchMailId = bm.Email;
+
+
             return View();
         }
 
@@ -25,9 +42,13 @@ namespace IBITest.Controllers
         }
 
         [HttpPost]
-        public void GenerateToken(GenerateTokenViewModel md)
+        [ValidateAntiForgeryToken]
+        public ActionResult GenerateToken(GenerateTokenViewModel model)
         {
-            BankerDAL bd = new BankerDAL();
+            BankerDAL obj = new BankerDAL();
+
+            obj.GenerateToken(model);
+            return View("GenerateToken");
         }
     }
 }

@@ -44,6 +44,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -205,6 +207,7 @@
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -342,9 +345,12 @@
     <Content Include="Views\CommonBiz\Login.cshtml" />
     <Content Include="Views\Customer\DashBoard.cshtml" />
     <Content Include="Views\Banker\GenerateToken.cshtml" />
-    <Content Include="Views\Customer\FinishRegistration.cshtml" />
+    <Content Include="Views\AddBranch.cshtml" />
+    <Content Include="Views\Admin\AddBranch.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

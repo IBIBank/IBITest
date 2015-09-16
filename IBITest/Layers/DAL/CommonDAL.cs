@@ -133,6 +133,12 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker1','banker2','banker2','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
+                command.CommandText = String.Copy("DELETE FROM Customer");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO Customer (CustomerID, CustomerName,DOB, UserID, Password, PermanentAddress, CommunicationAddress, ContactNumber, Email, TransactionPassword, Token) VALUES('1','Customer','2015/12/12','customer1','customer1','PAddress','CAddress','11','e@m.l','tpassword','IBI1234')");
+                rowaff = command.ExecuteNonQuery();
+
                 if(rowaff==0)
                     System.Windows.Forms.MessageBox.Show(rowaff.ToString());
 

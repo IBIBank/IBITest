@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="Account" EntityType="Database1Model.Store.Account" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Branch" EntityType="Database1Model.Store.Branch" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BranchTransferRequest" EntityType="Database1Model.Store.BranchTransferRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ClosingRequest" EntityType="Database1Model.Store.ClosingRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Customer" EntityType="Database1Model.Store.Customer" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LoanRequest" EntityType="Database1Model.Store.LoanRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Loans" EntityType="Database1Model.Store.Loans" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="NewAccountRequest" EntityType="Database1Model.Store.NewAccountRequest" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Payee" EntityType="Database1Model.Store.Payee" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Transaction" EntityType="Database1Model.Store.Transaction" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserRoles" EntityType="Database1Model.Store.UserRoles" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Account">
+    <Key>
+      <PropertyRef Name="AccountNumber" />
+    </Key>
+    <Property Name="AccountNumber" Type="bigint" Nullable="false" />
+    <Property Name="AccountType" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="OpeningDate" Type="date" Nullable="false" />
+    <Property Name="Status" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="Balance" Type="money" Nullable="false" />
+    <Property Name="BranchCode" Type="bigint" Nullable="false" />
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+    <Property Name="AddressProof" Type="image" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchCode" />
+    </Key>
+    <Property Name="BranchCode" Type="bigint" Nullable="false" />
+    <Property Name="BranchName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="CityName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="ContactNumber" Type="nvarchar" Nullable="false" MaxLength="10" />
+    <Property Name="BankerName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="BranchLogInID" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="BranchPassword" Type="nvarchar" Nullable="false" MaxLength="20" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BranchTransferRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+    <Property Name="ServiceDate" Type="datetime" />
+    <Property Name="Status" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="AccountNumber" Type="bigint" Nullable="false" />
+    <Property Name="FromBranch" Type="bigint" Nullable="false" />
+    <Property Name="ToBranch" Type="bigint" Nullable="false" />
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClosingRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+    <Property Name="ServiceDate" Type="datetime" />
+    <Property Name="Status" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="AccountNumber" Type="bigint" Nullable="false" />
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+    <Property Name="CustomerName" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="DOB" Type="date" Nullable="false" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="PermanentAddress" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="CommunicationAddress" Type="nvarchar(max)" />
+    <Property Name="ContactNumber" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="TransactionPassword" Type="nvarchar" MaxLength="50" />
+    <Property Name="Token" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="PhotoIDProof" Type="image" />
+  </EntityType>
+  <EntityType Name="LoanRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="TypeOfLoan" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+    <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+    <Property Name="ServiceDate" Type="datetime" />
+    <Property Name="Status" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="BranchCode" Type="bigint" Nullable="false" />
+    <Property Name="AnnualIncome" Type="money" Nullable="false" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+    <Property Name="Tenure" Type="numeric" Nullable="false" />
+    <Property Name="AddressProof" Type="image" Nullable="false" />
+    <Property Name="SalaryProof" Type="image" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Loans">
+    <Key>
+      <PropertyRef Name="LoanAccountNumber" />
+    </Key>
+    <Property Name="LoanAccountNumber" Type="bigint" Nullable="false" />
+    <Property Name="AnnualIncome" Type="money" Nullable="false" />
+    <Property Name="LoanType" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="Tenure" Type="numeric" Nullable="false" />
+    <Property Name="SalaryProof" Type="image" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NewAccountRequest">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" Nullable="false" />
+    <Property Name="BranchCode" Type="bigint" Nullable="false" />
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+    <Property Name="SubmissionDate" Type="datetime" Nullable="false" />
+    <Property Name="ServiceDate" Type="datetime" />
+    <Property Name="Status" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="AddressProof" Type="image" />
+  </EntityType>
+  <EntityType Name="Payee">
+    <Key>
+      <PropertyRef Name="PayeeID" />
+    </Key>
+    <Property Name="PayeeID" Type="int" Nullable="false" />
+    <Property Name="PayeeNickName" Type="nchar" Nullable="false" MaxLength="50" />
+    <Property Name="CustomerID" Type="bigint" Nullable="false" />
+    <Property Name="PayeeAccountNumber" Type="bigint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transaction">
+    <Key>
+      <PropertyRef Name="TransactionID" />
+    </Key>
+    <Property Name="TransactionID" Type="int" Nullable="false" />
+    <Property Name="Type" Type="nchar" Nullable="false" MaxLength="1" />
+    <Property Name="TransactionDate" Type="datetime" Nullable="false" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+    <Property Name="TransactionRemarks" Type="nchar" Nullable="false" MaxLength="100" />
+    <Property Name="SrcAccount" Type="bigint" Nullable="false" />
+    <Property Name="DestAccount" Type="bigint" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="nvarchar" MaxLength="50" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="Role" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+</Schema>

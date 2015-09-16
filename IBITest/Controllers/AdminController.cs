@@ -25,14 +25,14 @@ namespace IBITest.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddBranch(BranchDetails model)
         {
-            //AdminDAL obj = new AdminDAL();
-            if (model.BranchLogInID == "banker1" || model.BranchLogInID == "banker2")
+            AdminDAL obj = new AdminDAL();
+            if (!obj.IsUniqueBranchLogInID(model.BranchLogInID))
             {
                 ModelState.AddModelError("", "Login ID is alreay taken.");
                 return View(model);
             }
-            //obj.AddBranch(model);
-            return View();
+            obj.AddBranch(model);
+            return View("Dashboard");
         }
 
     }
