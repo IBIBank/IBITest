@@ -14,12 +14,9 @@ C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\Micr
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\Microsoft.Web.WebPages.OAuth.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\Newtonsoft.Json.dll
-C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Net.Http.Formatting.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Spatial.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Helpers.dll
-C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Http.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Http.OData.dll
-C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Http.WebHost.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Mvc.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Optimization.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Razor.dll
@@ -31,10 +28,7 @@ C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\WebM
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\WebMatrix.WebData.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\EntityFramework.xml
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\Newtonsoft.Json.xml
-C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Net.Http.Formatting.xml
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Helpers.xml
-C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Http.xml
-C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Http.WebHost.xml
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Mvc.xml
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.Razor.xml
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\System.Web.WebPages.xml

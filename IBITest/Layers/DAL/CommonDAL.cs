@@ -115,7 +115,7 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','admin','admin','admin')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker','banker','banker')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker1','banker','banker')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','customer','customer','customer')");
