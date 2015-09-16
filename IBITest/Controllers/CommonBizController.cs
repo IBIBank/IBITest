@@ -16,6 +16,8 @@ namespace IBITest.Controllers
         static List<Int64> BranchCode;
         public ActionResult Index()
         {
+            CommonDAL syncobj = new CommonDAL();
+            syncobj.Sync();
             BankCountryModel objbankcountrymodel = new BankCountryModel();
             objbankcountrymodel.CityModel = new List<City>();
             objbankcountrymodel.BranchModel = new List<Branch>();

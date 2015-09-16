@@ -115,22 +115,22 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','admin','admin','admin')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker1','banker','banker')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker1','banker1','banker')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','customer','customer','customer')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','customer1','customer1','customer')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','banker2','banker','banker')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','banker2','banker2','banker')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM Branch");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker1','banker1','banker','e@m.l')");
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker1','banker1','banker1','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker1','banker2','banker','e@m.l')");
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker1','banker2','banker2','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
                 if(rowaff==0)
