@@ -14,7 +14,14 @@
     <fieldset>
         <legend>Customer</legend>
 
-        @Html.HiddenFor(model => model.CustomerID)
+        @*@Html.HiddenFor(model => model.CustomerID)*@
+         <div class="editor-label">
+            @Html.LabelFor(model => model.CustomerID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CustomerID)
+            @Html.ValidationMessageFor(model => model.CustomerID)
+        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.CustomerName)
@@ -96,15 +103,16 @@
             @Html.ValidationMessageFor(model => model.Token)
         </div>
 
+        <label for="@(Model.PhotoIDProof)">PhotoID Proof</label>  
+        <input type="file" name="@(Model.PhotoIDProof)" id="file"/>
+        <p>After Successful registration you will be redirected to Login page</p>
         <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

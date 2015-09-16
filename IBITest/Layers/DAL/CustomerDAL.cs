@@ -25,6 +25,7 @@ namespace IBITest.Layers.DAL
                 if (reader.HasRows)
                 {
                     reader.Read();
+                    c.CustomerID = Convert.ToInt64( reader[0] );
                     c.CustomerName = String.Copy(reader[1].ToString());
                     c.DOB = Convert.ToDateTime(reader[2]) ;
                     c.PermanentAddress = String.Copy(reader[5].ToString());

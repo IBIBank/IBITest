@@ -36,7 +36,7 @@ namespace IBITest.Controllers
 
             if (IsValid)
             {
-                return RedirectToAction("FinishRegistration", "Customer");
+                return RedirectToAction("FinishRegistration", "Customer", new { token=token});
             }
             else
             {
