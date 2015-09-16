@@ -92,6 +92,12 @@
 <br />
 <div>
 
-    <input id="Text1" type="text"/>
-    <input id="Button1" type="button" value="Submit Token" />
+    <br />
+    @using (Html.BeginForm("ValidateToken","CommonBiz"))
+    { 
+        
+        <input type="text" name="token" />
+        <input type="submit" value="Register" />
+    }
+   
 </div>

@@ -15,6 +15,10 @@ namespace IBITest.Controllers
         {
             return View();
         }
+        public ActionResult FinishRegistration()
+        {
+            return View();
+        }
 
     }
 }

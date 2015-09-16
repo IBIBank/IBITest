@@ -27,6 +27,33 @@ namespace IBITest.Controllers
         }
 
         [HttpPost]
+        public ActionResult ValidateToken(string token)
+        {
+            bool IsValid = true;
+            if (token == "420")
+            {
+                IsValid = false;
+            }
+            else
+            {
+                IsValid = true;
+            }
+            if (IsValid)
+            {
+                return RedirectToAction("FinishRegistration", "Customer");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Token is not valid.");
+                return RedirectToAction("Index");
+            }
+            //MessageBox.Show("Token is: " + token);
+            
+            
+        }
+
+
+        [HttpPost]
         public ActionResult GetBranchNamebyCity(int cityid)
         {
             List<Branch> objbranch = new List<Branch>();
@@ -43,7 +70,7 @@ namespace IBITest.Controllers
             objbranch = cd.GetBranchDetails(BranchCode[0]);
             return Json(objbranch);
         }
-
+        
         public List<City> GetAllCities()
         {
             List<City> objcity = new List<City>();
@@ -108,7 +135,6 @@ namespace IBITest.Controllers
                 return View(model);
                 //return RedirectToAction("Login");
             }
-
             else if (role.Equals("admin"))
             {
                 return RedirectToAction("DashBoard", "Admin");
