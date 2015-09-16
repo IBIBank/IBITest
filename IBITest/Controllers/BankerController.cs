@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using IBITest.Models;
+using IBITest.Layers.DAL;
 
 namespace IBITest.Controllers
 {
@@ -13,8 +15,19 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
-            return View("GenerateToken");
+            return View();
         }
 
+        [HttpGet]
+        public ActionResult GenerateToken()
+        {
+            return View(new GenerateTokenViewModel());
+        }
+
+        [HttpPost]
+        public void GenerateToken(GenerateTokenViewModel md)
+        {
+            BankerDAL bd = new BankerDAL();
+        }
     }
 }
