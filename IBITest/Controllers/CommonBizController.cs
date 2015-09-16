@@ -20,16 +20,43 @@ namespace IBITest.Controllers
             syncobj.Sync();
             BankCountryModel objbankcountrymodel = new BankCountryModel();
             objbankcountrymodel.CityModel = new List<City>();
-            objbankcountrymodel.BranchModel = new List<BranchL>();
+            objbankcountrymodel.BranchModel = new List<Branch>();
             objbankcountrymodel.CityModel = GetAllCities();
 
             return View(objbankcountrymodel);
         }
 
         [HttpPost]
+        public ActionResult ValidateToken(string token)
+        {
+            bool IsValid = true;
+            if (token == "420")
+            {
+                IsValid = false;
+            }
+            else
+            {
+                IsValid = true;
+            }
+            if (IsValid)
+            {
+                return RedirectToAction("FinishRegistration", "Customer");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Token is not valid.");
+                return RedirectToAction("Index");
+            }
+            //MessageBox.Show("Token is: " + token);
+            
+            
+        }
+
+
+        [HttpPost]
         public ActionResult GetBranchNamebyCity(int cityid)
         {
-            List<BranchL> objbranch = new List<BranchL>();
+            List<Branch> objbranch = new List<Branch>();
             objbranch = GetAllBranch(cityid);
            // SelectList obgbranch = new SelectList(objbranch, "Id", "BranchName", 0);
             return Json(objbranch);
@@ -43,7 +70,7 @@ namespace IBITest.Controllers
             objbranch = cd.GetBranchDetails(BranchCode[0]);
             return Json(objbranch);
         }
-
+        
         public List<City> GetAllCities()
         {
             List<City> objcity = new List<City>();
@@ -59,9 +86,9 @@ namespace IBITest.Controllers
             return objcity;
         }
 
-        public List<BranchL> GetAllBranch(int cityid)
+        public List<Branch> GetAllBranch(int cityid)
         {
-            List<BranchL> objbranch = new List<BranchL>();
+            List<Branch> objbranch = new List<Branch>();
             BranchCode = new List<Int64>();
             CommonDAL cd = new CommonDAL();
             List<string> listcity = cd.GetCityList();
@@ -74,7 +101,7 @@ namespace IBITest.Controllers
 
             foreach (BranchMiniViewModel b in bmvm)
             {
-                objbranch.Add(new BranchL {Id = id++, BranchName = b.BranchName });
+                objbranch.Add(new Branch {Id = id++, BranchName = b.BranchName });
                 BranchCode.Add(b.BranchCode);
             }
 
@@ -92,16 +119,15 @@ namespace IBITest.Controllers
             return View();
         }
         //
-        // POST: /Account/Login
+        // GET: /Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginCredentials model)
         {
             CommonDAL obj = new CommonDAL();
             string role = obj.CheckRole(model.UserName, model.Password);
-
-            UserRole ur = new UserRole { UserID=model.UserName, Role = role};
-           
+            //MessageBox.Show(role);
+            //MessageBox.Show(role.Length.ToString());
 
             if (role.Equals("Invalid"))
             {
@@ -109,11 +135,7 @@ namespace IBITest.Controllers
                 return View(model);
                 //return RedirectToAction("Login");
             }
-
-            Session["User"] = ur;
-
-            if (role.Equals("admin"))
-                 
+            else if (role.Equals("admin"))
             {
                 return RedirectToAction("DashBoard", "Admin");
             }
