@@ -20,7 +20,7 @@ namespace IBITest.Controllers
             syncobj.Sync();
             BankCountryModel objbankcountrymodel = new BankCountryModel();
             objbankcountrymodel.CityModel = new List<City>();
-            objbankcountrymodel.BranchModel = new List<Branch>();
+            objbankcountrymodel.BranchModel = new List<BranchL>();
             objbankcountrymodel.CityModel = GetAllCities();
 
             return View(objbankcountrymodel);
@@ -29,7 +29,7 @@ namespace IBITest.Controllers
         [HttpPost]
         public ActionResult GetBranchNamebyCity(int cityid)
         {
-            List<Branch> objbranch = new List<Branch>();
+            List<BranchL> objbranch = new List<BranchL>();
             objbranch = GetAllBranch(cityid);
            // SelectList obgbranch = new SelectList(objbranch, "Id", "BranchName", 0);
             return Json(objbranch);
@@ -59,9 +59,9 @@ namespace IBITest.Controllers
             return objcity;
         }
 
-        public List<Branch> GetAllBranch(int cityid)
+        public List<BranchL> GetAllBranch(int cityid)
         {
-            List<Branch> objbranch = new List<Branch>();
+            List<BranchL> objbranch = new List<BranchL>();
             BranchCode = new List<Int64>();
             CommonDAL cd = new CommonDAL();
             List<string> listcity = cd.GetCityList();
@@ -74,7 +74,7 @@ namespace IBITest.Controllers
 
             foreach (BranchMiniViewModel b in bmvm)
             {
-                objbranch.Add(new Branch {Id = id++, BranchName = b.BranchName });
+                objbranch.Add(new BranchL {Id = id++, BranchName = b.BranchName });
                 BranchCode.Add(b.BranchCode);
             }
 
@@ -92,15 +92,16 @@ namespace IBITest.Controllers
             return View();
         }
         //
-        // GET: /Account/Login
+        // POST: /Account/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginCredentials model)
         {
             CommonDAL obj = new CommonDAL();
             string role = obj.CheckRole(model.UserName, model.Password);
-            //MessageBox.Show(role);
-            //MessageBox.Show(role.Length.ToString());
+
+            UserRole ur = new UserRole { UserID=model.UserName, Role = role};
+           
 
             if (role.Equals("Invalid"))
             {
@@ -109,7 +110,10 @@ namespace IBITest.Controllers
                 //return RedirectToAction("Login");
             }
 
-            else if (role.Equals("admin"))
+            Session["User"] = ur;
+
+            if (role.Equals("admin"))
+                 
             {
                 return RedirectToAction("DashBoard", "Admin");
             }

@@ -10,7 +10,7 @@ namespace IBITest.Models
     {
         public List<City> CityModel { get; set; }
         public SelectList FilteredBranch { get; set; }
-        public List<Branch> BranchModel { get; set; }
+        public List<BranchL> BranchModel { get; set; }
     }
 
     public class City
@@ -19,7 +19,7 @@ namespace IBITest.Models
         public string CityName { get; set; }
     }
 
-    public class Branch
+    public class BranchL
     {
         public int Id { get; set; }
       //  public int CityId { get; set; }
