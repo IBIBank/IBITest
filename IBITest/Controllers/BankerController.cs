@@ -16,7 +16,10 @@ namespace IBITest.Controllers
         public ActionResult DashBoard()
         {
             BankerDAL bd = new BankerDAL();
-            ViewBag.user = (Session["User"] as UserRole).UserID;
+            if (Session["User"] == null)
+                System.Windows.Forms.MessageBox.Show("No Session data");
+            else
+                ViewBag.user = (Session["User"] as UserRole).UserID;
 
             ViewBag.acctrf = bd.GetNoOfBranchTransferRequests();
             ViewBag.loan = bd.GetNoOfLoanRequests();

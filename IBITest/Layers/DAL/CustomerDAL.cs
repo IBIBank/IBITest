@@ -95,7 +95,7 @@ namespace IBITest.Layers.DAL
             bool res;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = '{5}'", c.UserID, c.Password,c.CommunicationAddress,c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
+                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, c.Password,c.CommunicationAddress,c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
 
                 
                 SqlCommand command = new SqlCommand(cmdtxt, connection);
@@ -116,7 +116,9 @@ namespace IBITest.Layers.DAL
                 int id = Convert.ToInt16(rd[0]) + 1;
                 rd.Close();                
 
-                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}') ", id, c.UserID, c.Password, "Customer");
+                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}') ", id, c.UserID, c.Password, "Customer");
+                command.ExecuteNonQuery();
+                
                 //insert into user profile too !!
             }
 
