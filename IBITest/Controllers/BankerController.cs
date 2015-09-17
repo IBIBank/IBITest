@@ -16,8 +16,9 @@ namespace IBITest.Controllers
         public ActionResult DashBoard()
         {
             BankerDAL bd = new BankerDAL();
+
             if (Session["User"] == null)
-                System.Windows.Forms.MessageBox.Show("No Session data");
+                return RedirectToAction("Login", "CommonBiz");
             else
                 ViewBag.user = (Session["User"] as UserRole).UserID;
 
@@ -54,9 +55,10 @@ namespace IBITest.Controllers
             tf = obj.GenerateToken(model);
 
             ViewBag.CustomerID = String.Format("Customer ID : {0}", tf.CustomerID);
-            ViewBag.token = String.Format("Customer ID : {0}", tf.Token);
+            ViewBag.token = String.Format("Token : {0}", tf.Token);
 
-            return View(model);
+            ModelState.Clear();
+            return View(new GenerateTokenViewModel());
         }
     }
 }
