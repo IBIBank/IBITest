@@ -60,5 +60,9 @@ namespace IBITest.Controllers
             ModelState.Clear();
             return View(new GenerateTokenViewModel());
         }
+
+        
+
+
     }
 }

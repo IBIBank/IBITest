@@ -46,23 +46,24 @@ namespace IBITest.Controllers
             
             
         }
-
+       
 
         [HttpPost]
         public ActionResult GetBranchNamebyCity(int cityid)
         {
             List<BranchL> objbranch = new List<BranchL>();
             objbranch = GetAllBranch(cityid);
-           // SelectList obgbranch = new SelectList(objbranch, "Id", "BranchName", 0);
-            return Json(objbranch);
+            SelectList obgbranch = new SelectList(objbranch, "Id", "BranchName");
+            return Json(obgbranch);
         }
-
+         
         [HttpPost]
-        public ActionResult GetBranchDetails()
+        public ActionResult GetBranchDetails(int branchid )
         {
             CommonDAL cd = new CommonDAL();
             BranchDetailsViewModel objbranch = new BranchDetailsViewModel();
-            objbranch = cd.GetBranchDetails(BranchCode[0]);
+           // MessageBox.Show(branchid);
+            objbranch = cd.GetBranchDetails(BranchCode[branchid-1]);
             return Json(objbranch);
         }
         
@@ -71,7 +72,7 @@ namespace IBITest.Controllers
             List<City> objcity = new List<City>();
             CommonDAL cd = new CommonDAL();
             List<string> listcity = cd.GetCityList();
-            int id = 1;
+            int id = 1;             
 
             foreach (string v in listcity)
             {
