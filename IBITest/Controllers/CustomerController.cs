@@ -19,7 +19,7 @@ namespace IBITest.Controllers
         }
         public ActionResult FinishRegistration(string token)
         {
-            MessageBox.Show("I am in GET Now get user details according to token"+token);
+            //MessageBox.Show("I am in GET Now get user details according to token"+token);
             CustomerDAL obj = new CustomerDAL();
 
             return View(obj.GetUserByTokenID(token));
@@ -27,7 +27,7 @@ namespace IBITest.Controllers
         [HttpPost]
         public ActionResult FinishRegistration(Customer model)
         {
-            MessageBox.Show("I am in POST");
+            //MessageBox.Show("I am in POST");
             CustomerDAL obj = new CustomerDAL();
 
             if (obj.IsUniqueUserID(model.UserID))
@@ -41,6 +41,12 @@ namespace IBITest.Controllers
                 return View(model);
             }
             
+        }
+        public ActionResult CreateNewAccount()
+        {
+            CommonDAL obj = new CommonDAL();
+            ViewBag.cityList = obj.GetCityList();
+            return View();
         }
 
     }

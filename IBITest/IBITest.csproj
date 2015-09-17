@@ -207,6 +207,7 @@
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
+    <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -348,9 +349,8 @@
     <Content Include="Views\Banker\GenerateToken.cshtml" />
     <Content Include="Views\AddBranch.cshtml" />
     <Content Include="Views\Admin\AddBranch.cshtml" />
-    <Content Include="Views\Customer\FinishRegistration.cshtml">
-      <SubType>Code</SubType>
-    </Content>
+    <Content Include="Views\Customer\FinishRegistration.cshtml" />
+    <Content Include="Views\Customer\CreateNewAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
