@@ -29,6 +29,7 @@ namespace IBITest.Controllers
         {
             MessageBox.Show("I am in POST");
             CustomerDAL obj = new CustomerDAL();
+
             if (obj.IsUniqueUserID(model.UserID))
             {
                 obj.FinishReg(model);
