@@ -45,8 +45,27 @@ namespace IBITest.Controllers
         public ActionResult CreateNewAccount()
         {
             CommonDAL obj = new CommonDAL();
+            MessageBox.Show(obj.GetCityList()[0]);
             ViewBag.cityList = obj.GetCityList();
-            return View();
+            NewAccountRequestView model = new NewAccountRequestView();
+            model.CustomerID = 1001;
+            return View(model);
+        }
+        [HttpPost]
+        public string CreateNewAccount( NewAccountRequestView model)
+        {
+            MessageBox.Show("I am post and branch is "+ model.Branch+ "city "+model.City);
+            return "Done";
+        }
+        public JsonResult GetBranchesInCity(string cityName)
+        {
+            List<BranchMiniViewModel> bmvm = new List<BranchMiniViewModel>();
+            CommonDAL cd = new CommonDAL();
+            bmvm = cd.GetBranchesInCity(cityName );
+            //MessageBox.Show(bmvm[0].BranchCode.ToString()+" "+bmvm[0].BranchName);
+            SelectList obj = new SelectList(bmvm, "BranchCode", "BranchName");
+
+            return Json(obj);
         }
 
     }
