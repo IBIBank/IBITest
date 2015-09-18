@@ -53,9 +53,9 @@ namespace IBITest.Controllers
         }
         public JsonResult GetTransferOfAccountAdminRequest(string requestType)
         {
-            Console.WriteLine("some one called me");
+            //Console.WriteLine("some one called me");
             //Console.ReadKey();
-            MessageBox.Show("some one called me");
+            //MessageBox.Show("some one called me");
             List<TranferOfAccountAdminView> obj = new List<TranferOfAccountAdminView>(){
                 new TranferOfAccountAdminView() {requestID=1,customerID=1,accountNumber=1,fromBranch=1,toBranch=2},
                 new TranferOfAccountAdminView() { requestID=2,customerID=2,accountNumber=2,fromBranch=2,toBranch=1}
@@ -65,8 +65,8 @@ namespace IBITest.Controllers
         }
         public void Approve(List<int> approveRequestList)
         {
-            MessageBox.Show("In approve method");
-            MessageBox.Show(approveRequestList[0].ToString());
+            //MessageBox.Show("In approve method");
+            //MessageBox.Show(approveRequestList[0].ToString());
             //MessageBox.Show(((int)approveRequestList[0]).ToString() + " " + ((int)approveRequestList[1]).ToString());
             //string r = "";
             //for (int i = 0; i < approveRequestList.Length; i++)
