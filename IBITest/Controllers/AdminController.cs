@@ -52,12 +52,15 @@ namespace IBITest.Controllers
             return View();
         }
         public JsonResult GetTransferOfAccountAdminRequest(string requestType)
-        {            
-            MessageBox.Show("some one called me");
+        {           
             AdminDAL adminObj = new AdminDAL();
-
             List<TranferOfAccountAdminView> obj = adminObj.GetTransferAccountRequests();
-            //return Json(obj);
+            return Json(obj);
+        }
+        public JsonResult GetClosureOfAccountAdminRequest(string requestType)
+        {
+            AdminDAL objAdminDal = new AdminDAL();
+            List<ClosureOfAccountAdminView> obj = objAdminDal.GetClosureOfAccountRequests();
             return Json(obj);
         }
         public void Approve(List<int> approveRequestList)

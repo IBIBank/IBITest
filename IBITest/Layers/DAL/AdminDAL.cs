@@ -213,7 +213,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT RequestID, CustomerID, AccountNumber FROM BranchTransferRequest WHERE Status = 'T' ", connection);
+                SqlCommand command = new SqlCommand("SELECT RequestID, CustomerID, AccountNumber FROM ClosingRequest WHERE Status = 'T' ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();

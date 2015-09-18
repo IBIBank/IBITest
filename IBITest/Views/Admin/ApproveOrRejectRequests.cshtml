@@ -8,40 +8,50 @@
     function getListOfRequests(requestType) {
         if (requestType == "") {
             alert("You selectd request type none");
+            $("#mytable").empty();
             return;
         }
         alert("You selectd request type " + requestType);
-        //Call some function
-        //get requests
-        // with those values populate table
-        //then add select option
-        //on approve call some other function
-        $.ajax({
-            url: "/Admin/GetTransferOfAccountAdminRequest",
-            data: { requestType: requestType },
-            cache: false,
-            type: "POST",
-            success: function (data) {
-                //alert("input is "+requestType)
-                //alert(data.length);
-                //alert(data[0].requestID + " " + data[0].customerID+" "+data[0].toBranch);
-                $("#mytable").empty();
-                $("#mytable").append('<tr><th>Select</th><th>RequestID</th><th>CustomerID</th><th>AccountNumber</th><th>FromBranch</th><th>ToBranch</th></tr>');
-                for (var x = 0; x < data.length; x++) {
-                    $("#mytable").append('<tr><td><input type="checkbox" name="Select" value="' + data[x].requestID + '"/></td><td>' + data[x].requestID + '</td><td>' + data[x].customerID + '</td><td>' + data[x].accountNumber + '</td><td>' + data[x].fromBranch + '</td><td>' + data[x].toBranch + '</td></tr>');
+        if(requestType=="TOC")
+        {
+            $.ajax({
+                url: "/Admin/GetTransferOfAccountAdminRequest",
+                data: { requestType: requestType },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                        $("#mytable").empty();
+                        $("#mytable").append('<tr><th>Select</th><th>RequestID</th><th>CustomerID</th><th>AccountNumber</th><th>FromBranch</th><th>ToBranch</th></tr>');
+                        for (var x = 0; x < data.length; x++) {
+                            $("#mytable").append('<tr><td><input type="checkbox" name="Select" value="' + data[x].requestID + '"/></td><td>' + data[x].requestID + '</td><td>' + data[x].customerID + '</td><td>' + data[x].accountNumber + '</td><td>' + data[x].fromBranch + '</td><td>' + data[x].toBranch + '</td></tr>');
+                        }
+                },
+                error: function (reponse) {
+                            alert("error : " + reponse);
                 }
-                //$("#branchDropDown").empty();
+            });
+    }
+    else
+    {
+            $.ajax({
+                url: "/Admin/GetClosureOfAccountAdminRequest",
+                data: { requestType: requestType },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    $("#mytable").empty();
+                    $("#mytable").append('<tr><th>Select</th><th>RequestID</th><th>CustomerID</th><th>AccountNumber</th></tr>');
+                    for (var x = 0; x < data.length; x++) {
+                        $("#mytable").append('<tr><td><input type="checkbox" name="Select" value="' + data[x].requestID + '"/></td><td>' + data[x].requestID + '</td><td>' + data[x].customerID + '</td><td>' + data[x].accountNumber + '</td></tr>');
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+    }
 
-                //$("#branchDropDown").append("<option value = '0' >" + "--Select--" + "</option>");
-                //for (var x = 0; x < data.length; x++) {
-                //    $("#branchDropDown").append("<option value = '" + data[x].Value + "' >" + data[x].Text + " </option>");
-                //}
 
-            },
-            error: function (reponse) {
-                alert("error : " + reponse);
-            }
-        });
     }
     function Approve() {
         var selected = $("#mytable input:checked").length;
@@ -62,7 +72,7 @@
                 selected.push($(this).attr('value'));
             });
             //alert("requestid's are " + $("#mytable input:checked").val())
-            alert(selected)
+            //alert(selected)
             $.ajax({
                 url: "/Admin/Approve",
                 data: { approveRequestList: selected },
