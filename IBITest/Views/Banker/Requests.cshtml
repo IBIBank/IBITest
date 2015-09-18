@@ -128,7 +128,7 @@
                     for (var x = 0; x < data.length; x++) {
                         trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td> <a onclick= ' GetProofImage( " + x + "  ) '> View Proof <a> </td> <td><a href =' '> Approve <a> </td> <td><a href =' '> Reject <a> </td></tr>";
                     }
-                    $('#mytable').append(trhtml);
+                    $('#mytable tbody').append(trhtml);
                 },
                 error: function (reponse) {
                     alert("error : " + reponse);

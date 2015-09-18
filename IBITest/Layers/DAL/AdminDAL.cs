@@ -169,6 +169,36 @@ namespace IBITest.Layers.DAL
         }
 
 
+        List<TranferOfAccountAdminView> GetTransferAccountRequests()
+        {
+            List<TranferOfAccountAdminView> RequestList = new List<TranferOfAccountAdminView>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM BranchTransferRequest WHERE Status = 'T' ", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        TranferOfAccountAdminView BranchTransferRequest = new TranferOfAccountAdminView();
+
+
+
+                        RequestList.Add(BranchTransferRequest);
+                    }
+                }
+
+                reader.Close();
+            }
+
+            return RequestList;
+        }
+
 
     }
 }
