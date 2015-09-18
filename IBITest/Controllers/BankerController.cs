@@ -68,11 +68,12 @@ namespace IBITest.Controllers
             List<RequestViewModel> mdL = new List<RequestViewModel>();
             
             mdL = obj.GetAllRequests();
-            ViewBag.daa = mdL;
+
+            Session["AllRequests"] = mdL;
+
             return View(mdL);
         }
 
-        [HttpPost]
         public ActionResult GetRequestsByType(int typeid)
         {
             BankerDAL obj = new BankerDAL();
@@ -96,11 +97,66 @@ namespace IBITest.Controllers
                     md = obj.GetClosingRequests();
                     break;
             }
-
-            System.Windows.Forms.MessageBox.Show(typeid.ToString());
-
             return Json(md);
         }
 
+        public ActionResult GetRequestsByStatus(int typeid)
+        {
+            BankerDAL obj = new BankerDAL();
+            List<RequestViewModel> md = new List<RequestViewModel>();
+            List<RequestViewModel> mdSorted = new List<RequestViewModel>();
+
+            if (Session["AllRequests"] != null)
+                md = (Session["AllRequests"] as List<RequestViewModel>);
+            else
+                System.Windows.Forms.MessageBox.Show("Session expired");
+
+
+            switch (typeid)
+            {
+                case 1:
+                    return Json(md);
+
+                case 2:
+                   
+                    foreach (var v in md)
+                    {
+                        if (v.Status == 'S')
+                            mdSorted.Add(v);
+                    }
+
+                    break;
+
+                case 3:
+
+                    foreach (var v in md)
+                    {
+                        if (v.Status == 'A')
+                            mdSorted.Add(v);
+                    }                  
+                    break;
+
+                case 4:
+                    foreach (var v in md)
+                    {
+                        if (v.Status == 'R')
+                            mdSorted.Add(v);
+                    }
+                    break;
+
+
+                case 5:
+                    foreach (var v in md)
+                    {
+                        if (v.Status == 'T')
+                            mdSorted.Add(v);
+                    }
+                    break;
+
+            }
+
+            return Json(mdSorted);
+        }
+        
     }
 }

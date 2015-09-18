@@ -161,10 +161,10 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO BranchTransferRequest (RequestID, SubmissionDate,Status, AccountNumber, FromBranch, ToBranch, CustomerID) VALUES(3,'2015/12/12','S',3,3,1,3)");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('1','1','1','2015/9/17', '2015/2/2', 'P', 'Customer')");
+                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('1','1','1','2015/9/17', '2015/2/2', 'S', 'Customer')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('2','2','2','2016/9/17', '2016/2/2', 'G', 'Customer')");
+                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('2','2','2','2016/9/17', '2016/2/2', 'A', 'Customer')");
                 rowaff = command.ExecuteNonQuery();
 
                 if(rowaff==0)

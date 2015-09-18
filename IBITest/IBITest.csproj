@@ -208,6 +208,7 @@
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
+    <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\RequestViewModel.cs" />
     <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Models\UserRole.cs" />

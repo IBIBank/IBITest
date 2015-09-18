@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using IBITest.Models;
 using System.Configuration;
+using System.Globalization;
 
 namespace IBITest.Layers.DAL
 {
@@ -217,6 +218,7 @@ namespace IBITest.Layers.DAL
 
         public List<RequestViewModel> GetBranchTransferRequests()
         {
+            StringComparison com;
             List<RequestViewModel> mdL = null;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
@@ -237,7 +239,8 @@ namespace IBITest.Layers.DAL
                         md.RequestID = String.Copy("TOA" + reader[0].ToString());
                         md.RequestType = String.Copy("TOA");
                         md.SubmissionDate = Convert.ToDateTime(reader[1].ToString());
-                        md.ServiceDate = Convert.ToDateTime(reader[2].ToString());
+                        if (reader[2].ToString() != "")
+                            md.ServiceDate = Convert.ToDateTime(reader[2].ToString(), new DateTimeFormatInfo { FullDateTimePattern = "yyyy-mm-dd" });
                         md.Status = Convert.ToChar(reader[3].ToString());
                         md.CustomerName = reader[8].ToString();
 
@@ -277,7 +280,10 @@ namespace IBITest.Layers.DAL
                         md.RequestID = String.Copy("COA" + reader[0].ToString());
                         md.RequestType = String.Copy("COA");
                         md.SubmissionDate = Convert.ToDateTime(reader[1].ToString());
-                        md.ServiceDate = Convert.ToDateTime(reader[2].ToString());
+                       
+                        if(reader[2].ToString() != null)
+                            md.ServiceDate = Convert.ToDateTime(reader[2].ToString());
+                       
                         md.Status = Convert.ToChar(reader[3].ToString());
                         md.CustomerName = reader[6].ToString();
 
@@ -318,7 +324,9 @@ namespace IBITest.Layers.DAL
                         md.RequestID = String.Copy("AFL" + reader[0].ToString());
                         md.RequestType = String.Copy("AFL");
                         md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
-                        md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
+
+                        if (reader[2].ToString() != null)
+                               md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
                         md.Status = Convert.ToChar(reader[5].ToString());
                         md.CustomerName = reader[12].ToString();
 
@@ -360,7 +368,9 @@ namespace IBITest.Layers.DAL
                         md.RequestID = "NAC" + reader[0].ToString();
                         md.RequestType = String.Copy("NAC");
                         md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
-                        md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
+
+                        if (reader[2].ToString() != null)
+                             md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
                         md.Status = Convert.ToChar(reader[5].ToString());
                         md.CustomerName = reader[7].ToString();
 
