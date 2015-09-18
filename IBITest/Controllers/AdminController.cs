@@ -71,11 +71,11 @@ namespace IBITest.Controllers
         {
             return;
         }
-        public void RejectTOC(List<int> approveRequestList)
+        public void RejectTOC(List<int> rejectRequestList)
         {
             return;
         }
-        public void RejectCOA(List<int> approveRequestList)
+        public void RejectCOA(List<int> rejectRequestList)
         {
             return;
         }

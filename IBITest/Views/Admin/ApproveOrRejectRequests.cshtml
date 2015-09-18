@@ -124,7 +124,7 @@
             //call method
             //verify list of requestd's
             //change their satus in db
-            alert("Confirm!! You chosen " + selected + " requests to approve");
+            alert("Confirm!! You chosen " + selected + " requests to reject");
             //alert("requestid's are "+$("#mytable input:checked")[0].value)
             var selected = [];
             $('#mytable input:checked').each(function () {
@@ -176,4 +176,4 @@
 <table border="1" id="mytable">
 </table>
 <button onclick="Approve()">Approve</button>
-<button>Reject</button>
+<button onclick="Reject()">Reject</button>
