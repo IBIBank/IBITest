@@ -204,6 +204,7 @@
     <Compile Include="Models\BranchDetails.cs" />
     <Compile Include="Models\BranchDetailsViewModel.cs" />
     <Compile Include="Models\BranchMiniViewModel.cs" />
+    <Compile Include="Models\BranchTransferViewModel.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
@@ -351,6 +352,8 @@
     <Content Include="Views\Admin\AddBranch.cshtml" />
     <Content Include="Views\Customer\FinishRegistration.cshtml" />
     <Content Include="Views\Customer\CreateNewAccount.cshtml" />
+    <Content Include="Views\Admin\ApproveOrRejectRequests.cshtml" />
+    <Content Include="Views\Admin\ViewOrUpdateBranchDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

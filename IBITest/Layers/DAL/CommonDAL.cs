@@ -139,6 +139,16 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO Customer (CustomerID, CustomerName,DOB, UserID, Password, PermanentAddress, CommunicationAddress, ContactNumber, Email, TransactionPassword, Token) VALUES('1','Customer','2015/12/12','customer1','customer1','PAddress','CAddress','11','e@m.l','tpassword','IBI1234')");
                 rowaff = command.ExecuteNonQuery();
 
+                command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO BranchTransferRequest (RequestID, SubmissionDate,Status, AccountNumber, FromBranch, ToBranch, CustomerID) VALUES(1,'2015/12/12','T',1,1,2,1)");
+                rowaff = command.ExecuteNonQuery();
+                command.CommandText = String.Copy("INSERT INTO BranchTransferRequest (RequestID, SubmissionDate,Status, AccountNumber, FromBranch, ToBranch, CustomerID) VALUES(2,'2015/12/12','T',2,2,1,2)");
+                rowaff = command.ExecuteNonQuery();
+                command.CommandText = String.Copy("INSERT INTO BranchTransferRequest (RequestID, SubmissionDate,Status, AccountNumber, FromBranch, ToBranch, CustomerID) VALUES(3,'2015/12/12','S',3,3,1,3)");
+                rowaff = command.ExecuteNonQuery();
+
                 if(rowaff==0)
                     System.Windows.Forms.MessageBox.Show(rowaff.ToString());
 
