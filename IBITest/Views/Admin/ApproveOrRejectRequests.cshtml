@@ -5,10 +5,8 @@
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
-    function getListOfRequests(requestType)
-    {
-        if (requestType == "")
-        {
+    function getListOfRequests(requestType) {
+        if (requestType == "") {
             alert("You selectd request type none");
             return;
         }
@@ -24,11 +22,14 @@
             cache: false,
             type: "POST",
             success: function (data) {
-                alert("input is "+requestType)
-                alert(data.length);
-                alert(data[0].requestID + " " + data[0].customerID+" "+data[0].toBranch);
-                html(data);
-                
+                //alert("input is "+requestType)
+                //alert(data.length);
+                //alert(data[0].requestID + " " + data[0].customerID+" "+data[0].toBranch);
+                $("#mytable").empty();
+                $("#mytable").append('<tr><th>Select</th><th>RequestID</th><th>CustomerID</th><th>AccountNumber</th><th>FromBranch</th><th>ToBranch</th></tr>');
+                for (var x = 0; x < data.length; x++) {
+                    $("#mytable").append('<tr><td><input type="checkbox" name="Select" value="' + data[x].requestID + '"/></td><td>' + data[x].requestID + '</td><td>' + data[x].customerID + '</td><td>' + data[x].accountNumber + '</td><td>' + data[x].fromBranch + '</td><td>' + data[x].toBranch + '</td></tr>');
+                }
                 //$("#branchDropDown").empty();
 
                 //$("#branchDropDown").append("<option value = '0' >" + "--Select--" + "</option>");
@@ -41,13 +42,49 @@
                 alert("error : " + reponse);
             }
         });
+    }
+    function Approve() {
+        var selected = $("#mytable input:checked").length;
+        //alert("No of checkbox selected = " + selected);
+        if (selected == 0) {
+            return;
+        }
+        else {
+            //alert confirm
+            //remove from list
+            //call method
+            //verify list of requestd's
+            //change their satus in db
+            alert("Confirm You chosen " + selected + " requests");
+            //alert("requestid's are "+$("#mytable input:checked")[0].value)
+            var selected = [];
+            $('#mytable input:checked').each(function () {
+                selected.push($(this).attr('value'));
+            });
+            //alert("requestid's are " + $("#mytable input:checked").val())
+            alert(selected)
+            $.ajax({
+                url: "/Admin/Approve",
+                data: { approveRequestList: selected },
+                cache: false,
+                type: "POST",
+                traditional: true,
+                success: function (data) {
 
+                    alert("Approved successfully" + data)
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
 
-
+        }
     }
 </script>
 <h2>Approve Or Reject Requests</h2>
 <label>Request type</label>
 @Html.DropDownList("RequestTypeDropdownList", new SelectList(ViewBag.requestTypeList, "Value", "Text"),"--Select--", new{@id="dropdown",@onchange="javascript:getListOfRequests(this.value)" })
-
-<div id="test"></div>
+<table border="1" id="mytable">
+</table>
+<button onclick="Approve()">Approve</button>
+<button>Reject</button>
