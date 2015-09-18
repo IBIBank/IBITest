@@ -204,5 +204,42 @@ namespace IBITest.Layers.DAL
         }
 
 
+
+
+
+        public List<ClosureOfAccountAdminView> GetClosureOfAccountRequests()
+        {
+            List<ClosureOfAccountAdminView> RequestList = new List<ClosureOfAccountAdminView>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT RequestID, CustomerID, AccountNumber FROM BranchTransferRequest WHERE Status = 'T' ", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        ClosureOfAccountAdminView ClosureOfAccountRequest = new ClosureOfAccountAdminView();
+
+                        ClosureOfAccountRequest.requestID = Convert.ToInt16(reader[0]);
+                        ClosureOfAccountRequest.customerID = Convert.ToInt64(reader[1]);
+                        ClosureOfAccountRequest.accountNumber = Convert.ToInt64(reader[2]);
+
+                        RequestList.Add(ClosureOfAccountRequest);
+                    }
+                }
+
+                reader.Close();
+            }
+
+            return RequestList;
+        }
+
+
+
     }
 }
