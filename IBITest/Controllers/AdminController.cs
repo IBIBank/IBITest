@@ -63,17 +63,20 @@ namespace IBITest.Controllers
             List<ClosureOfAccountAdminView> obj = objAdminDal.GetClosureOfAccountRequests();
             return Json(obj);
         }
-        public void Approve(List<int> approveRequestList)
+        public void ApproveTOC(List<int> approveRequestList)
         {
-            MessageBox.Show("In approve method");
-            MessageBox.Show(approveRequestList[0].ToString());
-            //MessageBox.Show(((int)approveRequestList[0]).ToString() + " " + ((int)approveRequestList[1]).ToString());
-            //string r = "";
-            //for (int i = 0; i < approveRequestList.Length; i++)
-            //{
-            //    r = approveRequestList[i] + ",";
-            //}
-            //MessageBox.Show(r);
+           return;
+        }
+        public void ApproveCOA(List<int> approveRequestList)
+        {
+            return;
+        }
+        public void RejectTOC(List<int> approveRequestList)
+        {
+            return;
+        }
+        public void RejectCOA(List<int> approveRequestList)
+        {
             return;
         }
 
