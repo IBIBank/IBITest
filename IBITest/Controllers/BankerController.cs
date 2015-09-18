@@ -61,8 +61,46 @@ namespace IBITest.Controllers
             return View(new GenerateTokenViewModel());
         }
 
-        
+        [HttpGet]
+        public ActionResult Requests()
+        {
+            BankerDAL obj = new BankerDAL();
+            List<RequestViewModel> mdL = new List<RequestViewModel>();
+            
+            mdL = obj.GetAllRequests();
+            ViewBag.daa = mdL;
+            return View(mdL);
+        }
 
+        [HttpPost]
+        public ActionResult GetRequestsByType(int typeid)
+        {
+            BankerDAL obj = new BankerDAL();
+            List<RequestViewModel> md = new List<RequestViewModel>();
+
+            switch (typeid)
+            {
+                case 1:
+                    md = obj.GetNewAccountRequests();
+                    break;
+
+                case 2:
+                    md = obj.GetLoanRequests();
+                    break;
+
+                case 3:
+                    md = obj.GetBranchTransferRequests();
+                    break;
+
+                case 4:
+                    md = obj.GetClosingRequests();
+                    break;
+            }
+
+            System.Windows.Forms.MessageBox.Show(typeid.ToString());
+
+            return Json(md);
+        }
 
     }
 }

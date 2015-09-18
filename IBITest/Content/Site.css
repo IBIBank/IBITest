@@ -778,3 +778,7 @@ tr.pager td {
     border-width: medium;
     width:400px;
 }
+
+.radiolist {
+    width: 20px;
+}

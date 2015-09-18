@@ -1,0 +1,129 @@
+﻿@model List<IBITest.Models.RequestViewModel>
+
+
+@{
+    ViewBag.Title = "Requests";
+    Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
+}
+
+@using IBITest.Models
+
+
+<h3>View or Approve/Transfer/Reject Requests</h3>
+<br />
+
+
+
+<input type="radio" class="radiolist" onchange="fun(this.value)" value="1"  id="Radio1" name="OptionList" checked   />View Requests
+<input type="radio" class="radiolist" onchange="fun(this.value)" value="2" id="Radio2" name="OptionList" />Approve/Transfer/Reject Requests
+
+
+                                                                 
+<p id="Label">
+    Request Status
+</p>
+
+<input type="hidden" value ="@Model" id ="data"/>
+
+
+
+<p id="list">    
+    <select onchange ="FilterRequests(this.value)" id ="selectlist">
+        <option value ="1">All</option>
+        <option value ="2">Pending</option>
+        <option value ="3">Approved</option>
+        <option value ="4">Rejected</option>
+        <option value ="5">Transferred</option>
+    </select>    
+</p>
+
+
+<table id ="mytable" class ="display">
+     <thead>
+         <tr>
+             <th>RequestID</th>
+             <th>Request Type</th>
+             <th>Customer Name</th>
+             <th>Submission Date</th>
+             <th>Service Date</th>
+             <th>Status</th>
+         </tr>
+     </thead>
+
+     <tbody>         
+        @{
+            foreach(var v in Model)
+            {
+                <tr>
+                    <td>@(v.RequestID) </td>
+                    <td>@(v.RequestType) </td>
+                    <td>@(v.CustomerName) </td>
+                    <td>@(v.SubmissionDate) </td>
+                    <td>@(v.ServiceDate) </td>
+                    <td>@(v.Status) </td>
+                </tr>
+            }        
+        }
+     </tbody>
+
+ </table>
+
+
+<script>        
+    
+    function FilterRequests(SelectValue) {
+        alert("yessss");
+    }
+
+    function ProcessRequests(SelectValue) {
+        var url = "/Banker/GetRequestsByType/";
+        alert("Processing...");
+        $.ajax({
+            url: url,
+            data: { typeid: SelectValue },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                $('#mytable tbody > tr').remove();
+                var trhtml = "";
+                for (var x = 0; x < data.length; x++) {
+                    trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</tr>";
+                }
+                $('#mytable').append(trhtml);
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+
+    function fun(i) {
+        if (i == 1) {
+            $('#mytable').remove();
+            $('#Label').text("Request Status");
+            $("#list").find('option').remove().end();
+            $("#list").find('select').append("<option value = '1'>All </option>");
+            $("#list").find('select').append("<option value = '2'>Pending </option>");
+            $("#list").find('select').append("<option value = '3'>Approved </option>");
+            $("#list").find('select').append("<option value = '4'>Rejected </option>");
+            $("#list").find('select').append("<option value = '5'>Transferred </option>");
+            $("#selectlist").attr("onchange", "javascript:FilterRequests(this.value)");
+        }
+
+        else {
+            $('#mytable').remove();
+            $('#Label').text("Pending Request Type");
+            $("#list").find('option').remove().end();
+            $("#list").find('select').append("<option value = '1'>New Account Creation</option>");
+            $("#list").find('select').append("<option value = '2'>Apply For Loan</option>");
+            $("#list").find('select').append("<option value = '3'>Transfer of Account </option>");
+            $("#list").find('select').append("<option value = '4'>Closing of Account </option>");
+            $("#selectlist").attr("onchange", "javascript:ProcessRequests(this.value)");
+        }
+                   
+    }
+       
+
+   
+</script>
+

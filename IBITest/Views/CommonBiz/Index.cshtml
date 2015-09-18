@@ -28,6 +28,7 @@
                     $("#ddlbranch").append("<option value = '0' >" + "--Select--" + "</option>");
                     for (var x = 0; x < data.length; x++) {
                         $("#ddlbranch").append("<option value = '" + data[x].Value + "' >" +data[x].Text + " </option>");
+                        
                     }
                 },
                 error: function (reponse) {

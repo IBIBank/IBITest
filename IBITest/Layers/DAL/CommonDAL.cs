@@ -124,6 +124,18 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','banker2','banker2','banker')");
                 rowaff = command.ExecuteNonQuery();
 
+                command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("DELETE FROM ClosingRequest");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("DELETE FROM LoanRequest");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("DELETE FROM NewAccountRequest");
+                rowaff = command.ExecuteNonQuery();
+
                 command.CommandText = String.Copy("DELETE FROM Branch");
                 rowaff = command.ExecuteNonQuery();
 
@@ -137,6 +149,12 @@ namespace IBITest.Layers.DAL
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("INSERT INTO Customer (CustomerID, CustomerName,DOB, UserID, Password, PermanentAddress, CommunicationAddress, ContactNumber, Email, TransactionPassword, Token) VALUES('1','Customer','2015/12/12','customer1','customer1','PAddress','CAddress','11','e@m.l','tpassword','IBI1234')");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('1','1','1','2015/9/17', '2015/2/2', 'P', 'Customer')");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('2','2','2','2016/9/17', '2016/2/2', 'G', 'Customer')");
                 rowaff = command.ExecuteNonQuery();
 
                 if(rowaff==0)
