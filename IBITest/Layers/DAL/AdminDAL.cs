@@ -241,5 +241,91 @@ namespace IBITest.Layers.DAL
 
 
 
+
+        public bool ApproveAccountClosingRequest(List<ClosureOfAccountAdminView> ClosingList)
+        {            
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                foreach(var v in ClosingList)
+                {
+                    SqlCommand command = new SqlCommand(String.Format( "UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ",v.accountNumber.ToString() ), connection);
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE ClosingRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ",DateTime.Now.ToString(),v.requestID);
+                    command.ExecuteNonQuery();                    
+                }
+                
+            }
+
+            return true;
+        }
+
+
+
+        public bool ApproveAccountTransferRequest(List<TranferOfAccountAdminView> ClosingList)
+        {
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                foreach (var v in ClosingList)
+                {
+                    SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET BranchCode = {0} WHERE AccountNumber = {1} ", v.toBranch.ToString(),v.accountNumber.ToString()), connection);
+                    command.ExecuteNonQuery();
+
+                    command.CommandText = String.Format("UPDATE BranchTransferRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.requestID);
+                    command.ExecuteNonQuery();
+                }
+
+            }
+
+            return true;
+        }
+
+
+
+
+        public bool RejectAccountClosingRequest(List<ClosureOfAccountAdminView> ClosingList)
+        {
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                foreach (var v in ClosingList)
+                {
+                    SqlCommand command = new SqlCommand(String.Format("UPDATE ClosingRequest SET Status = 'R', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.requestID), connection);
+                    command.ExecuteNonQuery();                    
+                }
+
+            }
+
+            return true;
+        }
+
+
+
+
+        public bool RejectAccountTransferRequest(List<TranferOfAccountAdminView> ClosingList)
+        {
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                foreach (var v in ClosingList)
+                {
+                    SqlCommand command = new SqlCommand(String.Format("UPDATE BranchTransferRequest SET Status = 'R', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.requestID), connection);
+                    command.ExecuteNonQuery();
+                }
+
+            }
+
+            return true;
+        }
+
+
+
+
     }
 }

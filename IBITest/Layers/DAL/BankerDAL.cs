@@ -218,7 +218,6 @@ namespace IBITest.Layers.DAL
 
         public List<RequestViewModel> GetBranchTransferRequests()
         {
-            StringComparison com;
             List<RequestViewModel> mdL = null;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
@@ -281,7 +280,7 @@ namespace IBITest.Layers.DAL
                         md.RequestType = String.Copy("COA");
                         md.SubmissionDate = Convert.ToDateTime(reader[1].ToString());
                        
-                        if(reader[2].ToString() != null)
+                        if(reader[2].ToString() != "")
                             md.ServiceDate = Convert.ToDateTime(reader[2].ToString());
                        
                         md.Status = Convert.ToChar(reader[3].ToString());
@@ -325,7 +324,7 @@ namespace IBITest.Layers.DAL
                         md.RequestType = String.Copy("AFL");
                         md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
 
-                        if (reader[2].ToString() != null)
+                        if (reader[2].ToString() != "")
                                md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
                         md.Status = Convert.ToChar(reader[5].ToString());
                         md.CustomerName = reader[12].ToString();
@@ -369,7 +368,7 @@ namespace IBITest.Layers.DAL
                         md.RequestType = String.Copy("NAC");
                         md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
 
-                        if (reader[2].ToString() != null)
+                        if (reader[2].ToString() != "")
                              md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
                         md.Status = Convert.ToChar(reader[5].ToString());
                         md.CustomerName = reader[7].ToString();
