@@ -242,8 +242,9 @@ namespace IBITest.Layers.DAL
 
 
 
-        public bool ApproveAccountClosingRequest(List<ClosureOfAccountAdminView> ClosingList)
+        public bool ApproveAccountClosingRequest(List<int> ClosingList)
         {            
+
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
                 connection.Open();
