@@ -169,7 +169,7 @@ namespace IBITest.Layers.DAL
         }
 
 
-        List<TranferOfAccountAdminView> GetTransferAccountRequests()
+        public List<TranferOfAccountAdminView> GetTransferAccountRequests()
         {
             List<TranferOfAccountAdminView> RequestList = new List<TranferOfAccountAdminView>();
 
@@ -187,7 +187,11 @@ namespace IBITest.Layers.DAL
                     {
                         TranferOfAccountAdminView BranchTransferRequest = new TranferOfAccountAdminView();
 
-
+                        BranchTransferRequest.requestID = Convert.ToInt16(reader[0]);
+                        BranchTransferRequest.customerID = Convert.ToInt64(reader[7]);
+                        BranchTransferRequest.accountNumber = Convert.ToInt64(reader[4]);
+                        BranchTransferRequest.fromBranch = Convert.ToInt64(reader[5]);
+                        BranchTransferRequest.toBranch = Convert.ToInt64(reader[6]);
 
                         RequestList.Add(BranchTransferRequest);
                     }
