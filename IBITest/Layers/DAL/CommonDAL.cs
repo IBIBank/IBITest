@@ -80,21 +80,26 @@ namespace IBITest.Layers.DAL
         {
             string res;
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand(String.Format( "SELECT Role FROM UserRoles WHERE UserID = '{0}' AND Password = '{1}'",  UserID,Password), cn);
+            SqlCommand cmd = new SqlCommand(String.Format( "SELECT Password, Role FROM UserRoles WHERE UserID = '{0}' ",  UserID), cn);
             cn.Open();
             SqlDataReader rd = cmd.ExecuteReader();
 
             rd.Read();
 
-            
+
 
             if (!rd.HasRows)
             {
-                res =  String.Copy("Invalid");
+                res = String.Copy("Invalid");
             }
             else
-                res = String.Copy(rd[0].ToString());
+            {
+                if(rd[0].ToString().Equals(Password))
+                    res = String.Copy(rd[1].ToString());
 
+                else
+                    res = String.Copy("Invalid");
+            }
             cn.Close();
 
             return res;
@@ -112,7 +117,7 @@ namespace IBITest.Layers.DAL
                 int rowaff = command.ExecuteNonQuery();
 
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','admin','admin','admin')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','admin')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker1','banker1','banker')");
@@ -164,7 +169,7 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('1','1','1','2015/9/17', '2015/2/2', 'S', 'Customer')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('2','2','2','2016/9/17', '2016/2/2', 'A', 'Customer')");
+                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('2','2','2','2016/9/17', ' "+ DateTime.Now.ToString() +"', 'A', 'Customer')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM ClosingRequest");

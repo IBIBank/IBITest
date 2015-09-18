@@ -113,6 +113,10 @@ namespace IBITest.Controllers
         // GET: /Account/Login
         public ActionResult Login()
         {
+            if (Session["User"] != null)
+            {
+                return View("InvalidSession");
+            }
             return View();
         }
         //
@@ -123,8 +127,10 @@ namespace IBITest.Controllers
         {
             CommonDAL obj = new CommonDAL();
             string role = obj.CheckRole(model.UserName, model.Password);
-            //MessageBox.Show(role);
-            //MessageBox.Show(role.Length.ToString());
+
+
+            if (!ModelState.IsValid)
+                return View(model);
 
             if (role.Equals("Invalid"))
             {
