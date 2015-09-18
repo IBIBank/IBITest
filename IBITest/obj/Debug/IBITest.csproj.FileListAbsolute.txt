@@ -247,3 +247,4 @@ C:\Users\akale\Documents\IBITest\IBITest\obj\Debug\IBITest.csprojResolveAssembly
 C:\Users\akale\Documents\IBITest\IBITest\obj\Debug\IBITest.dll
 C:\Users\akale\Documents\IBITest\IBITest\obj\Debug\IBITest.pdb
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\obj\Debug\IBITest.csprojResolveAssemblyReference.cache
+C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\Content\Chrysanthemum.jpg
