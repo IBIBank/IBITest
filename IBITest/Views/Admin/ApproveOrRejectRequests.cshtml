@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IBITest.Models.TranferOfAccountAdminView
+@{
     ViewBag.Title = "ApproveOrRejectRequests";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
@@ -12,11 +13,34 @@
             return;
         }
         alert("You selectd request type " + requestType);
-        //Call some function to get values
+        //Call some function
+        //get requests
         // with those values populate table
         //then add select option
         //on approve call some other function
+        $.ajax({
+            url: "/Admin/GetTransferOfAccountAdminRequest",
+            data: { requestType: requestType },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                alert("input is "+requestType)
+                alert(data.length);
+                alert(data[0].requestID + " " + data[0].customerID+" "+data[0].toBranch);
+                html(data);
+                
+                //$("#branchDropDown").empty();
 
+                //$("#branchDropDown").append("<option value = '0' >" + "--Select--" + "</option>");
+                //for (var x = 0; x < data.length; x++) {
+                //    $("#branchDropDown").append("<option value = '" + data[x].Value + "' >" + data[x].Text + " </option>");
+                //}
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
 
 
 
@@ -26,3 +50,4 @@
 <label>Request type</label>
 @Html.DropDownList("RequestTypeDropdownList", new SelectList(ViewBag.requestTypeList, "Value", "Text"),"--Select--", new{@id="dropdown",@onchange="javascript:getListOfRequests(this.value)" })
 
+<div id="test"></div>

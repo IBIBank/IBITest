@@ -211,6 +211,7 @@
     <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\RequestViewModel.cs" />
     <Compile Include="Models\TokenInfo.cs" />
+    <Compile Include="Models\TranferOfAccountAdminView.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -356,6 +357,9 @@
     </Content>
     <Content Include="Views\Banker\ViewRequestPartial.cshtml" />
     <Content Include="Views\Banker\Requests.cshtml" />
+    <Content Include="Views\Customer\CreateNewAccount.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
