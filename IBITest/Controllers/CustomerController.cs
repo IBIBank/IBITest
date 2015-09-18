@@ -51,6 +51,7 @@ namespace IBITest.Controllers
             model.CustomerID = 1001;
             return View(model);
         }
+
         [HttpPost]
         public string CreateNewAccount( NewAccountRequestView model)
         {
