@@ -15,6 +15,8 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
+            ViewBag.BranchTransferRequests = 7;
+            ViewBag.AccountClosureRequests = 0;
             return View();
         }
         public ActionResult AddBranch()
@@ -34,6 +36,22 @@ namespace IBITest.Controllers
             obj.AddBranch(model);
             return View("Dashboard");
         }
+        public ActionResult ViewOrUpdateBranchDetails()
+        {
+            return View();
+        }
+        public ActionResult ApproveOrRejectRequests()
+        {
+
+            List<SelectListItem> obj = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = "Transfer of Account Request",Value="TOC"},
+                new SelectListItem(){Text = "Closure of Account",Value="COA"}
+            };
+            ViewBag.requestTypeList = obj;
+            return View();
+        }
+
 
     }
 }

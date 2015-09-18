@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "ApproveOrRejectRequests";
+    Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function getListOfRequests(requestType)
+    {
+        if (requestType == "")
+        {
+            alert("You selectd request type none");
+            return;
+        }
+        alert("You selectd request type " + requestType);
+        //Call some function to get values
+        // with those values populate table
+        //then add select option
+        //on approve call some other function
+
+
+
+
+    }
+</script>
+<h2>Approve Or Reject Requests</h2>
+<label>Request type</label>
+@Html.DropDownList("RequestTypeDropdownList", new SelectList(ViewBag.requestTypeList, "Value", "Text"),"--Select--", new{@id="dropdown",@onchange="javascript:getListOfRequests(this.value)" })
+
