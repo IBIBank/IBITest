@@ -52,6 +52,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -204,11 +205,11 @@
     <Compile Include="Models\BranchDetails.cs" />
     <Compile Include="Models\BranchDetailsViewModel.cs" />
     <Compile Include="Models\BranchMiniViewModel.cs" />
-    <Compile Include="Models\BranchTransferViewModel.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
     <Compile Include="Models\NewAccountRequestView.cs" />
+    <Compile Include="Models\RequestViewModel.cs" />
     <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Models\TranferOfAccountAdminView.cs" />
     <Compile Include="Models\UserRole.cs" />
@@ -351,10 +352,14 @@
     <Content Include="Views\Banker\GenerateToken.cshtml" />
     <Content Include="Views\AddBranch.cshtml" />
     <Content Include="Views\Admin\AddBranch.cshtml" />
-    <Content Include="Views\Customer\FinishRegistration.cshtml" />
-    <Content Include="Views\Customer\CreateNewAccount.cshtml" />
-    <Content Include="Views\Admin\ApproveOrRejectRequests.cshtml" />
-    <Content Include="Views\Admin\ViewOrUpdateBranchDetails.cshtml" />
+    <Content Include="Views\Customer\FinishRegistration.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Banker\ViewRequestPartial.cshtml" />
+    <Content Include="Views\Banker\Requests.cshtml" />
+    <Content Include="Views\Customer\CreateNewAccount.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

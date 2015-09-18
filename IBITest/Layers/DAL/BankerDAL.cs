@@ -213,5 +213,237 @@ namespace IBITest.Layers.DAL
 
             return res;
         }
+
+
+        public List<RequestViewModel> GetBranchTransferRequests()
+        {
+            List<RequestViewModel> mdL = null;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM BranchTransferRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    mdL = new List<RequestViewModel>();
+                    while (reader.Read())
+                    {
+                        RequestViewModel md = new RequestViewModel();
+
+                        md.RequestID = String.Copy("TOA" + reader[0].ToString());
+                        md.RequestType = String.Copy("TOA");
+                        md.SubmissionDate = Convert.ToDateTime(reader[1].ToString());
+                        md.ServiceDate = Convert.ToDateTime(reader[2].ToString());
+                        md.Status = Convert.ToChar(reader[3].ToString());
+                        md.CustomerName = reader[8].ToString();
+
+                        mdL.Add(md);
+                    }
+                }                
+
+                reader.Close();
+            }
+
+            return mdL;            
+        }
+
+
+
+
+
+        public List<RequestViewModel> GetClosingRequests()
+        {
+            List<RequestViewModel> mdL = null;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM ClosingRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    mdL = new List<RequestViewModel>();
+                    while (reader.Read())
+                    {
+                        RequestViewModel md = new RequestViewModel();
+
+                        md.RequestID = String.Copy("COA" + reader[0].ToString());
+                        md.RequestType = String.Copy("COA");
+                        md.SubmissionDate = Convert.ToDateTime(reader[1].ToString());
+                        md.ServiceDate = Convert.ToDateTime(reader[2].ToString());
+                        md.Status = Convert.ToChar(reader[3].ToString());
+                        md.CustomerName = reader[6].ToString();
+
+                        mdL.Add(md);
+                    }
+                }
+
+                reader.Close();
+            }
+
+            return mdL;
+        }
+
+
+
+
+
+        public List<RequestViewModel> GetLoanRequests()
+        {
+            List<RequestViewModel> mdL = null;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM LoanRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+
+                    mdL = new List<RequestViewModel>();
+                    while (reader.Read())
+                    {
+                        RequestViewModel md = new RequestViewModel();
+
+                        md.RequestID = String.Copy("AFL" + reader[0].ToString());
+                        md.RequestType = String.Copy("AFL");
+                        md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
+                        md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
+                        md.Status = Convert.ToChar(reader[5].ToString());
+                        md.CustomerName = reader[12].ToString();
+
+                        mdL.Add(md);
+                    }
+                }
+
+                reader.Close();
+            }
+
+            return mdL;
+        }
+
+
+
+
+
+
+        public List<RequestViewModel> GetNewAccountRequests()
+        {
+            List<RequestViewModel> mdL = null;
+            
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM NewAccountRequest", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    mdL = new List<RequestViewModel>();
+                    while (reader.Read())
+                    {
+                        RequestViewModel md = new RequestViewModel();
+
+                        md.RequestID = "NAC" + reader[0].ToString();
+                        md.RequestType = String.Copy("NAC");
+                        md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
+                        md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
+                        md.Status = Convert.ToChar(reader[5].ToString());
+                        md.CustomerName = reader[7].ToString();
+
+                        mdL.Add(md);
+                    }
+                }
+
+                reader.Close();
+            }
+
+            return mdL;
+        }
+
+
+
+
+
+        public List<RequestViewModel> GetAllRequests()
+        {
+            char fl = 'f';
+            List<RequestViewModel> mdLA = new List<RequestViewModel>();
+
+            List<RequestViewModel> mdLtemp = null;
+
+            mdLtemp = GetLoanRequests();
+
+            if (mdLtemp != null)
+            {
+                fl = 't';
+
+                foreach (var v in mdLtemp)
+                    mdLA.Add(v);
+                mdLtemp.Clear();
+            }
+
+           
+
+            mdLtemp = GetClosingRequests();
+
+            if (mdLtemp != null)
+            {
+                fl = 't';
+
+                foreach (var v in mdLtemp)
+                    mdLA.Add(v);
+                mdLtemp.Clear();
+
+            }
+
+
+            mdLtemp = GetNewAccountRequests();
+
+            if (mdLtemp != null)
+            {
+                fl = 't';
+
+                foreach (var v in mdLtemp)
+                    mdLA.Add(v);
+                mdLtemp.Clear();
+
+            }
+
+
+            mdLtemp = GetBranchTransferRequests();
+
+            if (mdLtemp != null)
+            {
+                fl = 't';
+
+                foreach (var v in mdLtemp)
+                    mdLA.Add(v);
+                mdLtemp.Clear();
+
+            }
+
+
+            if (fl == 'f')
+                return null;
+
+            return mdLA;
+        }
+ 
+ 
+
     }
 }
