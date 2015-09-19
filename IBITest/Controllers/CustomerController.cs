@@ -48,11 +48,11 @@ namespace IBITest.Controllers
             CustomerDAL customerDALobject = new CustomerDAL();
             NewAccountRequestView model = new NewAccountRequestView();
             
-            var userID = customerDALobject.GetCustomerIDbyUserID((Session["User"] as UserRole).userID);
+            var customerID = customerDALobject.GetCustomerIDbyUserID((Session["User"] as UserRole).userID);
 
             ViewBag.cityList = obj.GetCityList();
 
-            model.CustomerID = userID;
+            model.CustomerID = customerID;
             return View(model);
         }
 
