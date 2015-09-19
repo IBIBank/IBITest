@@ -68,36 +68,89 @@
 
  </table>
 
-<img src="/Content/Chrysanthemum.jpg" alt = "Image" />    
+<img src="/Content/Chrysanthemum.jpg" alt = "Image" id="ProofImage"  />    
+<div id="divImageHolder"></div>
+
+
+
 
 <script>        
+
+    var displayImage = function (base64Data) {
+        var imag = "<img "
+                 + "src='" + "data:image/jpg;base64,"
+                 + base64Data + "'/>";
+
+        $("#divImageHolder").html(imag)
+    };
+
+    function GetProofImage(_requestID) {
+        alert(_requestID);
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "/Banker/GetProofImage",
+            data: {val: _requestID},
+            dataType: "json",
+            success: function (data) {
+                displayImage(data.base64imgage);
+            },
+            error: function (xhr) {
+                alert("Error occurred while sfsbfs loading the image. "
+                    + xhr.responseText);
+            }
+        });
+    };
+
+
+
+
+
+
     
     function FilterRequests(SelectValue) {
 
-        var url = "/Banker/GetRequestsByStatus/";
-        $.ajax({
-            url: url,
-            data: { typeid: SelectValue },
-            cache: false,
-            type: "POST",
-            success: function (data) {
-                $('#mytable tbody > tr').remove();
-                var trhtml = "";
-                for (var x = 0; x < data.length; x++) {
-                    trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td>"+  data[x].ServiceDate + "</td> <td>" + data[x].Status + "</td>  </tr>";
-                }
-                $('#mytable').append(trhtml);
-            },
-            error: function (reponse) {
-                alert("error : " + reponse);
-            }
-        });
+        if (SelectValue != 0) {
+            $('#mytable thead').remove();
 
+            $('#mytable').append(
+             "<thead>" +
+              "<tr>" +
+                  "<th>Request ID</th>" +
+                  "<th>Request Type</th>" +
+                  "<th>Customer Name</th>" +
+                  "<th>Submission Date</th>" +
+                  "<th>Service Date</th>" +
+                  "<th>Status</th>" +
+              "</tr>" +
+            "</thead>");
+
+
+            var url = "/Banker/GetRequestsByStatus/";
+            $.ajax({
+                url: url,
+                data: { typeid: SelectValue },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    $('#mytable tbody > tr').remove();
+                    var trhtml = "";
+                    for (var x = 0; x < data.length; x++) {
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td>" + data[x].ServiceDate + "</td> <td>" + data[x].Status + "</td>  </tr>";
+                    }
+                    $('#mytable').append(trhtml);
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+     
+            
 
     }
 
     function ProcessRequests(SelectValue) {
-        var url = "/Banker/GetRequestsByType/";
 
         if (SelectValue == 1 || SelectValue == 2) {
 
@@ -116,6 +169,7 @@
              "</tr>" +
            "</thead>");
 
+            var url = "/Banker/GetRequestsByType/";
 
             $.ajax({
                 url: url,
@@ -126,9 +180,9 @@
                     $('#mytable tbody > tr').remove();
                     var trhtml = "";
                     for (var x = 0; x < data.length; x++) {
-                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td> <a onclick= ' GetProofImage( " + x + "  ) '> View Proof <a> </td> <td><a href =' '> Approve <a> </td> <td><a href =' '> Reject <a> </td></tr>";
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td> <a onclick=\"GetProofImage('" + data[x].RequestID + "')\"> View Proof <a> </td> <td><a href =' '> Approve <a> </td> <td><a href =' '> Reject <a> </td></tr>";
                     }
-                    $('#mytable tbody').append(trhtml);
+                    $('#mytable').append(trhtml);
                 },
                 error: function (reponse) {
                     alert("error : " + reponse);
@@ -136,7 +190,7 @@
             });
         }
 
-        else {
+        else if(SelectValue == 3 || SelectValue == 4) {
 
             $('#mytable thead').remove();
 
@@ -152,7 +206,7 @@
              "</tr>" +
            "</thead>");
 
-
+            var url = "/Banker/GetRequestsByType/";
             $.ajax({
                 url: url,
                 data: { typeid: SelectValue },
@@ -162,9 +216,9 @@
                     $('#mytable tbody > tr').remove();
                     var trhtml = "";
                     for (var x = 0; x < data.length; x++) {
-                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td><a href =' '> Approve <a> </td> <td><a href =' '> Reject <a> </td></tr>";
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td><a href =' '> Approve </a> </td> <td><a href =' '> Reject </a> </td></tr>";
                     }
-                    $('#mytable').append(trhtml);
+                    $('#mytable ').append(trhtml);
                 },
                 error: function (reponse) {
                     alert("error : " + reponse);
@@ -192,17 +246,7 @@
             $("#list").find('select').append("<option value = '5'>Transferred </option>");
             $("#selectlist").attr("onchange", "javascript:FilterRequests(this.value)");
 
-            $('#mytable').append(
-             "<thead>" +
-              "<tr>" +
-                  "<th>Request ID</th>" +
-                  "<th>Request Type</th>" +
-                  "<th>Customer Name</th>" +
-                  "<th>Submission Date</th>" +
-                  "<th>Service Date</th>" +
-                  "<th>Status</th>" +
-              "</tr>" +
-            "</thead>");
+           
         }
 
         else {
@@ -224,19 +268,7 @@
                    
     }
 
-    function GetProofImage(val) {
-        alert("oh yeah" + val);
-
-        $.ajax({
-            type: "GET",
-            url: '/Banker/GetProof',
-            data: val,
-            datatype: "image/jpg",
-            success: function (data) {
-                         $('#CaptchaImg').attr('src', data);
-                                     }
-        });
-    }
+    
        
 
    

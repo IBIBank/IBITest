@@ -368,7 +368,7 @@ namespace IBITest.Layers.DAL
                         md.RequestType = String.Copy("NAC");
                         md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
 
-                        if (reader[2].ToString() != "")
+                        if (reader[4].ToString() != "")
                              md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
                         md.Status = Convert.ToChar(reader[5].ToString());
                         md.CustomerName = reader[7].ToString();
@@ -451,8 +451,36 @@ namespace IBITest.Layers.DAL
 
             return mdLA;
         }
- 
- 
+
+
+        public Byte[] GetProofImageByNewAccountRequestID(int requestID)
+        {            
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT AddressProof FROM NewAccountRequest WHERE RequestID = " + requestID.ToString(), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    Byte[] image = (Byte[])reader[0];
+
+                    reader.Close();
+                    return image;
+                }
+                else
+                    return null;
+
+            }
+        }
+
+
+
+
+
 
     }
 }

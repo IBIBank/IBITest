@@ -157,6 +157,29 @@ namespace IBITest.Controllers
 
             return Json(mdSorted);
         }
+
+
+        public ActionResult GetProofImage(string val)
+        {
+            int requestID;
+            BankerDAL bankerDALObj = new BankerDAL();
+
+            if (val[0] == 'N')
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+                Byte[] image = bankerDALObj.GetProofImageByNewAccountRequestID(requestID);
+
+                return Json(new { base64imgage = Convert.ToBase64String(image) }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+                Byte[] image = bankerDALObj.GetProofImageByNewAccountRequestID(requestID);
+
+                return Json(new { base64imgage = Convert.ToBase64String(image) });
+            }
+
+        }
         
     }
 }
