@@ -20,7 +20,7 @@ namespace IBITest.Controllers
             if (Session["User"] == null)
                 return RedirectToAction("Login", "CommonBiz");
             else
-                ViewBag.user = (Session["User"] as UserRole).UserID;
+                ViewBag.user = (Session["User"] as UserRole).userID;
 
             ViewBag.acctrf = bd.GetNoOfBranchTransferRequests();
             ViewBag.loan = bd.GetNoOfLoanRequests();

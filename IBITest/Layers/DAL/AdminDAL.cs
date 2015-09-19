@@ -239,20 +239,20 @@ namespace IBITest.Layers.DAL
             return RequestList;
         }
 
-
-
-        /*
+        
+        
         public bool ApproveAccountClosingRequest(List<int> ClosingList)
         {
-            List<Int64> ClosingAccountNumbersList = new List<long>();
+            List<Int64> closingAccountNumbersList = new List<long>();
          //   SqlDataReader reader = new SqlDataReader();
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
+                connection.Open();
+
                 foreach (var v in ClosingList)
                 {
                     SqlCommand command = new SqlCommand("SELECT AccountNumber FROM ClosingRequest WHERE RequestID = " + v.ToString(), connection);
-                    connection.Open();
 
                     SqlDataReader reader = command.ExecuteReader();
 
@@ -260,7 +260,7 @@ namespace IBITest.Layers.DAL
                     if (reader.HasRows)
                     {
                         reader.Read();
-                        ClosingAccountNumbersList.Add(Convert.ToInt64(reader[0]));
+                        closingAccountNumbersList.Add(Convert.ToInt64(reader[0]));
                     }
 
                     reader.Close();
@@ -276,7 +276,7 @@ namespace IBITest.Layers.DAL
 
                 foreach(var v in ClosingList)
                 {
-                    SqlCommand command = new SqlCommand(String.Format( "UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ",ClosingAccountNumbersList[pos++].ToString() ), connection);
+                    SqlCommand command = new SqlCommand(String.Format( "UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ",closingAccountNumbersList[pos++].ToString() ), connection);
                     command.ExecuteNonQuery();
 
                     command.CommandText = String.Format("UPDATE ClosingRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ",DateTime.Now.ToString(),v.ToString());
@@ -287,10 +287,10 @@ namespace IBITest.Layers.DAL
 
             return true;
         }
-        */
+        
 
 
-        public bool ApproveAccountTransferRequest(List<Int16> TransferList)
+        public bool ApproveAccountTransferRequest(List<int> TransferList)
         {
 
             List<Int64> TransferAccountNumbersList = new List<long>();

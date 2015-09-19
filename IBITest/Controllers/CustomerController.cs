@@ -45,19 +45,30 @@ namespace IBITest.Controllers
         public ActionResult CreateNewAccount()
         {
             CommonDAL obj = new CommonDAL();
-            //MessageBox.Show(obj.GetCityList()[0]);
-            ViewBag.cityList = obj.GetCityList();
+            CustomerDAL customerDALobject = new CustomerDAL();
             NewAccountRequestView model = new NewAccountRequestView();
-            model.CustomerID = 1001;
+            
+            var userID = customerDALobject.GetCustomerIDbyUserID((Session["User"] as UserRole).userID);
+
+            ViewBag.cityList = obj.GetCityList();
+
+            model.CustomerID = userID;
             return View(model);
         }
 
         [HttpPost]
         public string CreateNewAccount( NewAccountRequestView model)
         {
-            MessageBox.Show("I am post and branch is "+ model.Branch+ "city "+model.City);
-            return "Done";
+            CustomerDAL customerDALobject = new CustomerDAL();
+
+            if (customerDALobject.AddNewAccountRequest(model))
+                return "Request Submitted. Thank You !";
+            else
+                return "Oops... Error in submitting request.";
         }
+
+
+
         public JsonResult GetBranchesInCity(string cityName)
         {
             List<BranchMiniViewModel> bmvm = new List<BranchMiniViewModel>();

@@ -147,7 +147,7 @@ namespace IBITest.Controllers
                 //return RedirectToAction("Login");
             }
             
-            UserRole ur = new UserRole { UserID = model.UserName, Role = role};
+            UserRole ur = new UserRole {userID = model.UserName, role = role};
 
             Session["User"] = ur;
 
