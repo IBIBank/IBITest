@@ -45,10 +45,9 @@ namespace IBITest.Controllers
         public ActionResult CreateNewAccount()
         {
             CommonDAL obj = new CommonDAL();
-            CustomerDAL customerDALobject = new CustomerDAL();
             NewAccountRequestView model = new NewAccountRequestView();
             
-            var customerID = customerDALobject.GetCustomerIDbyUserID((Session["User"] as UserRole).userID);
+            var customerID = (Session["User"] as UserRole).customerID;
 
             ViewBag.cityList = obj.GetCityList();
 

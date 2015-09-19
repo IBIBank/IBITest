@@ -148,6 +148,10 @@ namespace IBITest.Controllers
             }
             
             UserRole ur = new UserRole {userID = model.UserName, role = role};
+            
+            
+            if(role.Equals("Customer"))
+                ur.customerID = (new CustomerDAL()).GetCustomerIDbyUserID(model.UserName);
 
             Session["User"] = ur;
 
