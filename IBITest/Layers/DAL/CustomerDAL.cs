@@ -203,7 +203,10 @@ namespace IBITest.Layers.DAL
                 {
                     while (reader.Read())
                     {
-                        
+                        account.accountNumber = Convert.ToInt64(reader[0]);
+                        account.balance = Convert.ToDecimal(reader[1]);
+
+                        accountsList.Add(account);
                     }
                     reader.Close();
                 }
