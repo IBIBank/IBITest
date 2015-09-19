@@ -371,6 +371,10 @@
     <Content Include="Views\CommonBiz\InvalidSession.cshtml" />
     <Content Include="Views\Customer\MiniDetailedstatements.cshtml" />
     <Content Include="Views\Customer\AddPayee.cshtml" />
+    <Content Include="Views\Customer\RequestForAccountTransfer.cshtml" />
+    <Content Include="Views\Customer\TransferFunds.cshtml" />
+    <Content Include="Views\Customer\RequestClosureOfAccount.cshtml" />
+    <Content Include="Views\Customer\ViewRequestStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

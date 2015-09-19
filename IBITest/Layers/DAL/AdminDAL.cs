@@ -13,31 +13,41 @@ namespace IBITest.Layers.DAL
     {
         public int GetNoOfAccTransferReq()
         {
+            int numberOfRequests;
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
 
-            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM NewAccountRequest ", cn);
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM BranchTransferRequest WHERE Status = 'T' ", cn);
             cn.Open();
 
             SqlDataReader rd = cmd.ExecuteReader();
+
+       
+
             rd.Read();
+
+            numberOfRequests = Convert.ToInt16(rd[0]);
+            rd.Close();
             cn.Close();
-            return Convert.ToInt16(rd[0]);
+            return numberOfRequests;
 
         }
 
 
         public int GetNoOfAccClosureferReq()
         {
+            int numberOfRequests;
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
 
-            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM ClosingRequest ", cn);
+            SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM ClosingRequest WHERE Status = 'T' ", cn);
             cn.Open();
 
             SqlDataReader rd = cmd.ExecuteReader();
             rd.Read();
 
+            numberOfRequests = Convert.ToInt16(rd[0]);
+
             cn.Close();
-            return Convert.ToInt16(rd[0]);
+            return numberOfRequests;
         }
 
         public bool IsUniqueBranchLogInID(string BranchLogInID)
