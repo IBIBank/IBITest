@@ -203,7 +203,10 @@ namespace IBITest.Layers.DAL
                 {
                     while (reader.Read())
                     {
-                        
+                        account.accountNumber = Convert.ToInt64(reader[0]);
+                        account.balance = Convert.ToDecimal(reader[1]);
+
+                        accountsList.Add(account);
                     }
                     reader.Close();
                 }
@@ -211,6 +214,209 @@ namespace IBITest.Layers.DAL
 
             return accountsList;
         }
+
+
+
+        public int GetNoOfApprovedRequestsByCustomerID(long customerID)
+        {
+            int numberOfRequests=0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                // Transfer requests
+                SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(*) FROM BranchTransferRequest WHERE CustomerID = {0} AND Status = 'A' ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)                    
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Closure requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM ClosingRequest WHERE CustomerID = {0} AND Status = 'A' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Loan requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM LoanRequest WHERE CustomerID = {0} AND Status = 'A' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // New Account requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM NewAccountRequest WHERE CustomerID = {0} AND Status = 'A' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+            }
+            
+            return numberOfRequests;
+        }
+
+
+
+
+        public int GetNoOfRejectedRequestsByCustomerID(long customerID)
+        {
+            int numberOfRequests = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                // Transfer requests
+                SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(*) FROM BranchTransferRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Closure requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM ClosingRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Loan requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM LoanRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // New Account requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM NewAccountRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+            }
+
+            return numberOfRequests;
+        }
+
+
+
+        public int GetNoOfPendingRequestsByCustomerID(long customerID)
+        {
+            int numberOfRequests = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                // Transfer requests
+                SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(*) FROM BranchTransferRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Closure requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM ClosingRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Loan requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM LoanRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // New Account requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM NewAccountRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+            }
+
+            return numberOfRequests;
+        }
+
+
+
+
 
     }
 }

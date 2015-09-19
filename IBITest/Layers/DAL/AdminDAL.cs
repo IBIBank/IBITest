@@ -293,8 +293,8 @@ namespace IBITest.Layers.DAL
         public bool ApproveAccountTransferRequest(List<int> TransferList)
         {
 
-            List<Int64> TransferAccountNumbersList = new List<long>();
-            List<Int64> TransferToAccountNumbersList = new List<long>();
+            List<long> TransferAccountNumbersList = new List<long>();
+            List<long> TransferToAccountNumbersList = new List<long>();
 
          //   SqlDataReader reader;
 
