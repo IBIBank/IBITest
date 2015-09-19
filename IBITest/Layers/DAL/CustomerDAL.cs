@@ -415,7 +415,80 @@ namespace IBITest.Layers.DAL
         }
 
 
+        public AddPayeeViewModel ValidatePayeeAccountNumber(long payeeAccountNumber)
+        {
+            AddPayeeViewModel payeeDetails = new AddPayeeViewModel();
+            long customerID, branchCode;
 
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT CustomerID, BranchCode FROM Account WHERE AccountNumber = " + payeeAccountNumber.ToString(), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+                else
+                {
+                    reader.Read();
+                    customerID = Convert.ToInt64(reader[0]);
+                    branchCode = Convert.ToInt64(reader[1]);
+
+                    reader.Close();
+                }
+
+                command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = " + customerID.ToString());
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                payeeDetails.payeeName = reader[0].ToString();
+
+                command.CommandText = String.Format("SELECT BranchName FROM Branch WHERE BranchCode = " + branchCode.ToString() );
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                payeeDetails.branchName = reader[0].ToString();
+                payeeDetails.payeeAccountNumber = payeeAccountNumber;                
+            }
+
+            return payeeDetails;
+        }
+
+
+
+        public bool AddPayee(AddPayeeViewModel payeeDetails, long customerID)
+        {
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                int payeeID;
+                SqlCommand command = new SqlCommand("SELECT MAX(PayeeID) FROM Payee", connection);
+                connection.Open();
+
+                SqlDataReader rd = command.ExecuteReader();
+
+                if (rd.HasRows)
+                {
+                    rd.Read();
+                    payeeID = Convert.ToInt16(rd[0]) + 1;
+                }
+                else
+                    payeeID = 1;
+                
+                rd.Close();
+
+                command.CommandText = String.Format("INSERT INTO Payee VALUES('{0}', '{1}', '{2}', '{3}') ", payeeID, payeeDetails.payeeNickName, customerID, payeeDetails.payeeAccountNumber);
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+            return result;
+        }
 
 
     }
