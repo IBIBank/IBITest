@@ -67,20 +67,32 @@ namespace IBITest.Controllers
             List<ClosureOfAccountAdminView> obj = objAdminDal.GetClosureOfAccountRequests();
             return Json(obj);
         }
-        public void ApproveTOC(List<int> approveRequestList)
+        public void ApproveTOC(int[] approveRequestList)
         {
-           return;
-        }
-        public void ApproveCOA(List<int> approveRequestList)
-        {
+            List<int> approvedRequests = approveRequestList.ToList<int>();
+            AdminDAL objAdminDAL = new AdminDAL();
+            objAdminDAL.ApproveAccountTransferRequest(approvedRequests);
             return;
         }
-        public void RejectTOC(List<int> rejectRequestList)
+        public void ApproveCOA(int[] approveRequestList)
         {
+            List<int> approvedRequests = approveRequestList.ToList<int>();
+            AdminDAL objAdminDAL = new AdminDAL();
+            objAdminDAL.ApproveAccountClosingRequest(approvedRequests);
             return;
         }
-        public void RejectCOA(List<int> rejectRequestList)
+        public void RejectTOC(int[] rejectRequestList)
         {
+            List<int> rejectRequests = rejectRequestList.ToList<int>();
+            AdminDAL objAdminDAL = new AdminDAL();
+            objAdminDAL.RejectAccountTransferRequest(rejectRequests);
+            return;
+        }
+        public void RejectCOA(int[] rejectRequestList)
+        {
+            List<int> rejectRequests = rejectRequestList.ToList<int>();
+            AdminDAL objAdminDAL = new AdminDAL();
+            objAdminDAL.RejectAccountClosingRequest(rejectRequests);
             return;
         }
 

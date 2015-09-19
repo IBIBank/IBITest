@@ -249,10 +249,11 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
+                connection.Open();
+
                 foreach (var v in ClosingList)
                 {
                     SqlCommand command = new SqlCommand("SELECT AccountNumber FROM ClosingRequest WHERE RequestID = " + v.ToString(), connection);
-                    connection.Open();
 
                     SqlDataReader reader = command.ExecuteReader();
 
@@ -290,7 +291,7 @@ namespace IBITest.Layers.DAL
         
 
 
-        public bool ApproveAccountTransferRequest(List<Int16> TransferList)
+        public bool ApproveAccountTransferRequest(List<int> TransferList)
         {
 
             List<Int64> TransferAccountNumbersList = new List<long>();
@@ -300,11 +301,10 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
+                connection.Open();
                 foreach (var v in TransferList)
                 {
                     SqlCommand command = new SqlCommand("SELECT AccountNumber, ToBranch FROM BranchTransferRequest WHERE RequestID = " + v.ToString(), connection);
-                    connection.Open();
-
                     SqlDataReader reader = command.ExecuteReader();
 
                     // Call Read before accessing data. 
