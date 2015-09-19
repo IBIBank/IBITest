@@ -45,7 +45,7 @@ namespace IBITest.Controllers
         public ActionResult CreateNewAccount()
         {
             CommonDAL obj = new CommonDAL();
-            MessageBox.Show(obj.GetCityList()[0]);
+            //MessageBox.Show(obj.GetCityList()[0]);
             ViewBag.cityList = obj.GetCityList();
             NewAccountRequestView model = new NewAccountRequestView();
             model.CustomerID = 1001;

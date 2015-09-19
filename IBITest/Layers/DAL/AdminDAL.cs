@@ -241,7 +241,7 @@ namespace IBITest.Layers.DAL
 
 
 
-
+        /*
         public bool ApproveAccountClosingRequest(List<int> ClosingList)
         {
             List<Int64> ClosingAccountNumbersList = new List<long>();
@@ -287,7 +287,7 @@ namespace IBITest.Layers.DAL
 
             return true;
         }
-
+        */
 
 
         public bool ApproveAccountTransferRequest(List<Int16> TransferList)
