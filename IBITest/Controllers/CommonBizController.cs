@@ -132,9 +132,17 @@ namespace IBITest.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            if (role.Equals("DoesNotExist"))
+            {
+                ModelState.AddModelError("", "The user name does not exist !");
+                return View(model);
+                //return RedirectToAction("Login");
+            }
+            
+
             if (role.Equals("Invalid"))
             {
-                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                ModelState.AddModelError("", "The password provided is incorrect.");
                 return View(model);
                 //return RedirectToAction("Login");
             }

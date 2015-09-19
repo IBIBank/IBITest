@@ -136,7 +136,7 @@ namespace IBITest.Layers.DAL
             SqlCommand cmd2 = new SqlCommand(command,cn2);            
             int res = cmd2.ExecuteNonQuery();
 
-            SqlCommand cmd3 = new SqlCommand(String.Format("INSERT INTO UserRoles VALUES('{0}','{1}', '{2}', '{3}')", id, bd.BranchLogInID, bd.BranchLogInPassword, "Banker"), cn2);
+            SqlCommand cmd3 = new SqlCommand(String.Format("INSERT INTO UserRoles VALUES('{0}','{1}', '{2}', '{3}','{4}','{5}')", id, bd.BranchLogInID, bd.BranchLogInPassword, "Banker",DateTime.Now.ToString(),"0"), cn2);
             cmd3.ExecuteNonQuery();
 
             cn2.Close();

@@ -80,25 +80,63 @@ namespace IBITest.Layers.DAL
         {
             string res;
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand(String.Format( "SELECT Password, Role FROM UserRoles WHERE UserID = '{0}' ",  UserID), cn);
+            SqlCommand cmd = new SqlCommand(String.Format( "SELECT Password, Role,FailCount,Status FROM UserRoles WHERE UserID = '{0}' ",  UserID), cn);
             cn.Open();
             SqlDataReader rd = cmd.ExecuteReader();
-
+            int FailCount;
             rd.Read();
 
 
 
             if (!rd.HasRows)
             {
-                res = String.Copy("Invalid");
+                res = String.Copy("DoesNotExist");
             }
             else
             {
-                if(rd[0].ToString().Equals(Password))
-                    res = String.Copy(rd[1].ToString());
+                /*
+                if (rd[3].ToString().Equals("L"))
+                    res = String.Copy("Locked");
+                 * 
+                 * 
 
                 else
+                {*/
+                    //Account is active
+                if (rd[0].ToString().Equals(Password))
+                {
+                    //correct password
+                    res = String.Copy(rd[1].ToString());
+                    //update last log in in UserRoles and set FailCount = 0
+                }
+
+                else
+                {
                     res = String.Copy("Invalid");
+
+                    /*
+                    //Account is active but wrong password !
+
+                    // if customer entered wroong password, increment fail count and check if == 3
+                    if (rd[0].ToString().Equals("Customer"))
+                    {
+                        FailCount = Convert.ToInt16(rd[2]);
+
+                        if (FailCount == 3)
+                        {
+                            // lock customer account
+                        }
+                        else
+                        {
+                            FailCount += 1;
+                            // update failcount in UserRoles
+                        }
+                    }
+                     * 
+                     * */
+                }
+                   
+                
             }
             cn.Close();
 
@@ -117,16 +155,16 @@ namespace IBITest.Layers.DAL
                 int rowaff = command.ExecuteNonQuery();
 
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','admin')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','admin','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker1','banker1','banker')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker1','banker1','banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','customer1','customer1','customer')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','customer1','customer1','customer','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','banker2','banker2','banker')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','banker2','banker2','banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
