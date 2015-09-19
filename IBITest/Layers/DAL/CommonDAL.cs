@@ -158,13 +158,13 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','admin','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','banker1','banker1','banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','banker11','banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','customer1','customer1','customer','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','customer1','customer','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','banker2','banker2','banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','banker22','banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
