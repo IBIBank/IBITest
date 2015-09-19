@@ -241,7 +241,7 @@ namespace IBITest.Layers.DAL
 
 
 
-
+        /*
         public bool ApproveAccountClosingRequest(List<int> ClosingList)
         {            
 
@@ -262,7 +262,7 @@ namespace IBITest.Layers.DAL
 
             return true;
         }
-
+        */
 
 
         public bool ApproveAccountTransferRequest(List<TranferOfAccountAdminView> ClosingList)
