@@ -300,10 +300,11 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
+                connection.Open();
+
                 foreach (var v in TransferList)
                 {
                     SqlCommand command = new SqlCommand("SELECT AccountNumber, ToBranch FROM BranchTransferRequest WHERE RequestID = " + v.ToString(), connection);
-                    connection.Open();
 
                     SqlDataReader reader = command.ExecuteReader();
 
