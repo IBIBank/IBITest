@@ -8,6 +8,7 @@ namespace IBITest.Models
 {
     public class BranchDetails
     {
+        [Required]
         public string CityName { get; set; }
 
         [Required]
@@ -31,7 +32,7 @@ namespace IBITest.Models
         public string ContactNumber { get; set; }
 
         [Required]
-        [RegularExpression(@"*@ibi.com", ErrorMessage = "Not a valid Email !")]
+        [RegularExpression(@"([0-9]|[a-z]|[A-Z])+@ibi\.com$", ErrorMessage = "Not a valid Email !")]
         public string Email { get; set; }
         public Int64 BranchCode { get; set; }
     }
