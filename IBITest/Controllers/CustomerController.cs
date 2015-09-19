@@ -80,5 +80,23 @@ namespace IBITest.Controllers
             return Json(obj);
         }
 
+        public JsonResult GetListOfSavingAccounts()
+        {
+            List<AccountListViewModel> obj = new List<AccountListViewModel>()
+            {
+                new AccountListViewModel(){accountNumber=1,balance=9},
+                new AccountListViewModel(){accountNumber=2,balance=10 }
+            };
+            return Json(obj);
+        }
+        public ActionResult MiniDetailedstatements()
+        {
+            return View();
+        }
+        public ActionResult AddPayee()
+        {
+            return View();
+        }
+
     }
 }

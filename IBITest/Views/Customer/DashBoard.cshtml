@@ -2,15 +2,38 @@
     ViewBag.Title = "DashBoard";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    //function LoadOfSavingAccountTable()
+    $("#tableOfSavingAccounts").ready()
+    {
+        //alert("load table called");
+        $.ajax({
+            url: "/Customer/GetListOfSavingAccounts",
+            //data: { requestType: requestType },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                $("#tableOfSavingAccounts").empty();
+                $("#tableOfSavingAccounts").append('<tr><th>Account Number</th><th>Balance</th><th>Mini/Detailed statements</th></tr>');
+                for (var x = 0; x < data.length; x++) {
+                    $("#tableOfSavingAccounts").append('<tr><td>' + data[x].accountNumber + '</td><td>' + data[x].balance + '</td><td><a href =@Url.Action("MiniDetailedstatements","Customer")>Mini/Detailed Statements<a></td></tr>');
+                }
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+</script>
 <h2>Customer DashBoard</h2>
 @Html.ActionLink("Create New Account","CreateNewAccount","Customer")
+
 <br />
 <br />
 <div style="border:1px solid black">
-    <p>Account Details</p>
-    <table id="tableOfSavingAccount">
+    <p>Account Details:</p>
+    <table id="tableOfSavingAccounts" ">
 
     </table>
 </div>
-
