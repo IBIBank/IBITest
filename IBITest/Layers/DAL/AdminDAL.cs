@@ -239,12 +239,11 @@ namespace IBITest.Layers.DAL
             return RequestList;
         }
 
-
-
+        
         
         public bool ApproveAccountClosingRequest(List<int> ClosingList)
         {
-            List<Int64> ClosingAccountNumbersList = new List<long>();
+            List<Int64> closingAccountNumbersList = new List<long>();
          //   SqlDataReader reader = new SqlDataReader();
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
@@ -261,7 +260,7 @@ namespace IBITest.Layers.DAL
                     if (reader.HasRows)
                     {
                         reader.Read();
-                        ClosingAccountNumbersList.Add(Convert.ToInt64(reader[0]));
+                        closingAccountNumbersList.Add(Convert.ToInt64(reader[0]));
                     }
 
                     reader.Close();
@@ -277,7 +276,7 @@ namespace IBITest.Layers.DAL
 
                 foreach(var v in ClosingList)
                 {
-                    SqlCommand command = new SqlCommand(String.Format( "UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ",ClosingAccountNumbersList[pos++].ToString() ), connection);
+                    SqlCommand command = new SqlCommand(String.Format( "UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ",closingAccountNumbersList[pos++].ToString() ), connection);
                     command.ExecuteNonQuery();
 
                     command.CommandText = String.Format("UPDATE ClosingRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ",DateTime.Now.ToString(),v.ToString());
@@ -302,9 +301,11 @@ namespace IBITest.Layers.DAL
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
                 connection.Open();
+
                 foreach (var v in TransferList)
                 {
                     SqlCommand command = new SqlCommand("SELECT AccountNumber, ToBranch FROM BranchTransferRequest WHERE RequestID = " + v.ToString(), connection);
+
                     SqlDataReader reader = command.ExecuteReader();
 
                     // Call Read before accessing data. 

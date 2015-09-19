@@ -66,26 +66,26 @@ namespace IBITest.Layers.DAL
             return res;
         }
 
-        public bool IsUniqueUserID(string UserID)
+        public bool IsUniqueUserID(string userID)
         {
-            bool res;
+            bool result;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand(String.Format("SELECT UserID FROM UserRoles WHERE UserID = '{0}' ", UserID), connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT UserID FROM UserRoles WHERE UserID = '{0}' ", userID), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
 
                 // Call Read before accessing data. 
                 if (reader.HasRows)
-                    res = false;
+                    result = false;
                 else
-                    res = true;
+                    result = true;
 
                 reader.Close();
             }
 
-            return res;
+            return result;
         }
 
 
@@ -119,14 +119,98 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 'A') ", id, c.UserID, c.Password, "Customer",DateTime.Now.ToString(),"0");
                 command.ExecuteNonQuery();
                 
-                //insert into user profile too !!
             }
 
             return res;
         }
 
-           
+        
+        public bool AddNewAccountRequest(NewAccountRequestView request)
+        {
+            bool result = false;
 
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {   
+                int requestID;
+
+                SqlCommand command = new SqlCommand("SELECT MAX(RequestID) FROM NewAccountRequest ", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                    requestID = Convert.ToInt16(reader[0]) + 1;
+                }
+                else
+                    requestID = 1;
+                
+                reader.Close();
+
+                command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = "+ request.CustomerID);
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                string customerName = reader[0].ToString();
+                reader.Close();
+
+                command.CommandText = String.Format("INSERT INTO NewAccountRequest(RequestID, BranchCode, CustomerID, SubmissionDate, Status, AddressProof, CustomerName) VALUES('{0}', '{1}', '{2}', '{3}', 'S', '{4}', '{5}') ", requestID,request.Branch, request.CustomerID, DateTime.Now.ToString(), request.AddresProof, customerName);
+                
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+            return result;
+        }
+
+
+        public long GetCustomerIDbyUserID(string userID)
+        {
+            long customerID;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT CustomerID FROM Customer WHERE UserID = '{0}' ", userID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+
+                customerID = Convert.ToInt64(reader[0]);
+                reader.Close();
+            }
+
+            return customerID;
+        }
+
+
+        public List<AccountListViewModel> GetAccountsListByCustomerID(long customerID)
+        {
+            List<AccountListViewModel> accountsList = new List<AccountListViewModel>();
+            AccountListViewModel account = new AccountListViewModel();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber, Balance FROM Account WHERE CustomerID = {0} ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return accountsList;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        
+                    }
+                    reader.Close();
+                }
+            }
+
+            return accountsList;
+        }
 
     }
 }

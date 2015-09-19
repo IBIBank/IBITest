@@ -7,7 +7,7 @@ namespace IBITest.Models
 {
     public class UserRole
     {
-        public string UserID { get; set; }
-        public string Role { get; set; }
+        public string userID { get; set; }
+        public string role { get; set; }
     }
 }
