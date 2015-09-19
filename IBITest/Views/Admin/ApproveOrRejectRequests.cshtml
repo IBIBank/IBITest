@@ -11,7 +11,7 @@
             $("#mytable").empty();
             return;
         }
-        alert("You selectd request type " + requestType);
+        //alert("You selectd request type " + requestType);
         if(requestType=="TOC")
         {
             $.ajax({
@@ -72,6 +72,7 @@
             $('#mytable input:checked').each(function () {
                 selected.push($(this).attr('value'));
             });
+            //alert(selected);
             $('#mytable input:checked').each(function () {
                 $(this).parent().parent().remove();
             });
@@ -136,7 +137,7 @@
             if (requestType == "TOC") {
                 $.ajax({
                     url: "/Admin/RejectTOC",
-                    data: { approveRequestList: selected },
+                    data: { rejectRequestList: selected },
                     cache: false,
                     type: "POST",
                     traditional: true,
@@ -153,7 +154,7 @@
             {
                 $.ajax({
                     url: "/Admin/RejectCOA",
-                    data: { approveRequestList: selected },
+                    data: { rejectRequestList: selected },
                     cache: false,
                     type: "POST",
                     traditional: true,
@@ -175,5 +176,7 @@
 @Html.DropDownList("RequestTypeDropdownList", new SelectList(ViewBag.requestTypeList, "Value", "Text"),"--Select--", new{@id="dropdown",@onchange="javascript:getListOfRequests(this.value)" })
 <table border="1" id="mytable">
 </table>
+<br />
+<br />
 <button onclick="Approve()">Approve</button>
 <button onclick="Reject()">Reject</button>
