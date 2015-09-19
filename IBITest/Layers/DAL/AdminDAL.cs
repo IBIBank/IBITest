@@ -136,7 +136,7 @@ namespace IBITest.Layers.DAL
             SqlCommand cmd2 = new SqlCommand(command,cn2);            
             int res = cmd2.ExecuteNonQuery();
 
-            SqlCommand cmd3 = new SqlCommand(String.Format("INSERT INTO UserRoles VALUES('{0}','{1}', '{2}', '{3}')", id, bd.BranchLogInID, bd.BranchLogInPassword, "Banker"), cn2);
+            SqlCommand cmd3 = new SqlCommand(String.Format("INSERT INTO UserRoles VALUES('{0}','{1}', '{2}', '{3}','{4}','{5}')", id, bd.BranchLogInID, bd.BranchLogInPassword, "Banker",DateTime.Now.ToString(),"0"), cn2);
             cmd3.ExecuteNonQuery();
 
             cn2.Close();
@@ -243,18 +243,43 @@ namespace IBITest.Layers.DAL
 
         /*
         public bool ApproveAccountClosingRequest(List<int> ClosingList)
-        {            
+        {
+            List<Int64> ClosingAccountNumbersList = new List<long>();
+         //   SqlDataReader reader = new SqlDataReader();
 
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                foreach (var v in ClosingList)
+                {
+                    SqlCommand command = new SqlCommand("SELECT AccountNumber FROM ClosingRequest WHERE RequestID = " + v.ToString(), connection);
+                    connection.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    // Call Read before accessing data. 
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        ClosingAccountNumbersList.Add(Convert.ToInt64(reader[0]));
+                    }
+
+                    reader.Close();
+
+                }
+
+            }
+
+            int pos = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
                 connection.Open();
 
                 foreach(var v in ClosingList)
                 {
-                    SqlCommand command = new SqlCommand(String.Format( "UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ",v.accountNumber.ToString() ), connection);
+                    SqlCommand command = new SqlCommand(String.Format( "UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ",ClosingAccountNumbersList[pos++].ToString() ), connection);
                     command.ExecuteNonQuery();
 
-                    command.CommandText = String.Format("UPDATE ClosingRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ",DateTime.Now.ToString(),v.requestID);
+                    command.CommandText = String.Format("UPDATE ClosingRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ",DateTime.Now.ToString(),v.ToString());
                     command.ExecuteNonQuery();                    
                 }
                 
@@ -265,18 +290,50 @@ namespace IBITest.Layers.DAL
         */
 
 
-        public bool ApproveAccountTransferRequest(List<TranferOfAccountAdminView> ClosingList)
+        public bool ApproveAccountTransferRequest(List<Int16> TransferList)
         {
+
+            List<Int64> TransferAccountNumbersList = new List<long>();
+            List<Int64> TransferToAccountNumbersList = new List<long>();
+
+         //   SqlDataReader reader;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                foreach (var v in TransferList)
+                {
+                    SqlCommand command = new SqlCommand("SELECT AccountNumber, ToBranch FROM BranchTransferRequest WHERE RequestID = " + v.ToString(), connection);
+                    connection.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    // Call Read before accessing data. 
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        TransferAccountNumbersList.Add(Convert.ToInt64(reader[0]));
+                        TransferToAccountNumbersList.Add(Convert.ToInt64(reader[1]));
+                    }
+
+                    reader.Close();
+
+                }
+
+            }
+
+            int pos = 0;
+
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
                 connection.Open();
 
-                foreach (var v in ClosingList)
-                {
-                    SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET BranchCode = {0} WHERE AccountNumber = {1} ", v.toBranch.ToString(),v.accountNumber.ToString()), connection);
+                foreach (var v in TransferList)
+                {// store branch code in list alongwith account numbers
+                    SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET BranchCode = {0} WHERE AccountNumber = {1} ", TransferToAccountNumbersList[pos].ToString(),TransferAccountNumbersList[pos].ToString()), connection);
                     command.ExecuteNonQuery();
+                    pos++;
 
-                    command.CommandText = String.Format("UPDATE BranchTransferRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.requestID);
+                    command.CommandText = String.Format("UPDATE BranchTransferRequest SET Status = 'A', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.ToString());
                     command.ExecuteNonQuery();
                 }
 
@@ -288,7 +345,7 @@ namespace IBITest.Layers.DAL
 
 
 
-        public bool RejectAccountClosingRequest(List<ClosureOfAccountAdminView> ClosingList)
+        public bool RejectAccountClosingRequest(List<int> ClosingList)
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
@@ -296,7 +353,7 @@ namespace IBITest.Layers.DAL
 
                 foreach (var v in ClosingList)
                 {
-                    SqlCommand command = new SqlCommand(String.Format("UPDATE ClosingRequest SET Status = 'R', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.requestID), connection);
+                    SqlCommand command = new SqlCommand(String.Format("UPDATE ClosingRequest SET Status = 'R', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.ToString()), connection);
                     command.ExecuteNonQuery();                    
                 }
 
@@ -308,7 +365,7 @@ namespace IBITest.Layers.DAL
 
 
 
-        public bool RejectAccountTransferRequest(List<TranferOfAccountAdminView> ClosingList)
+        public bool RejectAccountTransferRequest(List<int> ClosingList)
         {
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
@@ -316,7 +373,7 @@ namespace IBITest.Layers.DAL
 
                 foreach (var v in ClosingList)
                 {
-                    SqlCommand command = new SqlCommand(String.Format("UPDATE BranchTransferRequest SET Status = 'R', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.requestID), connection);
+                    SqlCommand command = new SqlCommand(String.Format("UPDATE BranchTransferRequest SET Status = 'R', ServiceDate = '{0}'  WHERE RequestID = {1} ", DateTime.Now.ToString(), v.ToString()), connection);
                     command.ExecuteNonQuery();
                 }
 

@@ -116,7 +116,7 @@ namespace IBITest.Layers.DAL
                 int id = Convert.ToInt16(rd[0]) + 1;
                 rd.Close();                
 
-                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}') ", id, c.UserID, c.Password, "Customer");
+                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 'A') ", id, c.UserID, c.Password, "Customer",DateTime.Now.ToString(),"0");
                 command.ExecuteNonQuery();
                 
                 //insert into user profile too !!
@@ -125,9 +125,7 @@ namespace IBITest.Layers.DAL
             return res;
         }
 
-
-
-        //public 
+           
 
 
     }

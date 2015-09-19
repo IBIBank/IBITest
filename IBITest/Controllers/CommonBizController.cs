@@ -113,6 +113,10 @@ namespace IBITest.Controllers
         // GET: /Account/Login
         public ActionResult Login()
         {
+            if (Session["User"] != null)
+            {
+                return View("InvalidSession");
+            }
             return View();
         }
         //
@@ -123,12 +127,22 @@ namespace IBITest.Controllers
         {
             CommonDAL obj = new CommonDAL();
             string role = obj.CheckRole(model.UserName, model.Password);
-            //MessageBox.Show(role);
-            //MessageBox.Show(role.Length.ToString());
+
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+            if (role.Equals("DoesNotExist"))
+            {
+                ModelState.AddModelError("", "The user name does not exist !");
+                return View(model);
+                //return RedirectToAction("Login");
+            }
+            
 
             if (role.Equals("Invalid"))
             {
-                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                ModelState.AddModelError("", "The password provided is incorrect.");
                 return View(model);
                 //return RedirectToAction("Login");
             }
