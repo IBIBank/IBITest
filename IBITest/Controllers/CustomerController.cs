@@ -15,8 +15,8 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
-            //if (Session["User"] == null)
-            //    return RedirectToAction("Login", "CommonBiz");
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
 
             return View();
         }

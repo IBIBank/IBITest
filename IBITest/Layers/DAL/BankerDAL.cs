@@ -17,7 +17,7 @@ namespace IBITest.Layers.DAL
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM BranchTransferRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM BranchTransferRequest WHERE Status = 'S' ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -43,7 +43,7 @@ namespace IBITest.Layers.DAL
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM LoanRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM LoanRequest WHERE Status = 'S' ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -70,7 +70,7 @@ namespace IBITest.Layers.DAL
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM NewAccountRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM NewAccountRequest WHERE Status = 'S' ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -98,7 +98,7 @@ namespace IBITest.Layers.DAL
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM ClosingRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM ClosingRequest WHERE Status = 'S' ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -222,7 +222,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM BranchTransferRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM BranchTransferRequest ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -263,7 +263,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM ClosingRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM ClosingRequest ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -306,7 +306,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM LoanRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM LoanRequest ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -479,6 +479,350 @@ namespace IBITest.Layers.DAL
 
 
 
+        public bool ApproveNewAccountCreationRequest(int requestID)
+        {
+            long branchCode, customerID, accountNumber;
+            bool result = false;
+            Byte[] addressProof;
+            
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+                              
+                SqlCommand command = new SqlCommand("SELECT BranchCode, CustomerID, AddressProof FROM NewAccountRequest WHERE RequestID = " + requestID.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                
+                reader.Read();
+                branchCode = Convert.ToInt64(reader[0]);
+                customerID = Convert.ToInt64(reader[1]);
+
+                /*
+                if (reader[2] != null)
+                    addressProof = (Byte[])reader[2];
+                else */
+                    addressProof = null;
+               
+                reader.Close();
+
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM Account");
+                reader = command.ExecuteReader();
+
+                reader.Read();
+
+                if (Convert.ToInt64(reader[0]) != 0)
+                {
+                    accountNumber = Convert.ToInt64(reader[0]) + 1;
+                }
+                else
+                    accountNumber = 1;
+
+                reader.Close();
+
+                // create account in account table
+
+                command.CommandText = String.Format("INSERT INTO Account VALUES('{0}','S','{1}','Active','500','{2}','{3}','{4}')",accountNumber,DateTime.Now.ToString(),branchCode,customerID,addressProof);
+                command.ExecuteNonQuery();
+
+                // set request as serviced
+
+                command.CommandText = String.Format("UPDATE NewAccountRequest SET Status = 'A' WHERE RequestID = {0}",requestID);
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+
+            }
+                       
+            return result;
+        }
+
+
+        public bool ApproveLoanRequest(int requestID)
+        {
+            bool result = false;
+
+
+
+
+            return result;
+        }
+
+
+
+        public bool TransferTransferOfAccountRequest(int requestID)
+        {
+
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("UPDATE BranchTransferRequest SET Status = 'T' WHERE RequestID = " +requestID.ToString(), connection);
+                                
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+                
+            }
+
+
+            return result;
+        }
+
+
+      
+        public bool TransferClosingOfAccountRequest(int requestID)
+        {
+
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("UPDATE ClosingRequest SET Status = 'T' WHERE RequestID = " + requestID.ToString(), connection);
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+
+            return result;
+        }
+
+
+
+        public bool RejectNewAccountCreationRequest(int requestID)
+        {
+
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("UPDATE NewAccountRequest SET Status = 'R' WHERE RequestID = " + requestID.ToString(), connection);
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+
+
+            return result;
+        }
+
+
+        public bool RejectLoanRequest(int requestID)
+        {
+
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("UPDATE LoanRequest SET Status = 'R' WHERE RequestID = " + requestID.ToString(), connection);
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+
+
+            return result;
+        }
+
+
+        public bool RejectTransferOfAccountRequest(int requestID)
+        {
+
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("UPDATE BranchTransferRequest SET Status = 'R' WHERE RequestID = " + requestID.ToString(), connection);
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+
+
+            return result;
+        }
+
+
+        public bool RejectClosingOfAccountRequest(int requestID)
+        {
+
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("UPDATE ClosingRequest SET Status = 'R' WHERE RequestID = " + requestID.ToString(), connection);
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+
+
+            return result;
+        }
+
+
+
+        public char GetAccountType(long accountNumber)
+        {
+            char accountType = 'I' ;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT AccountType FROM Account WHERE AccountNumber = " + accountNumber.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    accountType = (char)reader[0];
+                }
+                reader.Close();
+            }                      
+  
+            return accountType;
+        }
+
+
+        public Decimal GetAccountBalance(long accountNumber)
+        {
+            Decimal balance = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Balance FROM Account WHERE AccountNumber = " + accountNumber.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    balance = (Decimal)reader[0];
+                }
+                reader.Close();
+            }          
+
+
+            return balance;
+        }
+
+
+
+
+        public bool SetAccountBalance(long accountNumber, Decimal finalBalance)
+        {
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}" , finalBalance.ToString(), accountNumber.ToString()));
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+            return result;
+        }
+
+
+
+
+        public bool CreateAccountTransactionByBanker(long sourceAccount, char transactionType, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                int transactionID;
+
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Transaction",connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                reader.Read();
+                transactionID = Convert.ToInt16(reader[0]) + 1;
+                reader.Close();                
+
+                command.CommandText = String.Format("INSERT INTO Transaction(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )",transactionID.ToString(), transactionType.ToString(), DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+            return result;
+        }
+
+
+
+
+
+        public bool CreditSavingsAccountByBanker(long sourceAccount, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+            Decimal currentBalance;
+
+
+            currentBalance = GetAccountBalance(sourceAccount);
+
+            currentBalance += amount;
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+                
+            return result;
+        }
+
+        public bool DebitSavingsAccountByBanker(long sourceAccount, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+            Decimal currentBalance;
+            
+            currentBalance = GetAccountBalance(sourceAccount);
+
+            currentBalance -= amount;
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'D', amount, transactionRemarks));
+                
+            return result;
+        }
+
+        public bool CreditLoanAccountByBanker(long sourceAccount, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+            Decimal currentBalance;
+            
+            currentBalance = GetAccountBalance(sourceAccount);
+
+            currentBalance -= amount;
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+                
+            return result;
+        }
 
 
 

@@ -155,11 +155,11 @@ namespace IBITest.Controllers
 
             Session["User"] = ur;
 
-            if (role.Equals("admin"))
+            if (role.Equals("Admin"))
             {
                 return RedirectToAction("DashBoard", "Admin");
             }
-            else if (role.Equals("banker"))
+            else if (role.Equals("Banker"))
             {
                 return RedirectToAction("DashBoard", "Banker");
             }

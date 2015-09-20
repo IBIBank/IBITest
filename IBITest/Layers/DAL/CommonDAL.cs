@@ -155,16 +155,16 @@ namespace IBITest.Layers.DAL
                 int rowaff = command.ExecuteNonQuery();
 
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','admin','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','Admin','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','banker11','banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','banker11','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','customer1','customer','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','customer1','Customer','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','banker22','banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','banker22','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
@@ -215,11 +215,18 @@ namespace IBITest.Layers.DAL
 
                 command.CommandText = String.Copy("INSERT INTO ClosingRequest (RequestID,SubmissionDate, Status, AccountNumber, CustomerID ) VALUES(1,'2016/9/17','T',1,1)");
                 rowaff = command.ExecuteNonQuery();
+               
                 command.CommandText = String.Copy("INSERT INTO ClosingRequest (RequestID,SubmissionDate, Status, AccountNumber, CustomerID ) VALUES(2,'2016/9/17','S',2,2)");
                 rowaff = command.ExecuteNonQuery();
+                
                 command.CommandText = String.Copy("INSERT INTO ClosingRequest (RequestID,SubmissionDate, Status, AccountNumber, CustomerID ) VALUES(3,'2016/9/17','T',3,3)");
                 rowaff = command.ExecuteNonQuery();
 
+                command.CommandText = String.Copy("DELETE FROM Account");
+                rowaff = command.ExecuteNonQuery();
+
+                command.CommandText = String.Copy("INSERT INTO Account (AccountNumber, AccountType, OpeningDate, Status, Balance, BranchCode, CustomerID ) VALUES(1,'S','2016/9/17','Active','500','1','1')");
+                rowaff = command.ExecuteNonQuery();
 
                 if(rowaff==0)
                     System.Windows.Forms.MessageBox.Show(rowaff.ToString());
