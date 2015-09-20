@@ -207,9 +207,13 @@ namespace IBITest.Controllers
         {
             return View();
         }
-        public string GetAccountType(int accountNumber)
+        public char GetAccountType(int accountNumber)
         {
-            
+            BankerDAL objBankerDal = new BankerDAL();
+            char accountType = objBankerDal.GetAccountType(accountNumber);
+            ViewBag.accountType = accountType;
+            return accountType;
+            /*
             if (accountNumber == 2011)
             {
                 ViewBag.accountType = "S";
@@ -225,6 +229,7 @@ namespace IBITest.Controllers
                 ViewBag.accountType = "I";
                 return "I";
             }
+             */
 
         }
         public bool SetBalance(int accountNumber, decimal amount, char accountType, char CreditOrDebit, string remarks)
