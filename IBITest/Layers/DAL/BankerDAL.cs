@@ -683,7 +683,73 @@ namespace IBITest.Layers.DAL
 
 
 
+        public char GetAccountType(long accountNumber)
+        {
+            char accountType = 'I' ;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT AccountType FROM Account WHERE AccountNumber = " + accountNumber.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    accountType = (char)reader[0];
+                }
+                reader.Close();
+            }                      
+  
+            return accountType;
+        }
 
 
+        public Decimal GetAccountBalance(long accountNumber)
+        {
+            Decimal balance = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Balance FROM Account WHERE AccountNumber = " + accountNumber.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    balance = (Decimal)reader[0];
+                }
+                reader.Close();
+            }          
+
+
+            return balance;
+        }
+
+
+
+
+        public bool SetAccountBalance(long accountNumber, Decimal finalBalance)
+        {
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}" , finalBalance.ToString(), accountNumber.ToString()));
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+            return result;
+        }
+        
+        
     }
 }
