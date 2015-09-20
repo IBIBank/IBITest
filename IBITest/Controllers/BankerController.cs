@@ -232,9 +232,35 @@ namespace IBITest.Controllers
              */
 
         }
-        public bool SetBalance(int accountNumber, decimal amount, char accountType, char CreditOrDebit, string remarks)
+        public string SetBalance(int accountNumber, decimal amount, char accountType, char CreditOrDebit, string remarks)
         {
-            return true;
+            BankerDAL objBankerDAL = new BankerDAL();
+            if (accountType == 'S')
+            {
+                if (CreditOrDebit == 'C')//credit
+                {
+                    objBankerDAL.CreditSavingsAccountByBanker(accountNumber,amount,remarks);
+                    return "Credit Successful";
+                }
+                else//debit
+                {
+                    if (amount <= objBankerDAL.GetAccountBalance(accountNumber))
+                    {
+                        objBankerDAL.DebitSavingsAccountByBanker(accountNumber, amount, remarks);
+                        return "Debit successful";
+                    }
+                    else
+                    {
+                        return "Amount exceeds available balance";
+                    }
+                }
+            }
+            else
+            {
+
+                return "loan functionality in progress";
+            }
+            
         }
         public ActionResult ApproveRequest(string val)
         {
