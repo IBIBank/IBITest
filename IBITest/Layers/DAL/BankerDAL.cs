@@ -698,7 +698,7 @@ namespace IBITest.Layers.DAL
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    accountType = (char)reader[0];
+                    accountType = Convert.ToChar(reader[0]);
                 }
                 reader.Close();
             }                      
