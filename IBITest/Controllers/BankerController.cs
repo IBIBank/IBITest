@@ -77,27 +77,48 @@ namespace IBITest.Controllers
         public ActionResult GetRequestsByType(int typeid)
         {
             BankerDAL obj = new BankerDAL();
-            List<RequestViewModel> md = new List<RequestViewModel>();
+            List<RequestViewModel> requestListTemp = new List<RequestViewModel>();
+            List<RequestViewModel> requestList = new List<RequestViewModel>();
 
             switch (typeid)
             {
                 case 1:
-                    md = obj.GetNewAccountRequests();
+                    requestListTemp = obj.GetNewAccountRequests();
+
+                    foreach (var v in requestListTemp)
+                        if (v.Status == 'S')
+                            requestList.Add(v);
+
                     break;
 
                 case 2:
-                    md = obj.GetLoanRequests();
+                    requestListTemp = obj.GetLoanRequests();
+
+                    foreach (var v in requestListTemp)
+                        if (v.Status == 'S')
+                            requestList.Add(v);
+
                     break;
 
                 case 3:
-                    md = obj.GetBranchTransferRequests();
+                    requestListTemp = obj.GetBranchTransferRequests();
+
+                    foreach (var v in requestListTemp)
+                        if (v.Status == 'S')
+                            requestList.Add(v);
+
                     break;
 
                 case 4:
-                    md = obj.GetClosingRequests();
+                    requestListTemp = obj.GetClosingRequests();
+
+                    foreach (var v in requestListTemp)
+                        if (v.Status == 'S')
+                            requestList.Add(v);
+                    
                     break;
             }
-            return Json(md);
+            return Json(requestList);
         }
 
         public ActionResult GetRequestsByStatus(int typeid)
@@ -109,16 +130,17 @@ namespace IBITest.Controllers
             if (Session["AllRequests"] != null)
                 md = (Session["AllRequests"] as List<RequestViewModel>);
             else
-                System.Windows.Forms.MessageBox.Show("Session expired");
-
+            {
+                md = obj.GetAllRequests();
+                Session["AllRequests"] = md;
+            }
 
             switch (typeid)
             {
                 case 1:
                     return Json(md);
 
-                case 2:
-                   
+                case 2:                   
                     foreach (var v in md)
                     {
                         if (v.Status == 'S')
@@ -180,6 +202,83 @@ namespace IBITest.Controllers
             }
 
         }
+
+
+        
+        public ActionResult ApproveRequest(string val)
+        {
+            int requestID;
+            BankerDAL bankerDALObj = new BankerDAL();
+           
+            System.Windows.Forms.MessageBox.Show(val.Length.ToString());
+
+            if (val[0] == 'N')
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                return Json(bankerDALObj.ApproveNewAccountCreationRequest(requestID));
+            }
+            else
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+                
+                return Json(bankerDALObj.ApproveLoanRequest(requestID));
+            }            
+        }
+
+
+        public ActionResult TransferRequest(string val)
+        {
+            int requestID;
+            BankerDAL bankerDALObj = new BankerDAL();
+
+            if (val[0] == 'T')
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                return Json(bankerDALObj.TransferTransferOfAccountRequest(requestID));
+            }
+            else
+            {
+                requestID = Convert.ToInt16(val.Substring(3).ToString());
+
+                return Json(bankerDALObj.TransferClosingOfAccountRequest(requestID));
+            }
+        }
+
+
+
+        public ActionResult RejectRequest(string val)
+        {
+            int requestID;
+            BankerDAL bankerDALObj = new BankerDAL();
+
+            if (val[0] == 'N')
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                return Json(bankerDALObj.RejectNewAccountCreationRequest(requestID));
+            }
+            else if(val[0] == 'A')
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                return Json(bankerDALObj.RejectLoanRequest(requestID));
+            }
+            else if (val[0] == 'T')
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                return Json(bankerDALObj.RejectTransferOfAccountRequest(requestID));
+            }
+            else
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                return Json(bankerDALObj.RejectClosingOfAccountRequest(requestID));
+            }
+        }
+
         
     }
 }

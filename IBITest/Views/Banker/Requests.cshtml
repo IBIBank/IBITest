@@ -68,7 +68,6 @@
 
  </table>
 
-<img src="/Content/Chrysanthemum.jpg" alt = "Image" id="ProofImage"  />    
 <div id="divImageHolder"></div>
 
 
@@ -106,19 +105,22 @@
 
     function ApproveRequest(_requestID) {
         alert("In Approve " + _requestID);
-
-        alert(_requestID);
+        
         $.ajax({
             cache: false,
-            type: "GET",
+            type: "POST",
             url: "/Banker/ApproveRequest",
             data: { val: _requestID },
-
             success: function (data) {
-                
+                if (data == true) {
+                    if (_requestID[0] == 'N')
+                        ProcessRequests(1);
+                    else
+                        ProcessRequests(2);
+                }
             },
             error: function (xhr) {
-                alert("Error occurred while sfsbfs loading the image. "
+                alert("Error ! "
                     + xhr.responseText);
             }
         });
@@ -132,15 +134,23 @@
         alert(_requestID);
         $.ajax({
             cache: false,
-            type: "GET",
+            type: "POST",
             url: "/Banker/RejectRequest",
             data: { val: _requestID },
-            dataType: "json",
             success: function (data) {
-                displayImage(data.base64imgage);
+                if (data == true) {
+                    if (_requestID[0] == 'N')
+                        ProcessRequests(1);
+                    else if (_requestID[0] == 'A')
+                        ProcessRequests(2);
+                    else if (_requestID[0] == 'T')
+                        ProcessRequests(3);
+                    else
+                        ProcessRequests(4);
+                }
             },
             error: function (xhr) {
-                alert("Error occurred while sfsbfs loading the image. "
+                alert("Error occurred. "
                     + xhr.responseText);
             }
         });
@@ -152,12 +162,16 @@
         alert(_requestID);
         $.ajax({
             cache: false,
-            type: "GET",
+            type: "POST",
             url: "/Banker/TransferRequest",
             data: { val: _requestID },
-            dataType: "json",
             success: function (data) {
-                displayImage(data.base64imgage);
+                if (data == true) {
+                    if (_requestID[0] == 'T')
+                        ProcessRequests(3);
+                    else
+                        ProcessRequests(4);
+                }
             },
             error: function (xhr) {
                 alert("Error occurred while sfsbfs loading the image. "
@@ -238,7 +252,7 @@
                     $('#mytable tbody > tr').remove();
                     var trhtml = "";
                     for (var x = 0; x < data.length; x++) {
-                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td> <a onclick = \"GetProofImage('" + data[x].RequestID + "')\"> View Proof </a> </td> <td><a onclick = \"ApproveRequest(' " + data[x].RequestID + " ') \"> Approve </a> </td> <td><a onclick = \"RejectRequest(' " +  data[x].RequestID + " ') \" > Reject </a> </td></tr>";
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td> <a onclick = \"GetProofImage('" + data[x].RequestID + "')\"> View Proof </a> </td> <td><a onclick = \"ApproveRequest('" + data[x].RequestID + "' ) \"> Approve </a> </td> <td><a onclick = \"RejectRequest( '" +  data[x].RequestID + "' ) \" > Reject </a> </td></tr>";
                     }
                     $('#mytable').append(trhtml);
                 },
@@ -274,7 +288,7 @@
                     $('#mytable tbody > tr').remove();
                     var trhtml = "";
                     for (var x = 0; x < data.length; x++) {
-                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td><a onclick = \"TransferRequest(' " + data[x].RequestID + " ') \"> Transfer </a> </td> <td><a onclick = \"RejectRequest(' " + data[x].RequestID + " ') \" > Reject </a> </td></tr>";
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td><a onclick = \"TransferRequest('" + data[x].RequestID + "') \"> Transfer </a> </td> <td><a onclick = \"RejectRequest('" + data[x].RequestID + "') \" > Reject </a> </td></tr>";
                     }
                     $('#mytable ').append(trhtml);
                 },
