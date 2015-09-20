@@ -155,16 +155,16 @@ namespace IBITest.Layers.DAL
                 int rowaff = command.ExecuteNonQuery();
 
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','admin','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','Admin','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','banker11','banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','banker11','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','customer1','customer','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','customer1','Customer','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','banker22','banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','banker22','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
