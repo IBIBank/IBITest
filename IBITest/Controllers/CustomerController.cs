@@ -15,6 +15,9 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
+            //if (Session["User"] == null)
+            //    return RedirectToAction("Login", "CommonBiz");
+
             return View();
         }
         public ActionResult FinishRegistration(string token)
@@ -44,6 +47,9 @@ namespace IBITest.Controllers
         }
         public ActionResult CreateNewAccount()
         {
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+
             CommonDAL obj = new CommonDAL();
             NewAccountRequestView model = new NewAccountRequestView();
             
@@ -96,6 +102,44 @@ namespace IBITest.Controllers
         {
             return View();
         }
-
+        public ActionResult RequestForAccountTransfer()
+        {
+            return View();
+        }
+        public ActionResult TransferFunds()
+        {
+            return View();
+        }
+        public ActionResult RequestClosureOfAccount()
+        {
+            return View();
+        }
+        public ActionResult ViewRequestStatus()
+        {
+            return View();
+        }
+        public ActionResult ViewOrUpdateProfile()
+        {
+            return View();
+        }
+        public ActionResult UpdateUserOrTransactionPassword()
+        {
+            return View();
+        }
+        public ActionResult ApplyForLoan()
+        {
+            return View();
+        }
+        public ActionResult MoneyManagaer()
+        {
+            return View();
+        }
     }
+
 }
+/*
+    
+    EMI Calculator
+    Money Managaer
+   
+ */

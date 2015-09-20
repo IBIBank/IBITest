@@ -15,8 +15,9 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
-            ViewBag.BranchTransferRequests = 7;
-            ViewBag.AccountClosureRequests = 0;
+            AdminDAL objAdminDAL = new AdminDAL();
+            ViewBag.BranchTransferRequests = objAdminDAL.GetNoOfAccTransferReq();
+            ViewBag.AccountClosureRequests = objAdminDAL.GetNoOfAccClosureferReq();
             return View();
         }
         public ActionResult AddBranch()
