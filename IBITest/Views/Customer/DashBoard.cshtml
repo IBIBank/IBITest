@@ -26,16 +26,28 @@
         });
     }
 </script>
-<h2>Customer DashBoard</h2>
+<h1>Customer DashBoard</h1>
 @Html.ActionLink("Create New Account","CreateNewAccount","Customer")
+<h3>Fund Manager</h3>
 @Html.ActionLink("Add Payee","AddPayee","Customer")
 @Html.ActionLink("Transfer Funds","TransferFunds","Customer")
+<br />
+<h3>Request Manager</h3>
 @Html.ActionLink("Request Account Transfer","RequestForAccountTransfer","Customer")
 @Html.ActionLink("Request Closure of Account","RequestClosureOfAccount","Customer")
+@Html.ActionLink("View Request Status","ViewRequestStatus","Customer")
+<br />
+<h3>Profile Manager</h3>
+@Html.ActionLink("View Or Update Profile","ViewOrUpdateProfile","Customer")
+@Html.ActionLink("Update User Or Transaction Password","UpdateUserOrTransactionPassword","Customer")
+<br />
+<h3>Add-Ons</h3>
+@Html.ActionLink("Apply For Loan","ApplyForLoan","Customer")
+@Html.ActionLink("Money Managaer","MoneyManagaer","Customer")
 <br />
 <br />
 <div style="border:1px solid black">
-    <p>Account Details:</p>
+    <h3>Account Details:</h3>
     <table id="tableOfSavingAccounts" ">
 
     </table>

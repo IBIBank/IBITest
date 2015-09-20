@@ -118,13 +118,28 @@ namespace IBITest.Controllers
         {
             return View();
         }
+        public ActionResult ViewOrUpdateProfile()
+        {
+            return View();
+        }
+        public ActionResult UpdateUserOrTransactionPassword()
+        {
+            return View();
+        }
+        public ActionResult ApplyForLoan()
+        {
+            return View();
+        }
+        public ActionResult MoneyManagaer()
+        {
+            return View();
+        }
     }
+
 }
 /*
-    Apply For Loan
+    
     EMI Calculator
     Money Managaer
-    View/Update Profile
-    Update User/Transaction Password
- * Money Manager
+   
  */
