@@ -45,7 +45,14 @@
     
     function SubmitFormCredit()
     {
+
         var accountNumber = $('#form1 #AccountNumber').val();
+        var reenterAccountNumber = $('#form1 #ConfirmedAccountNumber').val();
+        if (accountNumber != reenterAccountNumber)
+        {
+            alert("Account numbers dont match")
+            return;
+        }
         var amount = $('#form1 #Amount').val();
         var remarks = $('#form1 #Remarks').val();
         var CreditOrDebit = 'C';
@@ -67,6 +74,11 @@
     function SubmitFormDebit()
     {
         var accountNumber = $('#form1 #AccountNumber').val();
+        var reenterAccountNumber = $('#form1 #ConfirmedAccountNumber').val();
+        if (accountNumber != reenterAccountNumber) {
+            alert("Account numbers dont match");
+            return;
+        }
         var amount = $('#form1 #Amount').val();
         var remarks = $('#form1 #Remarks').val();
         var CreditOrDebit = 'D';
@@ -91,11 +103,11 @@
 <form id="form1" action ="javascript:SubmitForm()">
     
     <label>Customer Account Number</label>
-    <input id="AccountNumber" type="text" onchange='getTypeOfAccount(this.value)' required/>
+    <input id="AccountNumber" type="number" onchange='getTypeOfAccount(this.value)' required/>
     <br />
 
     <label>Re-enter Account Number</label>
-    <input id ="ConfirmedAccountNumber" type="text" required />
+    <input id ="ConfirmedAccountNumber" type="number" required />
     <br />
     
     <label>Amount</label>
