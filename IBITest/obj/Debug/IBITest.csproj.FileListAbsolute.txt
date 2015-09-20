@@ -243,8 +243,8 @@ C:\Users\akale\Documents\IBITest\IBITest\bin\ko\System.Spatial.resources.dll
 C:\Users\akale\Documents\IBITest\IBITest\bin\ru\System.Spatial.resources.dll
 C:\Users\akale\Documents\IBITest\IBITest\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\akale\Documents\IBITest\IBITest\bin\zh-Hant\System.Spatial.resources.dll
-C:\Users\akale\Documents\IBITest\IBITest\obj\Debug\IBITest.csprojResolveAssemblyReference.cache
 C:\Users\akale\Documents\IBITest\IBITest\obj\Debug\IBITest.dll
 C:\Users\akale\Documents\IBITest\IBITest\obj\Debug\IBITest.pdb
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\Content\Chrysanthemum.jpg
 C:\Users\akale\Documents\IBITest\IBITest\bin\Content\Chrysanthemum.jpg
+C:\Users\akale\Documents\IBITest\IBITest\obj\Debug\IBITest.csprojResolveAssemblyReference.cache

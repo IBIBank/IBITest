@@ -379,6 +379,7 @@
     <Content Include="Views\Customer\UpdateUserOrTransactionPassword.cshtml" />
     <Content Include="Views\Customer\MoneyManagaer.cshtml" />
     <Content Include="Views\Customer\ApplyForLoan.cshtml" />
+    <Content Include="Views\Banker\CreditDebitCustomerAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
