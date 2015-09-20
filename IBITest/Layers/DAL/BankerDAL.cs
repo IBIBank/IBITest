@@ -750,7 +750,81 @@ namespace IBITest.Layers.DAL
 
             return result;
         }
-        
-        
+
+
+
+
+        public bool CreateAccountTransactionByBanker(long sourceAccount, char transactionType, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                int transactionID;
+
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Transaction",connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                reader.Read();
+                transactionID = Convert.ToInt16(reader[0]) + 1;
+                reader.Close();                
+
+                command.CommandText = String.Format("INSERT INTO Transaction(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )",transactionID.ToString(), transactionType.ToString(), DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+            return result;
+        }
+
+
+
+
+
+        public bool CreditSavingsAccountByBanker(long sourceAccount, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+            Decimal currentBalance;
+
+
+            currentBalance = GetAccountBalance(sourceAccount);
+
+            currentBalance += amount;
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+                
+            return result;
+        }
+
+        public bool DebitSavingsAccountByBanker(long sourceAccount, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+            Decimal currentBalance;
+            
+            currentBalance = GetAccountBalance(sourceAccount);
+
+            currentBalance -= amount;
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'D', amount, transactionRemarks));
+                
+            return result;
+        }
+
+        public bool CreditLoanAccountByBanker(long sourceAccount, Decimal amount, string transactionRemarks)
+        {
+            bool result = false;
+            Decimal currentBalance;
+            
+            currentBalance = GetAccountBalance(sourceAccount);
+
+            currentBalance -= amount;
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+                
+            return result;
+        }
+
+
+
     }
 }
