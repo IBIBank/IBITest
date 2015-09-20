@@ -203,8 +203,34 @@ namespace IBITest.Controllers
 
         }
 
+        public ActionResult CreditDebitCustomerAccount()
+        {
+            return View();
+        }
+        public string GetAccountType(int accountNumber)
+        {
+            
+            if (accountNumber == 2011)
+            {
+                ViewBag.accountType = "S";
+                return "S";
+            }
+            else if (accountNumber == 2012)
+            {
+                ViewBag.accountType = "L";
+                return "L";
+            }
+            else
+            {
+                ViewBag.accountType = "I";
+                return "I";
+            }
 
-        
+        }
+        public bool SetBalance(int accountNumber, decimal amount, char accountType, char CreditOrDebit, string remarks)
+        {
+            return true;
+        }
         public ActionResult ApproveRequest(string val)
         {
             int requestID;

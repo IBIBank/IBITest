@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "CreditDebitCustomerAccount";
+    Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $(document).ready()
+    {
+        /*
+        $("#creditButton").prop('disabled', false);
+        $("#debitButton").prop('disabled', true);
+        */
+    }
+    var accountType;
+    function getTypeOfAccount(accountNumber)
+    {
+        //alert("You selected account number " + accountNumber);
+        $.ajax({
+            url: "/Banker/GetAccountType",
+            data: { accountNumber: accountNumber },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                accountType=data;
+                if (data == "S") {
+                    $("#creditButton").prop('disabled', false);
+                    $("#debitButton").prop('disabled', false);
+                }
+                else if (data == "L") {
+                    $("#creditButton").prop('disabled', false);
+                    $("#debitButton").prop('disabled', true);
+                }
+                else
+                {
+                    alert("Account number does not exist");
+                    $("#creditButton").prop('disabled', true);
+                    $("#debitButton").prop('disabled', true);
+                }
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+    
+    function SubmitFormCredit()
+    {
+        var accountNumber = $('#form1 #AccountNumber').val();
+        var amount = $('#form1 #Amount').val();
+        var remarks = $('#form1 #Remarks').val();
+        var CreditOrDebit = 'C';
+        //alert(accountNumber + " " + amount + " " + remarks + " " + CreditOrDebit);
+        $.ajax({
+            url: "/Banker/SetBalance",
+            data: { accountNumber: accountNumber, amount: amount, accountType:accountType,CreditOrDebit:CreditOrDebit,remarks: remarks },
+            cache: false,
+            type: "POST",
+            traditional: true,
+            success: function (data) {
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });       
+    }
+    function SubmitFormDebit()
+    {
+        var accountNumber = $('#form1 #AccountNumber').val();
+        var amount = $('#form1 #Amount').val();
+        var remarks = $('#form1 #Remarks').val();
+        var CreditOrDebit = 'D';
+        //alert(accountNumber + " " + amount + " " + remarks + " " + CreditOrDebit);
+        $.ajax({
+            url: "/Banker/SetBalance",
+            data: { accountNumber: accountNumber, amount: amount, accountType:accountType,CreditOrDebit:CreditOrDebit,remarks: remarks },
+            cache: false,
+            type: "POST",
+            traditional: true,
+            success: function (data) {
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+    }
+
+</script>
+<h2>Credit - Debit Customer Account</h2>
+<form id="form1" action ="javascript:SubmitForm()">
+    
+    <label>Customer Account Number</label>
+    <input id="AccountNumber" type="text" onchange='getTypeOfAccount(this.value)' required/>
+    <br />
+
+    <label>Re-enter Account Number</label>
+    <input id ="ConfirmedAccountNumber" type="text" required />
+    <br />
+    
+    <label>Amount</label>
+    <input id="Amount" type="number" min="1" max="25000" required/>
+    <br />
+    
+    <label>Remarks</label>
+    <textarea id="Remarks" required></textarea>
+    <br />
+    
+    <button type="submit"  id="creditButton" formaction ="javascript:SubmitFormCredit()" disabled>Credit</button>
+    <button type="submit"  id="debitButton" formaction ="javascript:SubmitFormDebit()" disabled >Debit</button>
+
+</form>
