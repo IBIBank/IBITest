@@ -692,7 +692,7 @@ namespace IBITest.Layers.DAL
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand("SELECT AccountType FROM Account WHERE AccountNumber = " + accountNumber.ToString(), connection);
+                SqlCommand command = new SqlCommand("SELECT AccountType FROM Account WHERE AccountNumber = " + accountNumber.ToString() + " AND NOT Status = 'Closed' ", connection);
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (reader.HasRows)
