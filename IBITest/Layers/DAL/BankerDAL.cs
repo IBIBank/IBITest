@@ -507,12 +507,13 @@ namespace IBITest.Layers.DAL
                 reader.Close();
 
 
-                command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
+                command.CommandText = String.Format("SELECT COUNT(*) FROM Account");
                 reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+                reader.Read();
+
+                if (Convert.ToInt64(reader[0]) != 0)
                 {
-                    reader.Read();
                     accountNumber = Convert.ToInt64(reader[0]) + 1;
                 }
                 else
