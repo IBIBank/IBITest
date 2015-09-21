@@ -283,15 +283,25 @@ namespace IBITest.Controllers
             }
             else
             {
-                /*
+                
                 decimal loanBalance = objBankerDAL.GetAccountBalance(accountNumber);
                 if(amount==loanBalance)
                 {
                     objBankerDAL.CreditLoanAccountByBanker(accountNumber, amount, remarks);
-                    objBankerDAL.C
+                    objBankerDAL.CloseLoanAccount(accountNumber);
+                    return "Credit Successful and Closed account";
                 }
-                */
-                return "loan functionality in progress";
+                else if (amount > loanBalance)
+                {
+                    return "Amount exceeds available balance";
+                }
+                else
+                {
+                    objBankerDAL.CreditLoanAccountByBanker(accountNumber, amount, remarks);
+                    return "Credit Successful";
+                }
+                
+                
             }
             
         }
