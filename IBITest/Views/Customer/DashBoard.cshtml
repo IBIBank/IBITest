@@ -15,9 +15,10 @@
             type: "POST",
             success: function (data) {
                 $("#tableOfSavingAccounts").empty();
+                $("#tableOfSavingAccounts").append('<tr><th>Account Number</th><th>Balance</th><th>Mini/Detailed statements</th></tr>');
+                $("#AccountDetailsLabel").text("Account Details : ");
                 for (var x = 0; x < data.length; x++) {
-                    $("#tableOfSavingAccounts").append('<tr><th>Account Number</th><th>Balance</th><th>Mini/Detailed statements</th></tr>');
-                    $("#AccountDetailsLabel").text("Account Details : ");
+                   
 
                     $("#tableOfSavingAccounts").append('<tr><td>' + data[x].accountNumber + '</td><td>' + data[x].balance + '</td><td><a href =@Url.Action("MiniDetailedstatements","Customer")>Mini/Detailed Statements<a></td></tr>');
                 }
