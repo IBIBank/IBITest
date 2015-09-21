@@ -15,7 +15,7 @@ namespace IBITest.Controllers
         {
             CustomerDAL newObj = new CustomerDAL();
 
-            MessageBox.Show(newObj.DoFundTransfer(new FundTransferViewModel { FromAccount = 2, ToAccount = 5, Amount = 4, remarks = "First FT", TransactionPassword = "nocheck" }).ToString());
+            MessageBox.Show(newObj.GetNoOfPendingRequests(2).ToString());
             
             return View(new TestModel());
         }
