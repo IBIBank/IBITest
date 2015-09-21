@@ -741,7 +741,7 @@ namespace IBITest.Layers.DAL
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}" , finalBalance.ToString(), accountNumber.ToString()));
+                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}" , finalBalance.ToString(), accountNumber.ToString()),connection);
 
                 if (command.ExecuteNonQuery() > 0)
                     result = true;
@@ -754,7 +754,7 @@ namespace IBITest.Layers.DAL
 
 
 
-        public bool CreateAccountTransactionByBanker(long sourceAccount, char transactionType, Decimal amount, string transactionRemarks)
+        public bool CreateAccountTransactionByBanker(long sourceAccount, string transactionType, Decimal amount, string transactionRemarks)
         {
             bool result = false;
 
@@ -763,14 +763,14 @@ namespace IBITest.Layers.DAL
                 int transactionID;
 
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Transaction",connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(TransactionID) FROM Transactions ",connection);
                 SqlDataReader reader = command.ExecuteReader();
 
                 reader.Read();
                 transactionID = Convert.ToInt16(reader[0]) + 1;
                 reader.Close();                
 
-                command.CommandText = String.Format("INSERT INTO Transaction(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )",transactionID.ToString(), transactionType.ToString(), DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
+                command.CommandText = String.Format("INSERT INTO Transactions(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}' )",transactionID.ToString(), transactionType, DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
 
                 if (command.ExecuteNonQuery() > 0)
                     result = true;
@@ -793,7 +793,7 @@ namespace IBITest.Layers.DAL
             currentBalance = GetAccountBalance(sourceAccount);
 
             currentBalance += amount;
-            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, "Credit", amount, transactionRemarks));
                 
             return result;
         }
@@ -806,7 +806,7 @@ namespace IBITest.Layers.DAL
             currentBalance = GetAccountBalance(sourceAccount);
 
             currentBalance -= amount;
-            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'D', amount, transactionRemarks));
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, "Debit", amount, transactionRemarks));
                 
             return result;
         }
@@ -819,7 +819,7 @@ namespace IBITest.Layers.DAL
             currentBalance = GetAccountBalance(sourceAccount);
 
             currentBalance -= amount;
-            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, "Credit", amount, transactionRemarks));
                 
             return result;
         }

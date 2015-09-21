@@ -257,7 +257,14 @@ namespace IBITest.Controllers
             }
             else
             {
-
+                /*
+                decimal loanBalance = objBankerDAL.GetAccountBalance(accountNumber);
+                if(amount==loanBalance)
+                {
+                    objBankerDAL.CreditLoanAccountByBanker(accountNumber, amount, remarks);
+                    objBankerDAL.C
+                }
+                */
                 return "loan functionality in progress";
             }
             
