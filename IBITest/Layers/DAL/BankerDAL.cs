@@ -12,12 +12,36 @@ namespace IBITest.Layers.DAL
 {
     public class BankerDAL
     {
-        public int GetNoOfBranchTransferRequests()
+        public long GetBranchCodeByBankerID(string branchLogInID)
+        {
+            long branchCode = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT BranchCode FROM Branch WHERE BranchLogInID =  '" + branchLogInID + "' ", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                                
+                reader.Read();
+                branchCode = Convert.ToInt64(reader[0]);          
+
+                reader.Close();
+            }
+
+            return branchCode;
+
+        }
+
+
+
+
+        public int GetNoOfBranchTransferRequests(long branchCode)
         {
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM BranchTransferRequest WHERE Status = 'S' ", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM BranchTransferRequest WHERE Status = 'S' AND FromBranch = " + branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -38,12 +62,12 @@ namespace IBITest.Layers.DAL
         }
 
 
-        public int GetNoOfLoanRequests()
+        public int GetNoOfLoanRequests(long branchCode)
         {
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM LoanRequest WHERE Status = 'S' ", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM LoanRequest WHERE Status = 'S' AND BranchCode = " + branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -65,12 +89,12 @@ namespace IBITest.Layers.DAL
 
 
 
-        public int GetNoOfNewAccountRequests()
+        public int GetNoOfNewAccountRequests(long branchCode)
         {
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM NewAccountRequest WHERE Status = 'S' ", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM NewAccountRequest WHERE Status = 'S' AND BranchCode = " + branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -93,12 +117,12 @@ namespace IBITest.Layers.DAL
 
 
 
-        public int GetNoOfClosureRequests()
+        public int GetNoOfClosureRequests(long branchCode)
         {
             int count = 0;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM ClosingRequest WHERE Status = 'S' ", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM ClosingRequest WHERE Status = 'S' AND BranchCode = " + branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -216,13 +240,13 @@ namespace IBITest.Layers.DAL
         }
 
 
-        public List<RequestViewModel> GetBranchTransferRequests()
+        public List<RequestViewModel> GetBranchTransferRequests(long branchCode)
         {
             List<RequestViewModel> mdL = null;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM BranchTransferRequest ", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM BranchTransferRequest WHERE FromBranch = " + branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -257,13 +281,13 @@ namespace IBITest.Layers.DAL
 
 
 
-        public List<RequestViewModel> GetClosingRequests()
+        public List<RequestViewModel> GetClosingRequests(long branchCode)
         {
             List<RequestViewModel> mdL = null;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM ClosingRequest ", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM ClosingRequest WHERE BranchCode = "+branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -300,13 +324,13 @@ namespace IBITest.Layers.DAL
 
 
 
-        public List<RequestViewModel> GetLoanRequests()
+        public List<RequestViewModel> GetLoanRequests(long branchCode)
         {
             List<RequestViewModel> mdL = null;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM LoanRequest ", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM LoanRequest WHERE BranchCode = " + branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -344,14 +368,14 @@ namespace IBITest.Layers.DAL
 
 
 
-        public List<RequestViewModel> GetNewAccountRequests()
+        public List<RequestViewModel> GetNewAccountRequests(long branchCode)
         {
             List<RequestViewModel> mdL = null;
             
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM NewAccountRequest", connection);
+                SqlCommand command = new SqlCommand("SELECT * FROM NewAccountRequest WHERE BranchCode = "+branchCode.ToString(), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -387,14 +411,14 @@ namespace IBITest.Layers.DAL
 
 
 
-        public List<RequestViewModel> GetAllRequests()
+        public List<RequestViewModel> GetAllRequests(long branchCode)
         {
             char fl = 'f';
             List<RequestViewModel> mdLA = new List<RequestViewModel>();
 
             List<RequestViewModel> mdLtemp = null;
 
-            mdLtemp = GetLoanRequests();
+            mdLtemp = GetLoanRequests(branchCode);
 
             if (mdLtemp != null)
             {
@@ -405,22 +429,9 @@ namespace IBITest.Layers.DAL
                 mdLtemp.Clear();
             }
 
-           
-
-            mdLtemp = GetClosingRequests();
-
-            if (mdLtemp != null)
-            {
-                fl = 't';
-
-                foreach (var v in mdLtemp)
-                    mdLA.Add(v);
-                mdLtemp.Clear();
-
-            }
 
 
-            mdLtemp = GetNewAccountRequests();
+            mdLtemp = GetClosingRequests(branchCode);
 
             if (mdLtemp != null)
             {
@@ -433,7 +444,20 @@ namespace IBITest.Layers.DAL
             }
 
 
-            mdLtemp = GetBranchTransferRequests();
+            mdLtemp = GetNewAccountRequests(branchCode);
+
+            if (mdLtemp != null)
+            {
+                fl = 't';
+
+                foreach (var v in mdLtemp)
+                    mdLA.Add(v);
+                mdLtemp.Clear();
+
+            }
+
+
+            mdLtemp = GetBranchTransferRequests(branchCode);
 
             if (mdLtemp != null)
             {
@@ -763,14 +787,14 @@ namespace IBITest.Layers.DAL
                 int transactionID;
 
                 connection.Open();
-                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Transaction",connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Transactions",connection);
                 SqlDataReader reader = command.ExecuteReader();
 
                 reader.Read();
                 transactionID = Convert.ToInt16(reader[0]) + 1;
                 reader.Close();                
 
-                command.CommandText = String.Format("INSERT INTO Transaction(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )",transactionID.ToString(), transactionType.ToString(), DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
+                command.CommandText = String.Format("INSERT INTO Transactions(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )",transactionID.ToString(), transactionType.ToString(), DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
 
                 if (command.ExecuteNonQuery() > 0)
                     result = true;
@@ -824,6 +848,22 @@ namespace IBITest.Layers.DAL
             return result;
         }
 
+
+        public bool CloseLoanAccount(long accountNumber)
+        {
+            bool result = false;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+                                
+                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ", accountNumber.ToString() ), connection);
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+            }
+
+            return result;
+        }
 
 
     }

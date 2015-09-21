@@ -152,6 +152,8 @@ namespace IBITest.Controllers
             
             if(role.Equals("Customer"))
                 ur.customerID = (new CustomerDAL()).GetCustomerIDbyUserID(model.UserName);
+            else if(role.Equals("Banker"))
+                ur.branchCode = (new BankerDAL()).GetBranchCodeByBankerID(model.UserName);
 
             Session["User"] = ur;
 
