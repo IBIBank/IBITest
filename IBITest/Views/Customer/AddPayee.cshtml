@@ -6,15 +6,13 @@
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
-    function validate()
-    {
+    function validate() {
         var accountNumber = $("#payeeAccountNumber").val();
-        if (isNaN(accountNumber) == true)
-        {
+        if (isNaN(accountNumber) == true) {
             alert("Not a number");
             return;
         }
-         
+
         $.ajax({
             url: "/Customer/ValidateAccountNumber",
             data: { accountNumber: accountNumber },
@@ -26,12 +24,11 @@
                 if (!data) {
                     alert("Account Number is invalid");
                 }
-                else
-                {
+                else {
                     $('#payeeName').val(data.payeeName);
-                    $('#payeeName').prop("disabled","true");
+                    $('#payeeName').prop("readonly", "true");
                     $('#branchName').val(data.branchName);
-                    $('#branchName').prop("disabled","true");
+                    $('#branchName').prop("readonly", "true");
                 }
             },
             error: function (reponse) {
