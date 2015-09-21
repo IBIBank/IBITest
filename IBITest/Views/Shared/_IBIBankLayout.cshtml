@@ -24,6 +24,14 @@
             <div class="content-wrapper" style="clear:left;">
                 <div>
                     <h2><b>Welcome</b></h2>
+
+                    @{
+                        if(Session["User"] != null)
+                        {
+                           <h4> @Html.ActionLink("LogOut","LogOut","CommonBiz")</h4>    
+                        }                    
+                    }
+                    
                 </div>
             </div>
     </header>

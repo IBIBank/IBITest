@@ -173,5 +173,12 @@ namespace IBITest.Controllers
 
         }
 
+
+        public ActionResult LogOut()
+        {
+            Session["User"] = null;
+            return RedirectToAction("Index");
+        }
+
     }
 }
