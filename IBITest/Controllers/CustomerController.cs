@@ -131,8 +131,18 @@ namespace IBITest.Controllers
         }
         public ActionResult TransferFunds()
         {
+            List<int> savingsAccounts = new List<int>(){4,8,9};
+            ViewBag.savingsAccountList = savingsAccounts;
+            List<SelectListItem> payeeAccounts = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = "sham",Value="4"},
+                new SelectListItem(){Text = "ram",Value="8"},
+                new SelectListItem(){Text = "suresh",Value="12"},
+            };
+            ViewBag.payeeAccounts = payeeAccounts;
             return View();
         }
+       
         public ActionResult RequestClosureOfAccount()
         {
             return View();
