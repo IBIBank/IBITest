@@ -442,16 +442,17 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = " + customerID.ToString());
                 reader = command.ExecuteReader();
                 reader.Read();
-                reader.Close();
 
                 payeeDetails.payeeName = reader[0].ToString();
+                reader.Close();
 
                 command.CommandText = String.Format("SELECT BranchName FROM Branch WHERE BranchCode = " + branchCode.ToString() );
                 reader = command.ExecuteReader();
                 reader.Read();
-                reader.Close();
 
                 payeeDetails.branchName = reader[0].ToString();
+                reader.Close();
+
                 payeeDetails.payeeAccountNumber = payeeAccountNumber;                
             }
 
