@@ -43,7 +43,7 @@ namespace IBITest.Controllers
                 ModelState.AddModelError("", "User Id not available");
                 return View(model);
             }
-            
+
         }
         public ActionResult CreateNewAccount()
         {
@@ -52,7 +52,7 @@ namespace IBITest.Controllers
 
             CommonDAL obj = new CommonDAL();
             NewAccountRequestView model = new NewAccountRequestView();
-            
+
             var customerID = (Session["User"] as UserRole).customerID;
 
             ViewBag.cityList = obj.GetCityList();
@@ -62,7 +62,7 @@ namespace IBITest.Controllers
         }
 
         [HttpPost]
-        public string CreateNewAccount( NewAccountRequestView model)
+        public string CreateNewAccount(NewAccountRequestView model)
         {
             CustomerDAL customerDALobject = new CustomerDAL();
 
@@ -78,7 +78,7 @@ namespace IBITest.Controllers
         {
             List<BranchMiniViewModel> bmvm = new List<BranchMiniViewModel>();
             CommonDAL cd = new CommonDAL();
-            bmvm = cd.GetBranchesInCity(cityName );
+            bmvm = cd.GetBranchesInCity(cityName);
             //MessageBox.Show(bmvm[0].BranchCode.ToString()+" "+bmvm[0].BranchName);
             SelectList obj = new SelectList(bmvm, "BranchCode", "BranchName");
 
@@ -106,13 +106,20 @@ namespace IBITest.Controllers
         {
             CustomerDAL objOfCustomerDAL = new CustomerDAL();
             AddPayeeViewModel obj = objOfCustomerDAL.ValidatePayeeAccountNumber(accountNumber);
-            
+
             //if(accountNumber==0)
             //    return null;
             //AddPayeeViewModel obj = new AddPayeeViewModel {payeeName="virat",branchName="kormangala" };
-            
+
             return Json(obj);
-    
+
+        }
+        [HttpPost]
+        public ActionResult AddPayee(AddPayeeViewModel model)
+        {
+            CustomerDAL objOfCustomerDAL = new CustomerDAL();
+            objOfCustomerDAL.AddPayee(model, 1);
+            return View();
         }
         public ActionResult RequestForAccountTransfer()
         {
