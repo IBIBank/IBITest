@@ -23,6 +23,11 @@ a {
 }
 
 
+    .linkcolor {
+    color: blue;
+    text-decoration: underline;
+}
+
 
     a:link, a:visited,
     a:active, a:hover {
@@ -32,10 +37,6 @@ a {
     a:hover {
         background-color: #c7d1d6;
     }
-
-    .linkcolor {
-    color: blue;
-}
 
 header, footer, hgroup,
 nav, section {
