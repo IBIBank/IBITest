@@ -248,3 +248,4 @@ C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\zh-H
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\obj\Debug\IBITest.dll
 C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\obj\Debug\IBITest.pdb
+C:\Users\sommbhat\Documents\Visual Studio 2012\Projects\IBITest\IBITest\obj\Debug\IBITest.csprojResolveAssemblyReference.cache
