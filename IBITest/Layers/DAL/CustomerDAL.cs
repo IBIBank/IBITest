@@ -196,7 +196,7 @@ namespace IBITest.Layers.DAL
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (!reader.HasRows)
-                    return accountsList;
+                    return null;
 
                 else
                 {
@@ -207,6 +207,36 @@ namespace IBITest.Layers.DAL
                         account.accountNumber = Convert.ToInt64(reader[0]);
                         account.balance = Convert.ToDecimal(reader[1]);
 
+                        accountsList.Add(account);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return accountsList;
+        }
+
+
+        public List<long> GetAccountsListAsLongListByCustomerID(long customerID)
+        {
+            List<long> accountsList = new List<long>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber FROM Account WHERE CustomerID = {0} ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        long account = Convert.ToInt64(reader[0]);
+                        
                         accountsList.Add(account);
                     }
                     reader.Close();
@@ -933,6 +963,101 @@ namespace IBITest.Layers.DAL
         }
 
 
+
+
+        public List<TransactionStatementViewModel> GetLastFiveTransactions(long accountNumber)
+        {
+            List<TransactionStatementViewModel> accountsList = new List<TransactionStatementViewModel>();
+            int count = 0;
+            
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM Transactions WHERE SrcAccount = " + accountNumber.ToString() + " OR DestAccount = " + accountNumber.ToString() + " ORDER BY(TransactionID) DESC ", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+
+                else
+                {
+                    while (reader.Read() && (++count) <= 5)
+                    {
+                        TransactionStatementViewModel transactionDetails = new TransactionStatementViewModel();
+
+                        transactionDetails.transactionID = Convert.ToInt16(reader[0]);
+
+                        if (!reader.IsDBNull(6))
+                        {
+                            if (Convert.ToInt64(reader[5]) == accountNumber)
+                                transactionDetails.transactionType = "Debit";
+                            else
+                                transactionDetails.transactionType = "Credit";
+                        }
+
+                        transactionDetails.transactionDate = Convert.ToDateTime(reader[2]);
+                        transactionDetails.amount = Convert.ToDecimal(reader[3]);
+                        transactionDetails.transactionRemarks = reader[4].ToString();
+
+                        accountsList.Add(transactionDetails);
+                    }
+                    reader.Close();
+
+                }
+            }
+
+            return accountsList;
+        }
+
+
+        public List<TransactionStatementViewModel> GetDetailedTransactions(long accountNumber, DateTime startDate, DateTime endDate)
+        {
+            List<TransactionStatementViewModel> accountsList = new List<TransactionStatementViewModel>();
+            
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM Transactions WHERE (SrcAccount = "+ accountNumber.ToString() + " OR DestAccount = " + accountNumber.ToString() + ") AND (TransactionDate >= '"+startDate + "' AND TransactionDate <= '" + endDate + "') ", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        TransactionStatementViewModel transactionDetails = new TransactionStatementViewModel();
+
+                        transactionDetails.transactionID = Convert.ToInt16(reader[0]);
+
+                        if (!reader.IsDBNull(6))
+                        {
+                            if (Convert.ToInt64(reader[5]) == accountNumber)
+                                transactionDetails.transactionType = "Debit";
+                            else
+                                transactionDetails.transactionType = "Credit";
+                        }
+                        else
+                            transactionDetails.transactionType = reader[1].ToString();
+
+                        transactionDetails.transactionDate = Convert.ToDateTime(reader[2]);
+                        transactionDetails.amount = Convert.ToDecimal(reader[3]);
+                        transactionDetails.transactionRemarks = reader[4].ToString();
+
+                        accountsList.Add(transactionDetails);
+                    }
+                    reader.Close();
+
+                }
+            }
+
+            return accountsList;
+        }
 
     }
 }

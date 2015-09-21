@@ -102,10 +102,27 @@ namespace IBITest.Controllers
 
             return Json(obj);
         }
+
+
+
         public ActionResult MiniDetailedstatements()
         {
+            List<TransactionStatementViewModel> transactionsList = new List<TransactionStatementViewModel>();
+            List<long> accountsList = new List<long>();
+
+            CustomerDAL customerDALObject = new CustomerDAL();
+            long customerID = (Session["User"] as UserRole).customerID;
+
+            accountsList = customerDALObject.GetAccountsListAsLongListByCustomerID(customerID);
+
+            ViewBag.accountsList = accountsList;
+
             return View();
         }
+        
+        
+        
+        
         public ActionResult AddPayee()
         {
             //AddPayeeViewModel obj = new AddPayeeViewModel();

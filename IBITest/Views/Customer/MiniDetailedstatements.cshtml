@@ -10,6 +10,17 @@
 <br />
 
 
+<p id="list">    
+     Account Number:
+    <select onchange ="FilterRequests(this.value)" id ="selectlist">
+        @foreach(var v in ViewBag.accountsList)
+        {
+            <option value ="@v"> @v </option>
+        }
+       
+    </select>    
+</p>
+
 
 <input type="radio" class="radiolist" onchange="fun(this.value)" value="1"  id="Radio1" name="OptionList" checked   />Mini
 <input type="radio" class="radiolist" onchange="fun(this.value)" value="2" id="Radio2" name="OptionList" />Detailed
@@ -20,15 +31,6 @@
 
 
 
-<p id="list">    
-    <select onchange ="FilterRequests(this.value)" id ="selectlist">
-        <option value ="1">All</option>
-        <option value ="2">Pending</option>
-        <option value ="3">Approved</option>
-        <option value ="4">Rejected</option>
-        <option value ="5">Transferred</option>
-    </select>    
-</p>
 
 
 <table id ="mytable" class ="display">
@@ -44,19 +46,7 @@
      </thead>
 
      <tbody>         
-        @{
-            foreach(var v in Model)
-            {
-                <tr>
-                    <td>@(v.RequestID) </td>
-                    <td>@(v.RequestType) </td>
-                    <td>@(v.CustomerName) </td>
-                    <td>@(v.SubmissionDate) </td>
-                    <td>@(v.ServiceDate) </td>
-                    <td>@(v.Status) </td>
-                </tr>
-            }        
-        }
+       
      </tbody>
 
  </table>
