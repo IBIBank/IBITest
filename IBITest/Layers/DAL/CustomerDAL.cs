@@ -423,7 +423,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand("SELECT CustomerID, BranchCode FROM Account WHERE AccountNumber = " + payeeAccountNumber.ToString(), connection);
+                SqlCommand command = new SqlCommand("SELECT CustomerID, BranchCode FROM Account WHERE AccountNumber = " + payeeAccountNumber.ToString() + " AND NOT Status = 'Closed' ", connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -442,12 +442,14 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = " + customerID.ToString());
                 reader = command.ExecuteReader();
                 reader.Read();
+                reader.Close();
 
                 payeeDetails.payeeName = reader[0].ToString();
 
                 command.CommandText = String.Format("SELECT BranchName FROM Branch WHERE BranchCode = " + branchCode.ToString() );
                 reader = command.ExecuteReader();
                 reader.Read();
+                reader.Close();
 
                 payeeDetails.branchName = reader[0].ToString();
                 payeeDetails.payeeAccountNumber = payeeAccountNumber;                
