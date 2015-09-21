@@ -1,11 +1,98 @@
-﻿@{
+﻿@model IBITest.Models.AddPayeeViewModel
+
+@{
     ViewBag.Title = "AddPayee";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function validate()
+    {
+        var accountNumber = $("#payeeAccountNumber").val();
+        if (isNaN(accountNumber) == true)
+        {
+            alert("Not a number");
+            return;
+        }
+         
+        $.ajax({
+            url: "/Customer/ValidateAccountNumber",
+            data: { accountNumber: accountNumber },
+            cache: false,
+            type: "POST",
+            traditional: true,
+            success: function (data) {
 
-<h2>Add Payee</h2>
-<label>Payee's Account Number</label>
-<input id="payeeAccountNumber"  type="text"/>
+                if (!data) {
+                    alert("Account Number is invalid");
+                }
+                else
+                {
+                    $('#payeeName').val(data.payeeName);
+                    $('#payeeName').prop("disabled","true");
+                    $('#branchName').val(data.branchName);
+                    $('#branchName').prop("disabled","true");
+                }
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
 
+    }
+</script>
+<h2>AddPayee</h2>
 
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
 
+    <fieldset>
+        <legend>AddPayeeViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.payeeAccountNumber)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.payeeAccountNumber)
+            @Html.ValidationMessageFor(model => model.payeeAccountNumber)
+        </div>
+        <a onclick="validate()">Validate</a>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.payeeName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.payeeName)
+            @Html.ValidationMessageFor(model => model.payeeName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.branchName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.branchName)
+            @Html.ValidationMessageFor(model => model.branchName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.payeeNickName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.payeeNickName)
+            @Html.ValidationMessageFor(model => model.payeeNickName)
+        </div>
+
+        <p>
+            <button type="submit" id="SubmitButton">Add Payee</button>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
