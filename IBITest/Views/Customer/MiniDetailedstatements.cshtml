@@ -4,3 +4,342 @@
 }
 
 <h2>MiniDetailedstatements</h2>
+
+@using IBITest.Models
+
+<br />
+
+
+
+<input type="radio" class="radiolist" onchange="fun(this.value)" value="1"  id="Radio1" name="OptionList" checked   />Mini
+<input type="radio" class="radiolist" onchange="fun(this.value)" value="2" id="Radio2" name="OptionList" />Detailed
+
+
+                                                                 
+
+
+
+
+<p id="list">    
+    <select onchange ="FilterRequests(this.value)" id ="selectlist">
+        <option value ="1">All</option>
+        <option value ="2">Pending</option>
+        <option value ="3">Approved</option>
+        <option value ="4">Rejected</option>
+        <option value ="5">Transferred</option>
+    </select>    
+</p>
+
+
+<table id ="mytable" class ="display">
+     <thead>
+         <tr>
+             <th>RequestID</th>
+             <th>Request Type</th>
+             <th>Customer Name</th>
+             <th>Submission Date</th>
+             <th>Service Date</th>
+             <th>Status</th>
+         </tr>
+     </thead>
+
+     <tbody>         
+        @{
+            foreach(var v in Model)
+            {
+                <tr>
+                    <td>@(v.RequestID) </td>
+                    <td>@(v.RequestType) </td>
+                    <td>@(v.CustomerName) </td>
+                    <td>@(v.SubmissionDate) </td>
+                    <td>@(v.ServiceDate) </td>
+                    <td>@(v.Status) </td>
+                </tr>
+            }        
+        }
+     </tbody>
+
+ </table>
+
+<div id="divImageHolder"></div>
+
+
+
+
+<script>        
+
+    var displayImage = function (base64Data) {
+        var imag = "<img "
+                 + "src='" + "data:image/jpg;base64,"
+                 + base64Data + "'/>";
+
+        $("#divImageHolder").html(imag)
+    };
+
+    function GetProofImage(_requestID) {
+        alert(_requestID);
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "/Banker/GetProofImage",
+            data: {val: _requestID},
+            dataType: "json",
+            success: function (data) {
+                displayImage(data.base64imgage);
+            },
+            error: function (xhr) {
+                alert("Error occurred while sfsbfs loading the image. "
+                    + xhr.responseText);
+            }
+        });
+    };
+
+
+
+    function ApproveRequest(_requestID) {
+        alert("In Approve " + _requestID);
+        
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/Banker/ApproveRequest",
+            data: { val: _requestID },
+            success: function (data) {
+                if (data == true) {
+                    if (_requestID[0] == 'N')
+                        ProcessRequests(1);
+                    else
+                        ProcessRequests(2);
+                }
+            },
+            error: function (xhr) {
+                alert("Error ! "
+                    + xhr.responseText);
+            }
+        });
+
+    }
+
+
+    function RejectRequest(_requestID) {
+        alert("In Reject " + _requestID);
+
+        alert(_requestID);
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/Banker/RejectRequest",
+            data: { val: _requestID },
+            success: function (data) {
+                if (data == true) {
+                    if (_requestID[0] == 'N')
+                        ProcessRequests(1);
+                    else if (_requestID[0] == 'A')
+                        ProcessRequests(2);
+                    else if (_requestID[0] == 'T')
+                        ProcessRequests(3);
+                    else
+                        ProcessRequests(4);
+                }
+            },
+            error: function (xhr) {
+                alert("Error occurred. "
+                    + xhr.responseText);
+            }
+        });
+    }
+
+    function TransferRequest(_requestID) {
+        alert("In Transfer " + _requestID);
+
+        alert(_requestID);
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/Banker/TransferRequest",
+            data: { val: _requestID },
+            success: function (data) {
+                if (data == true) {
+                    if (_requestID[0] == 'T')
+                        ProcessRequests(3);
+                    else
+                        ProcessRequests(4);
+                }
+            },
+            error: function (xhr) {
+                alert("Error occurred while sfsbfs loading the image. "
+                    + xhr.responseText);
+            }
+        });
+    }
+    
+    function FilterRequests(SelectValue) {
+
+        if (SelectValue != 0) {
+            $('#mytable thead').remove();
+
+            $('#mytable').append(
+             "<thead>" +
+              "<tr>" +
+                  "<th>Request ID</th>" +
+                  "<th>Request Type</th>" +
+                  "<th>Customer Name</th>" +
+                  "<th>Submission Date</th>" +
+                  "<th>Service Date</th>" +
+                  "<th>Status</th>" +
+              "</tr>" +
+            "</thead>");
+
+
+            var url = "/Banker/GetRequestsByStatus/";
+            $.ajax({
+                url: url,
+                data: { typeid: SelectValue },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    $('#mytable tbody > tr').remove();
+                    var trhtml = "";
+                    for (var x = 0; x < data.length; x++) {
+
+                        var submissionDate = new Date(parseInt(data[x].SubmissionDate.substr(6)));
+                        var serviceDate = new Date(parseInt(data[x].ServiceDate.substr(6)));
+
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + submissionDate + "</td> <td>" + serviceDate + "</td> <td>" + data[x].Status + "</td>  </tr>";
+                    }
+                    $('#mytable').append(trhtml);
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+     
+            
+
+    }
+
+    function ProcessRequests(SelectValue) {
+
+        if (SelectValue == 1 || SelectValue == 2) {
+
+            $('#mytable thead').remove();
+
+            $('#mytable').append(
+            "<thead>" +
+             "<tr>" +
+                 "<th>Request ID</th>" +
+                 "<th>Request Type</th>" +
+                 "<th>Customer Name</th>" +
+                 "<th>Submission Date</th>" +
+                 "<th>View Proof</th>" +
+                 "<th>Approve</th>" +
+                 "<th>Reject</th>" +
+             "</tr>" +
+           "</thead>");
+
+            var url = "/Banker/GetRequestsByType/";
+
+            $.ajax({
+                url: url,
+                data: { typeid: SelectValue },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    $('#mytable tbody > tr').remove();
+                    var trhtml = "";
+                    for (var x = 0; x < data.length; x++) {
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td> <a onclick = \"GetProofImage('" + data[x].RequestID + "')\"> View Proof </a> </td> <td><a onclick = \"ApproveRequest('" + data[x].RequestID + "' ) \"> Approve </a> </td> <td><a onclick = \"RejectRequest( '" +  data[x].RequestID + "' ) \" > Reject </a> </td></tr>";
+                    }
+                    $('#mytable').append(trhtml);
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+
+        else if(SelectValue == 3 || SelectValue == 4) {
+
+            $('#mytable thead').remove();
+
+            $('#mytable').append(
+            "<thead>" +
+             "<tr>" +
+                 "<th>Request ID</th>" +
+                 "<th>Request Type</th>" +
+                 "<th>Customer Name</th>" +
+                 "<th>Submission Date</th>" +
+                 "<th>Transfer</th>" +
+                 "<th>Reject</th>" +
+             "</tr>" +
+           "</thead>");
+
+            var url = "/Banker/GetRequestsByType/";
+            $.ajax({
+                url: url,
+                data: { typeid: SelectValue },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    $('#mytable tbody > tr').remove();
+                    var trhtml = "";
+                    for (var x = 0; x < data.length; x++) {
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + data[x].SubmissionDate + "</td> <td><a onclick = \"TransferRequest('" + data[x].RequestID + "') \"> Transfer </a> </td> <td><a onclick = \"RejectRequest('" + data[x].RequestID + "') \" > Reject </a> </td></tr>";
+                    }
+                    $('#mytable ').append(trhtml);
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+
+
+        }
+    }
+
+    function fun(i) {
+        if (i == 1) {
+            $('#mytable thead').remove();
+            $('#mytable tbody').remove();
+
+            $('#Label').text("Request Status");
+            $("#list").find('option').remove().end();
+
+            $("#list").find('select').append("<option value = '0'> -- Select -- </option>");
+            $("#list").find('select').append("<option value = '1'>All </option>");
+            $("#list").find('select').append("<option value = '2'>Pending </option>");
+            $("#list").find('select').append("<option value = '3'>Approved </option>");
+            $("#list").find('select').append("<option value = '4'>Rejected </option>");
+            $("#list").find('select').append("<option value = '5'>Transferred </option>");
+            $("#selectlist").attr("onchange", "javascript:FilterRequests(this.value)");
+
+           
+        }
+
+        else {
+            $('#mytable thead').remove();
+            $('#mytable tbody').remove();
+
+            $('#Label').text("Pending Request Type");
+            $("#list").find('option').remove().end();
+
+            $("#list").find('select').append("<option value = '0'> -- Select -- </option>");
+            $("#list").find('select').append("<option value = '1'>New Account Creation</option>");
+            $("#list").find('select').append("<option value = '2'>Apply For Loan</option>");
+            $("#list").find('select').append("<option value = '3'>Transfer of Account </option>");
+            $("#list").find('select').append("<option value = '4'>Closing of Account </option>");
+            $("#selectlist").attr("onchange", "javascript:ProcessRequests(this.value)");
+            
+            
+        }
+                   
+    }
+
+    
+       
+
+   
+</script>
+
