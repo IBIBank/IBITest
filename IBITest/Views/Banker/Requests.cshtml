@@ -209,8 +209,8 @@
                     var trhtml = "";
                     for (var x = 0; x < data.length; x++) {
 
-                        var submissionDate = Date.parse((data[x].SubmissionDate).substring(6,20));
-                        var serviceDate =  Date.parse((data[x].serviceDate));
+                        var submissionDate = new Date(parseInt(data[x].SubmissionDate.substr(6)));
+                        var serviceDate = new Date(parseInt(data[x].ServiceDate.substr(6)));
 
 
                         trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + submissionDate + "</td> <td>" + serviceDate + "</td> <td>" + data[x].Status + "</td>  </tr>";
