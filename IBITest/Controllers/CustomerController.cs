@@ -122,7 +122,6 @@ namespace IBITest.Controllers
             CustomerDAL objOfCustomerDAL = new CustomerDAL();
 
             long customerID = (Session["User"] as UserRole).customerID;
-
             objOfCustomerDAL.AddPayee(model, customerID);
             return View();
         }
