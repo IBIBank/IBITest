@@ -227,7 +227,8 @@ namespace IBITest.Layers.DAL
 
                 command.CommandText = String.Copy("INSERT INTO Account (AccountNumber, AccountType, OpeningDate, Status, Balance, BranchCode, CustomerID ) VALUES(1,'S','2016/9/17','Active','500','1','1')");
                 rowaff = command.ExecuteNonQuery();
-
+                command.CommandText = String.Copy("INSERT INTO Account (AccountNumber, AccountType, OpeningDate, Status, Balance, BranchCode, CustomerID ) VALUES(2,'L','2016/9/17','Active','500','1','1')");
+                rowaff = command.ExecuteNonQuery();
                 if(rowaff==0)
                     System.Windows.Forms.MessageBox.Show(rowaff.ToString());
 

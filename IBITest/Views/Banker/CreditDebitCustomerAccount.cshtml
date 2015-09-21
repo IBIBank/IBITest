@@ -65,6 +65,10 @@
             traditional: true,
             success: function (data) {
                 alert(data);
+                $('#AccountNumber').val("");
+                $('#ConfirmedAccountNumber').val("");
+                $('#Amount').val("");
+                $('#Remarks').val("");
             },
             error: function (reponse) {
                 alert("error : " + reponse);
@@ -91,6 +95,10 @@
             traditional: true,
             success: function (data) {
                 alert(data);
+                $('#AccountNumber').val("");
+                $('#ConfirmedAccountNumber').val("");
+                $('#Amount').val("");
+                $('#Remarks').val("");
             },
             error: function (reponse) {
                 alert("error : " + reponse);

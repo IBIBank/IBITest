@@ -778,7 +778,7 @@ namespace IBITest.Layers.DAL
 
 
 
-        public bool CreateAccountTransactionByBanker(long sourceAccount, char transactionType, Decimal amount, string transactionRemarks)
+        public bool CreateAccountTransactionByBanker(long sourceAccount, string transactionType, Decimal amount, string transactionRemarks)
         {
             bool result = false;
 
@@ -817,7 +817,7 @@ namespace IBITest.Layers.DAL
             currentBalance = GetAccountBalance(sourceAccount);
 
             currentBalance += amount;
-            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, "Credit", amount, transactionRemarks));
                 
             return result;
         }
@@ -830,7 +830,7 @@ namespace IBITest.Layers.DAL
             currentBalance = GetAccountBalance(sourceAccount);
 
             currentBalance -= amount;
-            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'D', amount, transactionRemarks));
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, "Debit", amount, transactionRemarks));
                 
             return result;
         }
@@ -843,7 +843,7 @@ namespace IBITest.Layers.DAL
             currentBalance = GetAccountBalance(sourceAccount);
 
             currentBalance -= amount;
-            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, 'C', amount, transactionRemarks));
+            result = (SetAccountBalance(sourceAccount, currentBalance) && CreateAccountTransactionByBanker(sourceAccount, "Credit", amount, transactionRemarks));
                 
             return result;
         }
