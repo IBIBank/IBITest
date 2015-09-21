@@ -570,5 +570,34 @@ namespace IBITest.Layers.DAL
         }
 
 
+
+        public bool ValidateTransactionPassword(long customerID, string password)
+        {
+            bool result = false;
+
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT TransactionPassword FROM Customer WHERE CustomerID = {0} ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                    reader.Read();
+                else
+                    return false;
+
+                string storedPassword = reader[0].ToString();
+                reader.Close();
+
+                return password.Equals(storedPassword);
+            }
+            return result;
+        }
+
+
+        public bool DoFundTransfer(
+
     }
 }

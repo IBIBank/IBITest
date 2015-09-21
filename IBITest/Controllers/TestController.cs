@@ -17,9 +17,7 @@ namespace IBITest.Controllers
 
             List<FundTransferPayeeModel> accList = newObj.GetAllPayeeAccountByCustomerID(1);
 
-            if(accList != null)
-                foreach(var v in accList)
-                    MessageBox.Show(v.payeeNickName);
+            MessageBox.Show(newObj.ValidateTransactionPassword(04,"abhi123").ToString());
 
             return View(new TestModel());
         }
