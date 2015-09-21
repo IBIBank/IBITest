@@ -18,6 +18,14 @@ namespace IBITest.Controllers
             if (Session["User"] == null)
                 return RedirectToAction("Login", "CommonBiz");
 
+            CustomerDAL customerDALObject = new CustomerDAL();
+            
+            long customerID = (Session["User"] as UserRole).customerID;
+
+            ViewBag.approvedRequests = customerDALObject.GetNoOfApprovedRequests(customerID);
+            ViewBag.rejectedRequests = customerDALObject.GetNoOfRejectedRequests(customerID);
+            ViewBag.pendingRequests = customerDALObject.GetNoOfPendingRequests(customerID);
+
             return View();
         }
         public ActionResult FinishRegistration(string token)
