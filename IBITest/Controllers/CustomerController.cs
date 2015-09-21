@@ -105,7 +105,9 @@ namespace IBITest.Controllers
         public JsonResult ValidateAccountNumber(int accountNumber)
         {
             CustomerDAL objOfCustomerDAL = new CustomerDAL();
-            AddPayeeViewModel obj = objOfCustomerDAL.ValidatePayeeAccountNumber(accountNumber);
+            long customerID = (Session["User"] as UserRole).customerID;
+
+            AddPayeeViewModel obj = objOfCustomerDAL.ValidatePayeeAccountNumber(accountNumber, customerID);
 
             //if(accountNumber==0)
             //    return null;
@@ -118,7 +120,10 @@ namespace IBITest.Controllers
         public ActionResult AddPayee(AddPayeeViewModel model)
         {
             CustomerDAL objOfCustomerDAL = new CustomerDAL();
-            objOfCustomerDAL.AddPayee(model, 1);
+
+            long customerID = (Session["User"] as UserRole).customerID;
+
+            objOfCustomerDAL.AddPayee(model, customerID);
             return View();
         }
         public ActionResult RequestForAccountTransfer()

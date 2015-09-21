@@ -416,11 +416,25 @@ namespace IBITest.Layers.DAL
         }
 
 
-        public AddPayeeViewModel ValidatePayeeAccountNumber(long payeeAccountNumber)
+        public AddPayeeViewModel ValidatePayeeAccountNumber(long payeeAccountNumber, long sourceCustomerID)
         {
             AddPayeeViewModel payeeDetails = new AddPayeeViewModel();
-            long customerID, branchCode;
+            long payeeCustomerID, branchCode;
 
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT PayeeID FROM Payee WHERE CustomerID = " + sourceCustomerID.ToString() + " AND PayeeAccountNumber = " + payeeAccountNumber.ToString(), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Close();
+                    return null;
+                }
+
+            }
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
@@ -434,13 +448,13 @@ namespace IBITest.Layers.DAL
                 else
                 {
                     reader.Read();
-                    customerID = Convert.ToInt64(reader[0]);
+                    payeeCustomerID = Convert.ToInt64(reader[0]);
                     branchCode = Convert.ToInt64(reader[1]);
 
                     reader.Close();
                 }
 
-                command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = " + customerID.ToString());
+                command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = " + payeeCustomerID.ToString());
                 reader = command.ExecuteReader();
                 reader.Read();
 
