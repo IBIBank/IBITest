@@ -16,7 +16,7 @@
             success: function (data) {
                 $("#tableOfSavingAccounts").empty();
                 $("#tableOfSavingAccounts").append('<tr><th>Account Number</th><th>Balance</th><th>Mini/Detailed statements</th></tr>');
-                $("#AccountDetailsLabel").text("Account Details : ");
+                $("#AccountDetailsLabel").text("Account Details");
                 for (var x = 0; x < data.length; x++) {
                    
 
@@ -40,6 +40,12 @@
 @Html.ActionLink("Request Closure of Account","RequestClosureOfAccount","Customer")
 @Html.ActionLink("View Request Status","ViewRequestStatus","Customer")
 <br />
+
+<h3>Requests Status</h3>
+<p> Approved Requests: <a class ="linkcolor">@ViewBag.approvedRequests</a></p>
+<p>Rejected Requests: <a class ="linkcolor">@ViewBag.rejectedRequests</a></p>
+<p>Transferred Requests: <a class ="linkcolor">@ViewBag.pendingRequests</a></p>
+
 <h3>Profile Manager</h3>
 @Html.ActionLink("View Or Update Profile","ViewOrUpdateProfile","Customer")
 @Html.ActionLink("Update User Or Transaction Password","UpdateUserOrTransactionPassword","Customer")
@@ -49,7 +55,7 @@
 @Html.ActionLink("Money Managaer","MoneyManagaer","Customer")
 <br />
 <br />
-<div style="border:1px solid black">
+<div >
     <h3 id ="AccountDetailsLabel"></h3>
     <table id="tableOfSavingAccounts" ">
 

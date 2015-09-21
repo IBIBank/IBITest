@@ -15,10 +15,8 @@ namespace IBITest.Controllers
         {
             CustomerDAL newObj = new CustomerDAL();
 
-            List<FundTransferPayeeModel> accList = newObj.GetAllPayeeAccountByCustomerID(1);
-
-            MessageBox.Show(newObj.ValidateTransactionPassword(04,"abhi123").ToString());
-
+            MessageBox.Show(newObj.GetNoOfPendingRequests(2).ToString());
+            
             return View(new TestModel());
         }
 
