@@ -16,16 +16,20 @@ namespace IBITest.Controllers
         public ActionResult DashBoard()
         {
             BankerDAL bd = new BankerDAL();
+            long branchCode;
 
             if (Session["User"] == null)
                 return RedirectToAction("Login", "CommonBiz");
             else
                 ViewBag.user = (Session["User"] as UserRole).userID;
 
-            ViewBag.acctrf = bd.GetNoOfBranchTransferRequests();
-            ViewBag.loan = bd.GetNoOfLoanRequests();
-            ViewBag.newacc = bd.GetNoOfNewAccountRequests();
-            ViewBag.accclo = bd.GetNoOfClosureRequests();
+            branchCode = (Session["User"] as UserRole).branchCode;
+
+
+            ViewBag.acctrf = bd.GetNoOfBranchTransferRequests(branchCode);
+            ViewBag.loan = bd.GetNoOfLoanRequests(branchCode);
+            ViewBag.newacc = bd.GetNoOfNewAccountRequests(branchCode);
+            ViewBag.accclo = bd.GetNoOfClosureRequests(branchCode);
 
             BranchDetailsViewModel bm = bd.GetSelfBranchDetails(ViewBag.user);
 
@@ -66,8 +70,16 @@ namespace IBITest.Controllers
         {
             BankerDAL obj = new BankerDAL();
             List<RequestViewModel> mdL = new List<RequestViewModel>();
-            
-            mdL = obj.GetAllRequests();
+            long branchCode;
+
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+            else
+                ViewBag.user = (Session["User"] as UserRole).userID;
+
+            branchCode = (Session["User"] as UserRole).branchCode;
+
+            mdL = obj.GetAllRequests(branchCode);
 
             Session["AllRequests"] = mdL;
 
@@ -80,10 +92,20 @@ namespace IBITest.Controllers
             List<RequestViewModel> requestListTemp = new List<RequestViewModel>();
             List<RequestViewModel> requestList = new List<RequestViewModel>();
 
+            long branchCode; ;
+
+
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+            else
+                branchCode = (Session["User"] as UserRole).branchCode;
+
+
+
             switch (typeid)
             {
                 case 1:
-                    requestListTemp = obj.GetNewAccountRequests();
+                    requestListTemp = obj.GetNewAccountRequests(branchCode);
 
                     foreach (var v in requestListTemp)
                         if (v.Status == 'S')
@@ -92,7 +114,7 @@ namespace IBITest.Controllers
                     break;
 
                 case 2:
-                    requestListTemp = obj.GetLoanRequests();
+                    requestListTemp = obj.GetLoanRequests(branchCode);
 
                     foreach (var v in requestListTemp)
                         if (v.Status == 'S')
@@ -101,7 +123,7 @@ namespace IBITest.Controllers
                     break;
 
                 case 3:
-                    requestListTemp = obj.GetBranchTransferRequests();
+                    requestListTemp = obj.GetBranchTransferRequests(branchCode);
 
                     foreach (var v in requestListTemp)
                         if (v.Status == 'S')
@@ -110,7 +132,7 @@ namespace IBITest.Controllers
                     break;
 
                 case 4:
-                    requestListTemp = obj.GetClosingRequests();
+                    requestListTemp = obj.GetClosingRequests(branchCode);
 
                     foreach (var v in requestListTemp)
                         if (v.Status == 'S')
@@ -127,13 +149,17 @@ namespace IBITest.Controllers
             List<RequestViewModel> md = new List<RequestViewModel>();
             List<RequestViewModel> mdSorted = new List<RequestViewModel>();
 
-            if (Session["AllRequests"] != null)
-                md = (Session["AllRequests"] as List<RequestViewModel>);
+
+            long branchCode; ;
+
+
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
             else
-            {
-                md = obj.GetAllRequests();
-                Session["AllRequests"] = md;
-            }
+                branchCode = (Session["User"] as UserRole).branchCode;
+
+            md = (Session["AllRequests"] as List<RequestViewModel>);
+            
 
             switch (typeid)
             {

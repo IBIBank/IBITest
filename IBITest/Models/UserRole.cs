@@ -10,5 +10,6 @@ namespace IBITest.Models
         public string userID { get; set; }
         public string role { get; set; }
         public long customerID { get; set; }
+        public long branchCode { get; set; }
     }
 }
