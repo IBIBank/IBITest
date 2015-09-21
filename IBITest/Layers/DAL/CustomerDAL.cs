@@ -5,6 +5,7 @@ using System.Web;
 using IBITest.Models;
 using System.Data.SqlClient;
 using System.Configuration;
+
 namespace IBITest.Layers.DAL
 {
     public class CustomerDAL
@@ -15,7 +16,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand(String.Format( "SELECT * FROM Customer WHERE Token = '{0}' ",token), connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT * FROM Customer WHERE Token = '{0}' ", token), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -24,9 +25,9 @@ namespace IBITest.Layers.DAL
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    c.CustomerID = Convert.ToInt64( reader[0] );
+                    c.CustomerID = Convert.ToInt64(reader[0]);
                     c.CustomerName = String.Copy(reader[1].ToString());
-                    c.DOB = Convert.ToDateTime(reader[2].ToString()) ;
+                    c.DOB = Convert.ToDateTime(reader[2].ToString());
                     c.PermanentAddress = String.Copy(reader[5].ToString());
                     c.ContactNumber = String.Copy(reader[7].ToString());
                     c.Email = String.Copy(reader[8].ToString());
@@ -55,7 +56,7 @@ namespace IBITest.Layers.DAL
                 // Call Read before accessing data. 
                 if (reader.HasRows)
                     res = true;
-     
+
                 else
                     res = false;
 
@@ -94,9 +95,9 @@ namespace IBITest.Layers.DAL
             bool res;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, c.Password,c.CommunicationAddress,c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
+                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, c.Password, c.CommunicationAddress, c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
 
-                
+
                 SqlCommand command = new SqlCommand(cmdtxt, connection);
                 connection.Open();
                 int rowaff = command.ExecuteNonQuery();
@@ -113,48 +114,48 @@ namespace IBITest.Layers.DAL
                 SqlDataReader rd = command.ExecuteReader();
                 rd.Read();
                 int id = Convert.ToInt16(rd[0]) + 1;
-                rd.Close();                
+                rd.Close();
 
-                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 'A') ", id, c.UserID, c.Password, "Customer",DateTime.Now.ToString(),"0");
+                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 'A') ", id, c.UserID, c.Password, "Customer", DateTime.Now.ToString(), "0");
                 command.ExecuteNonQuery();
-                
+
             }
 
             return res;
         }
 
-        
+
         public bool AddNewAccountRequest(NewAccountRequestView request)
         {
             bool result = false;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
-            {   
+            {
                 int requestID;
 
                 SqlCommand command = new SqlCommand("SELECT MAX(RequestID) FROM NewAccountRequest ", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                
-                if(reader.HasRows)
+
+                if (reader.HasRows)
                 {
                     reader.Read();
                     requestID = Convert.ToInt16(reader[0]) + 1;
                 }
                 else
                     requestID = 1;
-                
+
                 reader.Close();
 
-                command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = "+ request.CustomerID);
+                command.CommandText = String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = " + request.CustomerID);
                 reader = command.ExecuteReader();
                 reader.Read();
 
                 string customerName = reader[0].ToString();
                 reader.Close();
 
-                command.CommandText = String.Format("INSERT INTO NewAccountRequest(RequestID, BranchCode, CustomerID, SubmissionDate, Status, AddressProof, CustomerName) VALUES('{0}', '{1}', '{2}', '{3}', 'S', '{4}', '{5}') ", requestID,request.Branch, request.CustomerID, DateTime.Now.ToString(), request.AddresProof, customerName);
-                
+                command.CommandText = String.Format("INSERT INTO NewAccountRequest(RequestID, BranchCode, CustomerID, SubmissionDate, Status, AddressProof, CustomerName) VALUES('{0}', '{1}', '{2}', '{3}', 'S', '{4}', '{5}') ", requestID, request.Branch, request.CustomerID, DateTime.Now.ToString(), request.AddresProof, customerName);
+
                 if (command.ExecuteNonQuery() > 0)
                     result = true;
 
@@ -219,7 +220,7 @@ namespace IBITest.Layers.DAL
 
         public int GetNoOfApprovedRequestsByCustomerID(long customerID)
         {
-            int numberOfRequests=0;
+            int numberOfRequests = 0;
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
@@ -229,7 +230,7 @@ namespace IBITest.Layers.DAL
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.HasRows)                    
+                if (reader.HasRows)
                 {
                     numberOfRequests += Convert.ToInt16(reader[0]);
                     reader.Close();
@@ -277,80 +278,143 @@ namespace IBITest.Layers.DAL
                     reader.Close();
                 }
             }
-            
+
             return numberOfRequests;
         }
 
 
 
 
-        //public int GetNoOfRejectedRequestsByCustomerID(long customerID)
-        //{
-        //    int numberOfRequests = 0;
+        public int GetNoOfRejectedRequestsByCustomerID(long customerID)
+        {
+            int numberOfRequests = 0;
 
-        //    using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
-        //    {
-        //        // Transfer requests
-        //        SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(*) FROM BranchTransferRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID), connection);
-        //        connection.Open();
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                // Transfer requests
+                SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(*) FROM BranchTransferRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID), connection);
+                connection.Open();
 
-        //        SqlDataReader reader = command.ExecuteReader();
+                SqlDataReader reader = command.ExecuteReader();
 
-        //        if (reader.HasRows)
-        //        {
-        //            numberOfRequests += Convert.ToInt16(reader[0]);
-        //            reader.Close();
-        //        }
-
-
-        //        // Closure requests
-
-        //        command.CommandText = String.Format("SELECT COUNT(*) FROM ClosingRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
-        //        connection.Open();
-
-        //        reader = command.ExecuteReader();
-
-        //        if (reader.HasRows)
-        //        {
-        //            numberOfRequests += Convert.ToInt16(reader[0]);
-        //            reader.Close();
-        //        }
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
 
 
-        //        // Loan requests
+                // Closure requests
 
-        //        command.CommandText = String.Format("SELECT COUNT(*) FROM LoanRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
-        //        connection.Open();
+                command.CommandText = String.Format("SELECT COUNT(*) FROM ClosingRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
+                connection.Open();
 
-        //        reader = command.ExecuteReader();
+                reader = command.ExecuteReader();
 
-        //        if (reader.HasRows)
-        //        {
-        //            numberOfRequests += Convert.ToInt16(reader[0]);
-        //            reader.Close();
-        //        }
-
-
-        //        // New Account requests
-
-        //        command.CommandText = String.Format("SELECT COUNT(*) FROM NewAccountRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
-        //        connection.Open();
-
-        //        reader = command.ExecuteReader();
-
-        //        if (reader.HasRows)
-        //        {
-        //            numberOfRequests += Convert.ToInt16(reader[0]);
-        //            reader.Close();
-        //        }
-        //    }
-
-        //    return numberOfRequests;
-        //}
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
 
 
+                // Loan requests
 
-        
+                command.CommandText = String.Format("SELECT COUNT(*) FROM LoanRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // New Account requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM NewAccountRequest WHERE CustomerID = {0} AND Status = 'R' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+            }
+
+            return numberOfRequests;
+        }
+
+
+
+        public int GetNoOfPendingRequestsByCustomerID(long customerID)
+        {
+            int numberOfRequests = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                // Transfer requests
+                SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(*) FROM BranchTransferRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Closure requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM ClosingRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // Loan requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM LoanRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+
+
+                // New Account requests
+
+                command.CommandText = String.Format("SELECT COUNT(*) FROM NewAccountRequest WHERE CustomerID = {0} AND Status = 'S' ", customerID);
+                connection.Open();
+
+                reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    numberOfRequests += Convert.ToInt16(reader[0]);
+                    reader.Close();
+                }
+            }
+
+            return numberOfRequests;
+        }
+
 
         public AddPayeeViewModel ValidatePayeeAccountNumber(long payeeAccountNumber, long sourceCustomerID)
         {
@@ -397,14 +461,14 @@ namespace IBITest.Layers.DAL
                 payeeDetails.payeeName = reader[0].ToString();
                 reader.Close();
 
-                command.CommandText = String.Format("SELECT BranchName FROM Branch WHERE BranchCode = " + branchCode.ToString() );
+                command.CommandText = String.Format("SELECT BranchName FROM Branch WHERE BranchCode = " + branchCode.ToString());
                 reader = command.ExecuteReader();
                 reader.Read();
 
                 payeeDetails.branchName = reader[0].ToString();
                 reader.Close();
 
-                payeeDetails.payeeAccountNumber = payeeAccountNumber;                
+                payeeDetails.payeeAccountNumber = payeeAccountNumber;
             }
 
             return payeeDetails;
@@ -423,10 +487,10 @@ namespace IBITest.Layers.DAL
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
-                              
+
                 reader.Read();
                 payeeID = Convert.ToInt16(reader[0]) + 1;
-                                
+
                 reader.Close();
 
                 command.CommandText = String.Format("INSERT INTO Payee VALUES('{0}', '{1}', '{2}', '{3}') ", payeeID, payeeDetails.payeeNickName, customerID, payeeDetails.payeeAccountNumber);
@@ -475,7 +539,7 @@ namespace IBITest.Layers.DAL
 
         public List<FundTransferPayeeModel> GetAllPayeeAccountByCustomerID(long customerID)
         {
-            List<FundTransferPayeeModel> payeeAccountList = new List<FundTransferPayeeModel>();            
+            List<FundTransferPayeeModel> payeeAccountList = new List<FundTransferPayeeModel>();
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
@@ -533,7 +597,342 @@ namespace IBITest.Layers.DAL
         }
 
 
-        //public bool DoFundTransfer(
+        public bool DoFundTransfer(FundTransferViewModel fundTransferDetails)
+        {
+            bool result = false;
+            char accountType;
+
+            // read balance of from account
+            Decimal balance = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Balance FROM Account WHERE AccountNumber = " + fundTransferDetails.FromAccount.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+
+                reader.Read();
+                balance = Convert.ToDecimal(reader[0]);
+
+                reader.Close();
+            }
+
+            // debit amount from FromAccount
+
+            balance -= fundTransferDetails.Amount;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}", balance.ToString(), fundTransferDetails.FromAccount.ToString()), connection);
+                command.ExecuteNonQuery();
+
+            }
+
+            //read balance and type of ToAccount
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Balance, AccountType FROM Account WHERE AccountNumber = " + fundTransferDetails.ToAccount.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                reader.Read();
+                balance = Convert.ToDecimal(reader[0]);
+                accountType = Convert.ToChar(reader[1]);
+
+
+                reader.Close();
+            }
+
+
+            // credit based on type of ToAccount
+
+            if (accountType == 'S')
+                balance += fundTransferDetails.Amount;
+            else
+                balance -= fundTransferDetails.Amount;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}", balance.ToString(), fundTransferDetails.ToAccount.ToString()), connection);
+                command.ExecuteNonQuery();
+
+            }
+
+
+            if (balance == 0 && accountType == 'L')
+            {
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Status = 'Closed' WHERE AccountNumber = {0} ", fundTransferDetails.ToAccount.ToString()), connection);
+                    if (command.ExecuteNonQuery() > 0)
+                        result = true;
+                }
+            }
+
+            // Insert into Transactions Table
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                int transactionID;
+
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Transactions", connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                reader.Read();
+                transactionID = Convert.ToInt16(reader[0]) + 1;
+                reader.Close();
+
+                command.CommandText = String.Format("INSERT INTO Transactions(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount, DestAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )", transactionID.ToString(), "Fund Transfer", DateTime.Now.ToString(), fundTransferDetails.Amount.ToString(), fundTransferDetails.remarks, fundTransferDetails.FromAccount.ToString(), fundTransferDetails.ToAccount.ToString());
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+
+
+            return result;
+        }
+
+
+
+        public int GetNoOfApprovedRequests(long customerID)
+        {
+            int approvedRequests = 0;
+
+            //  account transfer requests
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(RequestID) FROM BranchTransferRequest WHERE Status = 'A' AND CustomerID = " + customerID.ToString(), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests = Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+                // Closing requests
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM ClosingRequest WHERE Status = 'A' AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+
+                // Loan Requests
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM LoanRequest WHERE Status = 'A' AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+                // New Account Request
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM NewAccountRequest WHERE Status = 'A' AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+            }
+
+            return approvedRequests;
+        }
+
+
+
+
+        public int GetNoOfRejectedRequests(long customerID)
+        {
+            int approvedRequests = 0;
+
+            //  account transfer requests
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(RequestID) FROM BranchTransferRequest WHERE Status = 'R' AND CustomerID = " + customerID.ToString(), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests = Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+                // Closing requests
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM ClosingRequest WHERE Status = 'R' AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+
+                // Loan Requests
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM LoanRequest WHERE Status = 'R' AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+                // New Account Request
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM NewAccountRequest WHERE Status = 'R' AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+            }
+
+            return approvedRequests;
+        }
+
+
+
+        public int GetNoOfPendingRequests(long customerID)
+        {
+            int approvedRequests = 0;
+
+            //  account transfer requests
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(RequestID) FROM BranchTransferRequest WHERE (Status = 'S' OR Status = 'T') AND CustomerID = " + customerID.ToString(), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests = Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+                // Closing requests
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM ClosingRequest WHERE (Status = 'S' OR Status = 'T') AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+
+                // Loan Requests
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM LoanRequest WHERE (Status = 'S' OR Status = 'T') AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+
+
+                // New Account Request
+
+                command.CommandText = "SELECT COUNT(RequestID) FROM NewAccountRequest WHERE (Status = 'S' OR Status = 'T') AND CustomerID = " + customerID.ToString();
+
+                reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    approvedRequests += Convert.ToInt16(reader[0]);
+                }
+
+                reader.Close();
+            }
+
+            return approvedRequests;
+        }
+
+
 
     }
 }
