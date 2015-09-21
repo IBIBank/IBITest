@@ -22,6 +22,7 @@ namespace IBITest.Controllers
         }
         public ActionResult FinishRegistration(string token)
         {
+
             //MessageBox.Show("I am in GET Now get user details according to token"+token);
             CustomerDAL obj = new CustomerDAL();
 
@@ -133,6 +134,8 @@ namespace IBITest.Controllers
         {
             List<int> savingsAccounts = new List<int>(){4,8,9};
             ViewBag.savingsAccountList = savingsAccounts;
+
+
             List<SelectListItem> payeeAccounts = new List<SelectListItem>()
             {
                 new SelectListItem(){Text = "sham",Value="4"},
@@ -141,6 +144,12 @@ namespace IBITest.Controllers
             };
             ViewBag.payeeAccounts = payeeAccounts;
             return View();
+        }
+        [HttpPost]
+        public string TransferFunds(FundTransferViewModel model)
+        {
+            
+            return "aha";
         }
        
         public ActionResult RequestClosureOfAccount()

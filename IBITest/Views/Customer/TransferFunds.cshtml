@@ -4,22 +4,39 @@
     ViewBag.Title = "TransferFunds";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    //function SubmitForm()
+    //{
+    //    alert("Called");
+    //    $.ajax({
+    //        url: "/Customer/TransferFunds",
+    //        cache: false,
+    //        data: { model: $form.serialize()},
+    //        type: "POST",
+    //        success: function (data) {
+    //           alert("Success")
+    //        },
+    //        error: function (reponse) {
+    //            alert("error : " + reponse);
+    //        }
+    //    });
+    //}
+</script>
 <h2>TransferFunds</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
-
     <fieldset>
-        <legend>FundTransferViewModel</legend>
-
+            <legend>FundTransferViewModel</legend>
+    @*<form action="javascript:SubmitForm()" method="post">*@
         <div class="editor-label">
             @Html.LabelFor(model => model.FromAccount)
         </div>
         <div class="editor-field">
-            @*@Html.EditorFor(model => model.FromAccount)*@
-            @Html.DropDownListFor(model => model.FromAccount,new SelectList(@ViewBag.savingsAccountList),"--Select--")
+            @Html.DropDownListFor(model => model.FromAccount, new SelectList(@ViewBag.savingsAccountList), "--Select--")
             @Html.ValidationMessageFor(model => model.FromAccount)
         </div>
 
@@ -27,8 +44,7 @@
             @Html.LabelFor(model => model.ToAccount)
         </div>
         <div class="editor-field">
-            @*@Html.EditorFor(model => model.ToAccount)*@
-            @Html.DropDownListFor(model => model.ToAccount,new SelectList(@ViewBag.payeeAccounts),"--Select--")
+            @Html.DropDownListFor(model => model.ToAccount, new SelectList(@ViewBag.payeeAccounts, "Value", "Text"), "--Select--")
             @Html.ValidationMessageFor(model => model.ToAccount)
         </div>
 
@@ -59,6 +75,7 @@
         <p>
             <input type="submit" value="Save" />
         </p>
+    @*</form>*@
     </fieldset>
 }
 

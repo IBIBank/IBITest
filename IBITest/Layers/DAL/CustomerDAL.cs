@@ -5,7 +5,6 @@ using System.Web;
 using IBITest.Models;
 using System.Data.SqlClient;
 using System.Configuration;
-
 namespace IBITest.Layers.DAL
 {
     public class CustomerDAL
@@ -597,7 +596,7 @@ namespace IBITest.Layers.DAL
         }
 
 
-        public bool DoFundTransfer(
+        //public bool DoFundTransfer(
 
     }
 }
