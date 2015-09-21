@@ -99,7 +99,20 @@ namespace IBITest.Controllers
         }
         public ActionResult AddPayee()
         {
+            //AddPayeeViewModel obj = new AddPayeeViewModel();
             return View();
+        }
+        public JsonResult ValidateAccountNumber(int accountNumber)
+        {
+            //CustomerDAL objOfCustomerDAL = new CustomerDAL();
+            //AddPayeeViewModel obj = objOfCustomerDAL.ValidatePayeeAccountNumber(accountNumber);
+            
+            if(accountNumber==0)
+                return null;
+            AddPayeeViewModel obj = new AddPayeeViewModel {payeeName="virat",branchName="kormangala" };
+            
+            return Json(obj);
+    
         }
         public ActionResult RequestForAccountTransfer()
         {
