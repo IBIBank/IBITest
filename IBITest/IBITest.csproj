@@ -211,7 +211,7 @@
     <Compile Include="Models\ClosureOfAccountAdminView.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\FundTransferPayeeModel.cs" />
+    <Compile Include="Models\FundTransferViewModel.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
     <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\RequestViewModel.cs" />
@@ -374,7 +374,6 @@
     <Content Include="Views\CommonBiz\InvalidSession.cshtml" />
     <Content Include="Views\Customer\MiniDetailedstatements.cshtml" />
     <Content Include="Views\Customer\RequestForAccountTransfer.cshtml" />
-    <Content Include="Views\Customer\TransferFunds.cshtml" />
     <Content Include="Views\Customer\RequestClosureOfAccount.cshtml" />
     <Content Include="Views\Customer\ViewRequestStatus.cshtml" />
     <Content Include="Views\Customer\ViewOrUpdateProfile.cshtml" />
@@ -384,6 +383,7 @@
     <Content Include="Views\Banker\CreditDebitCustomerAccount.cshtml" />
     <Content Include="Views\Customer\AddPayee.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Customer\TransferFunds.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
