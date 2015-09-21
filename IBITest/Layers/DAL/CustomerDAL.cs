@@ -504,5 +504,71 @@ namespace IBITest.Layers.DAL
         }
 
 
+
+
+        public List<long> GetAllSavingsAccountByCustomerID(long customerID)
+        {
+            List<long> savingsAccountList = new List<long>();
+            long accountNumber;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber FROM Account WHERE CustomerID = {0} AND AccountType = 'S' ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        accountNumber = Convert.ToInt64(reader[0]);
+                        savingsAccountList.Add(accountNumber);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return savingsAccountList;
+        }
+
+
+
+        public List<FundTransferPayeeModel> GetAllPayeeAccountByCustomerID(long customerID)
+        {
+            List<FundTransferPayeeModel> payeeAccountList = new List<FundTransferPayeeModel>();            
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT PayeeNickName, PayeeAccountNumber FROM Payee WHERE CustomerID = {0} ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        FundTransferPayeeModel payeeDetails = new FundTransferPayeeModel();
+
+                        payeeDetails.payeeNickName = reader[0].ToString();
+                        payeeDetails.payeeAccountNumber = Convert.ToInt64(reader[1]);
+
+                        payeeAccountList.Add(payeeDetails);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return payeeAccountList;
+        }
+
+
     }
 }

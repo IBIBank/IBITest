@@ -212,7 +212,6 @@
                         var submissionDate = new Date(parseInt(data[x].SubmissionDate.substr(6)));
                         var serviceDate = new Date(parseInt(data[x].ServiceDate.substr(6)));
 
-
                         trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + submissionDate + "</td> <td>" + serviceDate + "</td> <td>" + data[x].Status + "</td>  </tr>";
                     }
                     $('#mytable').append(trhtml);

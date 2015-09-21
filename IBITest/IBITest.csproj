@@ -211,6 +211,7 @@
     <Compile Include="Models\ClosureOfAccountAdminView.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\FundTransferPayeeModel.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
     <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\RequestViewModel.cs" />

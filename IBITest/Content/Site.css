@@ -787,3 +787,7 @@ tr.pager td {
 table,th,td {
     border:1px solid black;
 }
+
+table, tbody {
+    border:1px solid black;
+}
