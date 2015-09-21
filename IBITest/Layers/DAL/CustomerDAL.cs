@@ -187,7 +187,6 @@ namespace IBITest.Layers.DAL
         public List<AccountListViewModel> GetAccountsListByCustomerID(long customerID)
         {
             List<AccountListViewModel> accountsList = new List<AccountListViewModel>();
-            AccountListViewModel account = new AccountListViewModel();
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
@@ -203,6 +202,8 @@ namespace IBITest.Layers.DAL
                 {
                     while (reader.Read())
                     {
+                        AccountListViewModel account = new AccountListViewModel();
+
                         account.accountNumber = Convert.ToInt64(reader[0]);
                         account.balance = Convert.ToDecimal(reader[1]);
 
