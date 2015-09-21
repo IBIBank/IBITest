@@ -48,6 +48,20 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
+
+                    $('#mytable thead').remove();
+
+                    $('#mytable').append(
+                        "<thead>" +
+                         "<tr>" +
+                             "<th>Branch Name</th>" +
+                             "<th>City Name</th>" +
+                             "<th>Address</th>" +
+                             "<th>Contact Number</th>" +
+                             "<th>Email</th>" +                             
+                         "</tr>" +
+                       "</thead>");
+
                     var trhtml = "<tr> <td>" + data.BranchName + "</td> <td> " + data.CityName + "</td> <td>" + data.Address + "</td><td> " + data.ContactNumber + "</td><td> " + data.Email + "</td> </tr>";
                     $('#mytable tbody > tr').remove();
                     $('#mytable').append(trhtml);
@@ -73,15 +87,7 @@
     <br />
 
  <table id ="mytable" class ="display">
-     <thead>
-         <tr>
-             <th>Branch Name</th>
-             <th>City Name</th>
-             <th>Address</th>
-             <th>Contact Number</th>
-             <th>Email</th>
-         </tr>
-     </thead>
+    
      <tbody>
 
 
@@ -97,7 +103,7 @@
     <br />
     @using (Html.BeginForm("ValidateToken","CommonBiz"))
     { 
-        
+        <label> Register with Token</label>
         <input type="text" name="token" />
         <input type="submit" value="Register" />
     }

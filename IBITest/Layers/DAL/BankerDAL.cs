@@ -765,7 +765,7 @@ namespace IBITest.Layers.DAL
             {
                 connection.Open();
 
-                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}" , finalBalance.ToString(), accountNumber.ToString()));
+                SqlCommand command = new SqlCommand(String.Format("UPDATE Account SET Balance = {0} WHERE AccountNumber = {1}" , finalBalance.ToString(), accountNumber.ToString()),connection);
 
                 if (command.ExecuteNonQuery() > 0)
                     result = true;
@@ -794,7 +794,7 @@ namespace IBITest.Layers.DAL
                 transactionID = Convert.ToInt16(reader[0]) + 1;
                 reader.Close();                
 
-                command.CommandText = String.Format("INSERT INTO Transactions(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}' )",transactionID.ToString(), transactionType.ToString(), DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
+                command.CommandText = String.Format("INSERT INTO Transactions(TransactionID, Type, TransactionDate, Amount, TransactionRemarks, SrcAccount) Values('{0}', '{1}', '{2}', '{3}', '{4}', '{5}' )",transactionID.ToString(), transactionType.ToString(), DateTime.Now.ToString(), amount, transactionRemarks, sourceAccount.ToString()  );
 
                 if (command.ExecuteNonQuery() > 0)
                     result = true;

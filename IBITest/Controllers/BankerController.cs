@@ -46,13 +46,16 @@ namespace IBITest.Controllers
         [HttpGet]
         public ActionResult GenerateToken()
         {
-            return View(new GenerateTokenViewModel());
+            return View(/*new GenerateTokenViewModel()*/);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GenerateToken(GenerateTokenViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             BankerDAL obj = new BankerDAL();
             TokenInfo tf = new TokenInfo();
                       
@@ -284,7 +287,22 @@ namespace IBITest.Controllers
             else
             {
 
-                return "loan functionality in progress";
+                decimal loanBalance = objBankerDAL.GetAccountBalance(accountNumber);
+                if (amount == loanBalance)
+                {
+                    objBankerDAL.CreditLoanAccountByBanker(accountNumber, amount, remarks);
+                    objBankerDAL.CloseLoanAccount(accountNumber);
+                    return "Credit Successful and Closed account";
+                }
+                else if (amount > loanBalance)
+                {
+                    return "Amount exceeds available balance";
+                }
+                else
+                {
+                    objBankerDAL.CreditLoanAccountByBanker(accountNumber, amount, remarks);
+                    return "Credit Successful";
+                }
             }
             
         }

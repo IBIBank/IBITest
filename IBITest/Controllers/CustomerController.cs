@@ -87,11 +87,10 @@ namespace IBITest.Controllers
 
         public JsonResult GetListOfSavingAccounts()
         {
-            List<AccountListViewModel> obj = new List<AccountListViewModel>()
-            {
-                new AccountListViewModel(){accountNumber=1,balance=9},
-                new AccountListViewModel(){accountNumber=2,balance=10 }
-            };
+            List<AccountListViewModel> obj = new List<AccountListViewModel>();
+
+            obj = (new CustomerDAL()).GetAccountsListByCustomerID((Session["User"] as UserRole).customerID);
+
             return Json(obj);
         }
         public ActionResult MiniDetailedstatements()

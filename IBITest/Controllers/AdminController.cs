@@ -22,6 +22,9 @@ namespace IBITest.Controllers
         }
         public ActionResult AddBranch()
         {
+            if (Session["User"] == null || !(Session["User"] as UserRole).role.Equals("Admin"))
+                return RedirectToAction("LogOut", "CommonBiz");
+
             return View();
         }
         [HttpPost]
@@ -47,6 +50,8 @@ namespace IBITest.Controllers
         }
         public ActionResult ApproveOrRejectRequests()
         {
+            if (Session["User"] == null || !(Session["User"] as UserRole).role.Equals("Admin") )
+                return RedirectToAction("LogOut", "CommonBiz");
 
             List<SelectListItem> obj = new List<SelectListItem>()
             {

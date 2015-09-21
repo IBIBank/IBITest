@@ -17,7 +17,7 @@ namespace IBITest.Controllers
         {
             CommonDAL syncobj = new CommonDAL();
            
-            syncobj.Sync();
+          //  syncobj.Sync();
             BankCountryModel objbankcountrymodel = new BankCountryModel();
             objbankcountrymodel.CityModel = new List<City>();
             objbankcountrymodel.BranchModel = new List<BranchL>();
@@ -177,7 +177,7 @@ namespace IBITest.Controllers
         public ActionResult LogOut()
         {
             Session["User"] = null;
-            return RedirectToAction("Index");
+            return RedirectToAction("Login");
         }
 
     }
