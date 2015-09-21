@@ -23,6 +23,7 @@ namespace IBITest.Models
         public string BranchLogInID { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
         [StringLength(15, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 15 characters long")]        
         public string BranchLogInPassword { get; set; }
         public string Address { get; set; }

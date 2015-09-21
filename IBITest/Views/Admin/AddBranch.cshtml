@@ -88,10 +88,12 @@
 
         <p>
             <input type="submit" value="Add Branch" />
-            <input id="Button1" type="button" value="Reset" />
+            <input id="Reset1" type="reset" value="reset" />
+
         </p>
     </fieldset>
 }
+
 
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -100,3 +102,13 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+<script> 
+
+    $("#Button1").click(function () {
+        $(".editor-field").reset();
+
+    });
+
+</script>

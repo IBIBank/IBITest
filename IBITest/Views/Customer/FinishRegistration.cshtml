@@ -19,7 +19,7 @@
             @Html.LabelFor(model => model.CustomerID)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CustomerID)
+            @Html.TextBoxFor(m => m.CustomerID, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.CustomerID)
         </div>
 
@@ -27,7 +27,7 @@
             @Html.LabelFor(model => model.CustomerName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CustomerName)
+            @Html.TextBoxFor(m => m.CustomerName, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.CustomerName)
         </div>
 
@@ -35,7 +35,7 @@
             @Html.LabelFor(model => model.DOB)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.DOB)
+            @Html.TextBoxFor(m => m.DOB, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.DOB)
         </div>
 
@@ -59,7 +59,7 @@
             @Html.LabelFor(model => model.PermanentAddress)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.PermanentAddress)
+            @Html.TextBoxFor(m => m.PermanentAddress, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.PermanentAddress)
         </div>
 
@@ -75,7 +75,7 @@
             @Html.LabelFor(model => model.ContactNumber)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.ContactNumber)
+            @Html.TextBoxFor(m => m.ContactNumber, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.ContactNumber)
         </div>
 
@@ -83,7 +83,7 @@
             @Html.LabelFor(model => model.Email)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
+            @Html.TextBoxFor(m => m.Email, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.Email)
         </div>
 
@@ -99,7 +99,7 @@
             @Html.LabelFor(model => model.Token)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Token)
+            @Html.TextBoxFor(m => m.Token, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.Token)
         </div>
 

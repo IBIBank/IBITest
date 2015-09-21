@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using IBITest.Models
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -24,6 +25,15 @@
             <div class="content-wrapper" style="clear:left;">
                 <div>
                     <h2><b>Welcome</b></h2>
+
+                    @{
+                        if(Session["User"] != null)
+                        {
+                           <h4> Hi  @((Session["User"] as UserRole).userID) !</h4> @Html.ActionLink("LogOut","LogOut","CommonBiz")   
+                           
+                        }                    
+                    }
+                    
                 </div>
             </div>
     </header>
