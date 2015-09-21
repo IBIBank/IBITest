@@ -469,20 +469,15 @@ namespace IBITest.Layers.DAL
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
                 int payeeID;
-                SqlCommand command = new SqlCommand("SELECT MAX(PayeeID) FROM Payee", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(PayeeID) FROM Payee", connection);
                 connection.Open();
 
-                SqlDataReader rd = command.ExecuteReader();
-
-                if (rd.HasRows)
-                {
-                    rd.Read();
-                    payeeID = Convert.ToInt16(rd[0]) + 1;
-                }
-                else
-                    payeeID = 1;
-                
-                rd.Close();
+                SqlDataReader reader = command.ExecuteReader();
+                              
+                reader.Read();
+                payeeID = Convert.ToInt16(reader[0]) + 1;
+                                
+                reader.Close();
 
                 command.CommandText = String.Format("INSERT INTO Payee VALUES('{0}', '{1}', '{2}', '{3}') ", payeeID, payeeDetails.payeeNickName, customerID, payeeDetails.payeeAccountNumber);
 

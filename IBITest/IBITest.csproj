@@ -191,6 +191,7 @@
     <Compile Include="Controllers\CommonBizController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -213,6 +214,7 @@
     <Compile Include="Models\GenerateTokenViewModel.cs" />
     <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\RequestViewModel.cs" />
+    <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Models\TranferOfAccountAdminView.cs" />
     <Compile Include="Models\UserRole.cs" />
@@ -380,6 +382,7 @@
     <Content Include="Views\Customer\ApplyForLoan.cshtml" />
     <Content Include="Views\Banker\CreditDebitCustomerAccount.cshtml" />
     <Content Include="Views\Customer\AddPayee.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
