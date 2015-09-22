@@ -393,12 +393,20 @@ namespace IBITest.Controllers
             return Json(objBankerDal.GetCustomerByName(queryName,branchCode));
         }
         [HttpPost]
-        public JsonResult GetCustomersByAccountNo(int accountNo)
+        public JsonResult GetCustomerByAccountNo(int accountNo)
         {
-
-            return Json(new object { });
+            BankerDAL objBankerDal = new BankerDAL();
+            long branchCode = (Session["User"] as UserRole).branchCode;
+            return Json(objBankerDal.GetCustomerByAccountNumber(accountNo, branchCode));
         }
-
+        [HttpPost]
+        public JsonResult GetCustomersWithLoan()
+        {
+            BankerDAL objBankerDal = new BankerDAL();
+            long branchCode = (Session["User"] as UserRole).branchCode;
+            return Json(objBankerDal.GetCustomersHavingLoan(branchCode));
+        }
         
+
     }
 }
