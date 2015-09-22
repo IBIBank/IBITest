@@ -24,7 +24,8 @@
     //}
 </script>
 <h2>TransferFunds</h2>
-
+@*<P style="color:red;>@ViewBag.message</P>*@
+<h3 style="color:red">&nbsp &nbsp &nbsp &nbsp @ViewBag.message</h3>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -44,7 +45,7 @@
             @Html.LabelFor(model => model.ToAccount)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.ToAccount, new SelectList(@ViewBag.payeeAccounts, "Value", "Text"), "--Select--")
+            @Html.DropDownListFor(model => model.ToAccount, new SelectList(@ViewBag.payeeAccounts, "payeeAccountNumber", "payeeNickName"), "--Select--")
             @Html.ValidationMessageFor(model => model.ToAccount)
         </div>
 
