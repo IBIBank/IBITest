@@ -924,5 +924,47 @@ namespace IBITest.Layers.DAL
         }
 
 
+        public List<SearchCustomerViewModel> GetCustomerByAccountNumber(long accountNumber, long branchCode)
+        {
+            List<SearchCustomerViewModel> customerList = new List<SearchCustomerViewModel>();
+            SearchCustomerViewModel customerDetails = new SearchCustomerViewModel();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("SELECT CustomerID FROM Account WHERE AccountNumber = {0} AND BranchCode = {1} AND Status = 'Active' ", accountNumber.ToString(), branchCode.ToString()), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+
+                reader.Read();
+
+                var customerID = Convert.ToInt64(reader[0]);
+                reader.Close();
+
+                command.CommandText = String.Format("SELECT CustomerName, PermanentAddress, CommunicationAddress, ContactNumber, Email FROM Customer WHERE CustomerID = {0} ", customerID.ToString()) ;
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                customerDetails.accountNumber = accountNumber.ToString();
+                customerDetails.customerName = reader[0].ToString();
+                customerDetails.permanentAddress = reader[1].ToString();
+                customerDetails.communicationAddress = reader[2].ToString();
+                customerDetails.contactNumber = reader[3].ToString();
+                customerDetails.email = reader[4].ToString();
+
+                reader.Close();
+
+            }
+            customerList.Add(customerDetails);
+            
+            return customerList;
+        }
+
+
+
+
     }
 }
