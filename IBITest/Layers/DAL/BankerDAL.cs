@@ -866,5 +866,63 @@ namespace IBITest.Layers.DAL
         }
 
 
+        public List<SearchCustomerViewModel> GetCustomerByName(string customerName, long branchCode)
+        {
+            List<SearchCustomerViewModel> customersList = new List<SearchCustomerViewModel>();
+            long customerID;
+            
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()), connection2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+                connection2.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("SELECT CustomerID, CustomerName, PermanentAddress, CommunicationAddress, ContactNumber, Email FROM Customer WHERE CustomerName LIKE '%{0}%' ", customerName), connection);
+                SqlDataReader reader = command.ExecuteReader(), reader2;
+                SqlCommand command2 = new SqlCommand("", connection2);
+
+
+
+                if (!reader.HasRows)
+                    return null;
+
+                while (reader.Read())
+                {
+                    customerID = Convert.ToInt64(reader[0]);
+                    string actualCustomerName = reader[1].ToString();
+                    string permanentAddress = reader[2].ToString();
+                    string communicationAddress = reader[3].ToString();
+                    string contactNumber = reader[4].ToString();
+                    string email = reader[5].ToString();
+
+                    
+                    command2.CommandText = String.Format("SELECT AccountNumber FROM Account WHERE CustomerID = {0} AND BranchCode = {1} AND Status = 'Active' ",customerID.ToString(), branchCode.ToString());
+                    reader2 = command2.ExecuteReader();
+
+                    if(reader2.HasRows)
+                        while (reader2.Read())
+                        {
+                            SearchCustomerViewModel customerDetails = new SearchCustomerViewModel();
+
+                            customerDetails.accountNumber = reader2[0].ToString();
+                            customerDetails.customerName = String.Copy(actualCustomerName);
+                            customerDetails.permanentAddress = String.Copy(permanentAddress);
+                            customerDetails.communicationAddress = String.Copy(communicationAddress);
+                            customerDetails.contactNumber = String.Copy(contactNumber);
+                            customerDetails.email = String.Copy(email);
+
+                            customersList.Add(customerDetails);
+                        }
+                      
+                 
+                    reader2.Close();
+                }
+
+            }
+
+            return customersList;
+        }
+
+
     }
 }

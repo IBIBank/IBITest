@@ -1066,6 +1066,9 @@ namespace IBITest.Layers.DAL
 
         public string ValidateAndSetPassword(long customerID, string oldPassword, string newPassword, string passwordType)
         {
+            if (oldPassword.Equals(newPassword))
+                return "Old and New Passwords cannot be same !";
+
             if(passwordType.Equals("userPassword"))
             {
                 using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))

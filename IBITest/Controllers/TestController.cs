@@ -14,11 +14,15 @@ namespace IBITest.Controllers
         public ActionResult Index()
         {
             CustomerDAL newObj = new CustomerDAL();
+            BankerDAL banObj = new BankerDAL();
 
             List<TransactionStatementViewModel> list = newObj.GetDetailedTransactions(2,new DateTime (DateTime.Today.Year-1, DateTime.Today.Month, DateTime.Today.Day), new DateTime (DateTime.Today.Year+1, DateTime.Today.Month, DateTime.Today.Day));
+            List<SearchCustomerViewModel> customerList = new List<SearchCustomerViewModel>();
 
-            foreach(var v in list)
-                MessageBox.Show(v.transactionID.ToString());
+            customerList = banObj.GetCustomerByName("om", 1);
+
+            foreach(var v in customerList)
+                MessageBox.Show(v.customerName);
             
             return View(new TestModel());
         }
