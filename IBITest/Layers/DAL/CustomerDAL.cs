@@ -1061,5 +1061,66 @@ namespace IBITest.Layers.DAL
             return accountsList;
         }
 
+
+
+
+        public string ValidateAndSetPassword(long customerID, string oldPassword, string newPassword, string passwordType)
+        {
+            if(passwordType.Equals("userPassword"))
+            {
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+                {
+                    SqlCommand command = new SqlCommand(String.Format("SELECT Password, UserID FROM Customer WHERE CustomerID = {0} ", customerID), connection);
+                    connection.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    reader.Read();                    
+                    var storedPassword = reader[0].ToString();
+                    var userID = reader[1].ToString();
+                    reader.Close();
+
+                    if (!storedPassword.Equals(oldPassword))
+                        return "Old Password entered is not correct !";
+
+                    // update password in Customer and User Profile tables
+
+                    command.CommandText = String.Format("UPDATE Customer SET Password = '{0}' WHERE CustomerID = {1}", newPassword, customerID.ToString());
+                    command.ExecuteNonQuery();                    
+
+                    command.CommandText = String.Format("UPDATE UserRoles SET Password = '{0}' WHERE UserID = '{1}' ", newPassword, userID);
+                    command.ExecuteNonQuery();
+
+                }
+            }
+
+            else
+            {
+                using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+                {
+                    SqlCommand command = new SqlCommand(String.Format("SELECT TransactionPassword FROM Customer WHERE CustomerID = {0} ", customerID), connection);
+                    connection.Open();
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    reader.Read();
+                    var storedPassword = reader[0].ToString();
+                    reader.Close();
+
+                    if (!storedPassword.Equals(oldPassword))
+                        return "Password entered is not correct !";
+
+                    // update password in Customer and User Profile tables
+
+                    command.CommandText = String.Format("UPDATE Customer SET TransactionPassword = '{0}' WHERE CustomerID = {1}", newPassword, customerID.ToString());
+                    command.ExecuteNonQuery();                 
+                }
+            }
+
+            return "Success";
+        }
+
+
+
     }
 }

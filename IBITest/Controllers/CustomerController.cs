@@ -278,11 +278,21 @@ namespace IBITest.Controllers
         {
             return View();
         }
+        
         [HttpPost]
-        public string UpdateUserOrTransactionPassword(string oldPassword, string newPassword, string passwordType)
+        public ActionResult UpdateUserOrTransactionPassword(string oldPassword, string newPassword, string passwordType)
         {
-            return "success";
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+
+            long customerID = (Session["User"] as UserRole).customerID;
+
+            string result = (new CustomerDAL()).ValidateAndSetPassword(customerID, oldPassword, newPassword, passwordType);
+
+            return Json(result);
         }
+
+
         public ActionResult ApplyForLoan()
         {
             return View();
