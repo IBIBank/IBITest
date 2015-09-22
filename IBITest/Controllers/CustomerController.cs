@@ -251,7 +251,7 @@ namespace IBITest.Controllers
             {
                 if (model.Amount > objBDAL.GetAccountBalance(model.ToAccount))
                 {
-                    message =  "Invaalid transaction";
+                    message =  "Invalid transaction";
                     @ViewBag.message = message;
                     return View(model);
                 }
