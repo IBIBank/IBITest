@@ -279,6 +279,9 @@ namespace IBITest.Controllers
         }
         public ActionResult UpdateUserOrTransactionPassword()
         {
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+
             return View();
         }
         

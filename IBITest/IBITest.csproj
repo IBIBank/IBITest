@@ -217,6 +217,7 @@
     <Compile Include="Models\GenerateTokenViewModel.cs" />
     <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\RequestViewModel.cs" />
+    <Compile Include="Models\SearchCustomerViewModel.cs" />
     <Compile Include="Models\TestModel.cs" />
     <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Models\TranferOfAccountAdminView.cs" />
