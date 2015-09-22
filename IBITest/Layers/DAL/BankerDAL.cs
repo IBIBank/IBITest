@@ -963,8 +963,55 @@ namespace IBITest.Layers.DAL
             return customerList;
         }
 
+        public List<SearchCustomerViewModel> GetCustomersHavingLoan(long branchCode)
+        {
+            List<SearchCustomerViewModel> customersList = new List<SearchCustomerViewModel>();
+            long customerID, accountNumber ;
 
 
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()), connection2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+                connection2.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("SELECT CustomerID, AccountNumber FROM Account WHERE BranchCode = {0} AND Status = 'Active' AND AccountType = 'L' ", branchCode.ToString()), connection);
+                SqlDataReader reader = command.ExecuteReader(), reader2;
+                SqlCommand command2 = new SqlCommand("", connection2);
+
+                if (!reader.HasRows)
+                    return null;
+
+                while (reader.Read())
+                {
+                    customerID = Convert.ToInt64(reader[0]);
+                    accountNumber = Convert.ToInt64(reader[1]);
+
+                    command2.CommandText = String.Format("SELECT CustomerName, PermanentAddress, CommunicationAddress, ContactNumber, Email FROM Customer WHERE CustomerID = {0}  ", customerID.ToString());
+                    reader2 = command2.ExecuteReader();
+
+                    if (reader2.HasRows)
+                    {
+                        SearchCustomerViewModel customerDetails = new SearchCustomerViewModel();
+                        reader2.Read();
+
+                        customerDetails.accountNumber = accountNumber.ToString();
+                        customerDetails.customerName = reader2[0].ToString();
+                        customerDetails.permanentAddress = reader2[1].ToString();
+                        customerDetails.communicationAddress = reader2[2].ToString();
+                        customerDetails.contactNumber = reader2[3].ToString();
+                        customerDetails.email = reader2[4].ToString();
+
+                        customersList.Add(customerDetails);
+                    }
+
+
+                    reader2.Close();
+                }
+
+            }
+
+            return customersList;
+        }
 
     }
 }

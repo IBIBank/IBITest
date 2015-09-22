@@ -19,7 +19,7 @@ namespace IBITest.Controllers
             List<TransactionStatementViewModel> list = newObj.GetDetailedTransactions(2,new DateTime (DateTime.Today.Year-1, DateTime.Today.Month, DateTime.Today.Day), new DateTime (DateTime.Today.Year+1, DateTime.Today.Month, DateTime.Today.Day));
             List<SearchCustomerViewModel> customerList = new List<SearchCustomerViewModel>();
 
-            customerList = banObj.GetCustomerByAccountNumber(2,2);
+            customerList = banObj.GetCustomersHavingLoan(1);
 
             foreach(var v in customerList)
                 MessageBox.Show(v.customerName);
