@@ -380,6 +380,12 @@ namespace IBITest.Controllers
             }
         }
 
+        public ActionResult SearchCustomerDetails()
+        {
+            
+            return View();
+        }
+
         
     }
 }
