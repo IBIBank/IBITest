@@ -382,9 +382,15 @@ namespace IBITest.Controllers
 
         public ActionResult SearchCustomerDetails()
         {
-            
+            //query
             return View();
         }
+        [HttpPost]
+        public JsonResult GetCustomersByName(string queryName)
+        { 
+            return Json(new object{});
+        }
+
 
         
     }
