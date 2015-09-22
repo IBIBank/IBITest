@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "SearchCustomerDetails";
+    Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function RadioToggled(radioSelection)
+    {
+        alert("change selection " + radioSelection);
+        if (radioSelection == "name")
+        {
+            $("#queryString").show();
+            $("#searchButton").show();
+        }
+        if (radioSelection == "accountNo")
+        {
+            $("#queryString").show();
+            $("#searchButton").show();
+        }
+        if (radioSelection == "loans")
+        {
+            $("#queryString").hide();
+            $("#searchButton").hide();
+        }
+        if (radioSelection == "locked")
+        {
+            $("#queryString").hide();
+            $("#searchButton").hide();    
+        }
+    }
+    
+</script>
+<h2>Search Customer Details</h2>
+<br />
+<form id="options">
+    <input type="radio" class="radiolist" name="searchCriteria" onchange="RadioToggled(this.value)" value="name" checked />Name
+    <br />
+    <input type="radio" class="radiolist" name="searchCriteria" onchange="RadioToggled(this.value)" value="accountNo" />Account No
+    <br />
+    <input type="radio" class="radiolist" name="searchCriteria" onchange="RadioToggled(this.value)" value="loans" />Customer With Loans
+    <br />
+    <input type="radio" class="radiolist" name="searchCriteria" onchange="RadioToggled(this.value)" value="locked" />UserID Locked Customer
+    <br />
+</form>
+<form>
+    <input id="queryString" type="text" required/>
+    <button id="searchButton">Search</button>
+</form>
+<table id="details">
+    <tr>
+        <th>Account Number</th>
+        <th>Customer Name</th>
+        <th>Permanent Address</th>
+        <th>Communication Address</th>
+        <th>Contact No</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
+</table>

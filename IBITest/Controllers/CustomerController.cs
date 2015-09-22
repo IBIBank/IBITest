@@ -264,6 +264,9 @@ namespace IBITest.Controllers
        
         public ActionResult RequestClosureOfAccount()
         {
+            long customerID = (Session["User"] as UserRole).customerID;
+            CustomerDAL objCustomerDAL = new CustomerDAL();
+            ViewBag.savingsAccountList = objCustomerDAL.GetAllSavingsAccountByCustomerID(customerID);
             return View();
         }
         public ActionResult ViewRequestStatus()

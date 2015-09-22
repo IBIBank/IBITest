@@ -386,6 +386,7 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Customer\TransferFunds.cshtml" />
     <Content Include="Views\Customer\UpdateUserOrTransactionPassword.cshtml" />
+    <Content Include="Views\Banker\SearchCustomerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
