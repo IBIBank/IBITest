@@ -4,9 +4,11 @@
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
+    var current="name";
     function RadioToggled(radioSelection)
     {
-        alert("change selection " + radioSelection);
+        current = radioSelection;
+        //alert("change selection " + radioSelection);
         if (radioSelection == "name")
         {
             $("#queryString").show();
@@ -36,7 +38,56 @@
     {
         $("#detailsTable").append("<tr><th>Account Number</th><th>Customer Name</th><th>Permanent Address</th><th>Communication Address</th><th>Contact No</th><th>Email</th><th>More Info</th></tr>");
     }
-    
+    function filldata(data)
+    {
+        for (var x = 0; x < data.length; x++)
+        {
+            $("#detailsTable").append("<tr><td>" + data[x].accountNumber + "</td><td>" + data[x].customerName + "</td><td>" + data[x].permanentAddress + "</td><td>" + data[x].communicationAddress + "</td><td>" + data[x].contactNumber + "</td><td>" + data[x].email + "</td><td>View Account details</td></tr>");
+        }
+    }
+    function Search()
+    {
+        //alert("I am here");
+        //var queryType = $(".radiolist").val();
+        //alert(current);
+        $("#detailsTable").empty();
+        var queryString = $("#queryString").val();
+        alert("You searched for " + queryString);
+
+        if (current == "name")
+        {
+            $.ajax({
+                url: "/Banker/GetCustomersByName",
+                data: { queryName: queryString },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    if (data == null) {
+                        alert("No records found");
+                    }
+                    else
+                    {
+                        fillHeader();
+                        filldata(data);
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+
+        }
+        else//current=accountNO
+        {
+            if (isNaN() == true)
+            {
+                alert("Account number is not valid");
+                return;
+            }
+            
+        }
+    }
+
 </script>
 <h2>Search Customer Details</h2>
 <br />
@@ -50,9 +101,9 @@
     <input type="radio" class="radiolist" name="searchCriteria" onchange="RadioToggled(this.value)" value="locked" />UserID Locked Customer
     <br />
 </form>
-<form>
+<form action="javascript:Search()" method="post">
     <input id="queryString" type="text" required/>
-    <button id="searchButton">Search</button>
+    <button id="searchButton" type="submit">Search</button>
 </form>
 <table id="detailsTable">
     
