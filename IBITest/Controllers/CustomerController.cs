@@ -140,24 +140,73 @@ namespace IBITest.Controllers
         }
         public ActionResult TransferFunds()
         {
-            List<int> savingsAccounts = new List<int>(){4,8,9};
-            ViewBag.savingsAccountList = savingsAccounts;
+            long customerID = (Session["User"] as UserRole).customerID;
+            CustomerDAL objCustomerDAL = new CustomerDAL();
+            //List<int> savingsAccounts = new List<int>(){4,8,9};
+            //ViewBag.savingsAccountList = savingsAccounts;
+            ViewBag.savingsAccountList = objCustomerDAL.GetAllSavingsAccountByCustomerID(customerID);
 
-
-            List<SelectListItem> payeeAccounts = new List<SelectListItem>()
-            {
-                new SelectListItem(){Text = "sham",Value="4"},
-                new SelectListItem(){Text = "ram",Value="8"},
-                new SelectListItem(){Text = "suresh",Value="12"},
-            };
-            ViewBag.payeeAccounts = payeeAccounts;
+            //List<SelectListItem> payeeAccounts = new List<SelectListItem>()
+            //{
+            //    new SelectListItem(){Text = "sham",Value="4"},
+            //    new SelectListItem(){Text = "ram",Value="8"},
+            //    new SelectListItem(){Text = "suresh",Value="12"},
+            //};
+            //ViewBag.payeeAccounts = payeeAccounts;
+            ViewBag.payeeAccounts = objCustomerDAL.GetAllPayeeAccountByCustomerID(customerID);
+            ViewBag.message = "";
             return View();
         }
+        
         [HttpPost]
-        public string TransferFunds(FundTransferViewModel model)
+        public ActionResult TransferFunds(FundTransferViewModel model)
         {
             
-            return "aha";
+            long customerID = (Session["User"] as UserRole).customerID;
+            BankerDAL objBDAL = new BankerDAL();
+            CustomerDAL objCDAL = new CustomerDAL();
+            ViewBag.savingsAccountList = objCDAL.GetAllSavingsAccountByCustomerID(customerID);
+            ViewBag.payeeAccounts = objCDAL.GetAllPayeeAccountByCustomerID(customerID);
+            string message="";
+            if (model.Amount <= 0)
+            {
+                //ModelState.AddModelError("", "Source and Dest cant be same");
+                message =  "Amount must be positive";
+                @ViewBag.message = message;
+                return View(model);
+            }
+            if (model.FromAccount == model.ToAccount)
+            {
+                //ModelState.AddModelError("", "Source and Dest cant be same");
+                message =  "Source and Destination account can't be same";
+                @ViewBag.message = message;
+                return View(model);
+            }
+            if (model.Amount > objBDAL.GetAccountBalance(model.FromAccount))
+            {
+                message =  "Insufficient funds. Please check balance";
+                @ViewBag.message = message;
+                return View(model);
+            }
+            if (objCDAL.ValidateTransactionPassword(customerID, model.TransactionPassword) == false)
+            {
+                message =  "Password is not valid";
+                @ViewBag.message = message;
+                return View(model);
+            }
+            if (objBDAL.GetAccountType(model.ToAccount) == 'L')
+            {
+                if (model.Amount > objBDAL.GetAccountBalance(model.ToAccount))
+                {
+                    message =  "Invaalid transaction";
+                    @ViewBag.message = message;
+                    return View(model);
+                }
+            }
+            objCDAL.DoFundTransfer(model);
+            message =  "Transaction Successful";
+            @ViewBag.message = message;
+            return View(model);
         }
        
         public ActionResult RequestClosureOfAccount()
