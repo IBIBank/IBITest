@@ -242,6 +242,11 @@ namespace IBITest.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public string UpdateUserOrTransactionPassword(string oldPassword, string newPassword, string passwordType)
+        {
+            return "success";
+        }
         public ActionResult ApplyForLoan()
         {
             return View();
