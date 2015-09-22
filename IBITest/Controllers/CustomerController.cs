@@ -110,17 +110,53 @@ namespace IBITest.Controllers
             List<TransactionStatementViewModel> transactionsList = new List<TransactionStatementViewModel>();
             List<long> accountsList = new List<long>();
 
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+
             CustomerDAL customerDALObject = new CustomerDAL();
             long customerID = (Session["User"] as UserRole).customerID;
+
 
             accountsList = customerDALObject.GetAccountsListAsLongListByCustomerID(customerID);
 
             ViewBag.accountsList = accountsList;
 
+            if (accountsList != null)
+                ViewBag.transactionDetails = customerDALObject.GetLastFiveTransactions(accountsList[0]);
+
             return View();
         }
-        
-        
+
+
+        public ActionResult GetLastFiveTransactions(long accountNumber)
+        {
+            List<TransactionStatementViewModel> transactionsList = new List<TransactionStatementViewModel>();
+            
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+
+            CustomerDAL customerDALObject = new CustomerDAL();
+            long customerID = (Session["User"] as UserRole).customerID;
+
+            return Json(customerDALObject.GetLastFiveTransactions(accountNumber));
+        }
+
+        [HttpPost]
+        public ActionResult GetDetailedTransactions(long accountNumber, int fromDate, int fromMonth, int fromYear, int toDate, int toMonth, int toYear)
+        {
+            List<TransactionStatementViewModel> transactionsList = new List<TransactionStatementViewModel>();
+
+            DateTime startDate = new DateTime(fromYear, fromMonth, fromDate);
+            DateTime endDate = new DateTime(toYear, toMonth, toDate);
+
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "CommonBiz");
+
+            CustomerDAL customerDALObject = new CustomerDAL();
+            long customerID = (Session["User"] as UserRole).customerID;
+
+            return Json(customerDALObject.GetDetailedTransactions(accountNumber, startDate, endDate));
+        }
         
         
         public ActionResult AddPayee()

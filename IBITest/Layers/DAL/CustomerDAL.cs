@@ -996,6 +996,8 @@ namespace IBITest.Layers.DAL
                             else
                                 transactionDetails.transactionType = "Credit";
                         }
+                        else
+                            transactionDetails.transactionType = reader[1].ToString();
 
                         transactionDetails.transactionDate = Convert.ToDateTime(reader[2]);
                         transactionDetails.amount = Convert.ToDecimal(reader[3]);
