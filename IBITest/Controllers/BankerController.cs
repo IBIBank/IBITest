@@ -387,10 +387,17 @@ namespace IBITest.Controllers
         }
         [HttpPost]
         public JsonResult GetCustomersByName(string queryName)
-        { 
-            return Json(new object{});
+        {
+            BankerDAL objBankerDal = new BankerDAL();
+            long branchCode = (Session["User"] as UserRole).branchCode;
+            return Json(objBankerDal.GetCustomerByName(queryName,branchCode));
         }
+        [HttpPost]
+        public JsonResult GetCustomersByAccountNo(int accountNo)
+        {
 
+            return Json(new object { });
+        }
 
         
     }
