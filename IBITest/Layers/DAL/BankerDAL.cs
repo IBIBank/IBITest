@@ -1013,5 +1013,74 @@ namespace IBITest.Layers.DAL
             return customersList;
         }
 
+
+
+
+        public List<SearchCustomerViewModel> GetLockedCustomers()
+        {
+            List<SearchCustomerViewModel> customersList = new List<SearchCustomerViewModel>();
+            long customerID;
+            CustomerDAL customerDALObj = new CustomerDAL();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()), connection2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()), connection3 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+                connection2.Open();
+                connection3.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("SELECT UserID FROM UserRoles WHERE Status = 'L' "), connection);
+                SqlDataReader reader = command.ExecuteReader(), reader2, reader3;
+                SqlCommand command2 = new SqlCommand("", connection2);
+                SqlCommand command3 = new SqlCommand("", connection3);
+
+                if (!reader.HasRows)
+                    return null;
+
+                while (reader.Read())
+                {
+                    var userID = reader[0].ToString();
+                    customerID = customerDALObj.GetCustomerIDbyUserID(userID);
+
+                    command2.CommandText = String.Format("SELECT CustomerName, PermanentAddress, CommunicationAddress, ContactNumber, Email FROM Customer WHERE CustomerID = {0}  ", customerID.ToString());
+                    reader2 = command2.ExecuteReader();
+                    reader2.Read();
+
+
+                    string customerName = reader2[0].ToString();
+                    string permanentAddress = reader2[1].ToString();
+                    string communicationAddress = reader2[2].ToString();
+                    string contactNumber = reader2[3].ToString();
+                    string email = reader2[4].ToString();
+
+                    reader2.Close();
+
+                    command3.CommandText = "SELECT AccountNumber FROM Account WHERE CustomerID = " + customerID.ToString();
+                    reader3 = command3.ExecuteReader();
+
+                    if (reader3.HasRows)
+                        while (reader3.Read())
+                        {
+                            SearchCustomerViewModel customerDetails = new SearchCustomerViewModel();
+
+                            customerDetails.accountNumber = reader3[0].ToString();
+                            customerDetails.customerName = String.Copy(customerName);
+                            customerDetails.permanentAddress = String.Copy(permanentAddress);
+                            customerDetails.communicationAddress = String.Copy(communicationAddress);
+                            customerDetails.contactNumber = String.Copy(contactNumber);
+                            customerDetails.email = String.Copy(email);
+
+                            customersList.Add(customerDetails);
+                        }
+
+
+                    reader3.Close();
+                }
+                reader.Close();
+
+            }
+
+            return customersList;
+        }
+
     }
 }
