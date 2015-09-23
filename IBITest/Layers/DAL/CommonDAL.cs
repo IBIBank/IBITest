@@ -8,6 +8,7 @@ using System.Configuration;
 using IBITest.Models;
 using System.Text;
 using System.Security.Cryptography;
+using System.Web.SessionState;
 
 namespace IBITest.Layers.DAL
 {
@@ -78,6 +79,22 @@ namespace IBITest.Layers.DAL
             return bd;
         }
 
+
+        public string CheckValidation(string allowedRole, HttpSessionStateBase Session)
+        {
+            if (Session["User"] == null)
+                return "LogIn";
+
+            string currentRole = (Session["User"] as UserRole).role;
+
+            if (allowedRole.Contains(currentRole))
+                return "Authorised";
+            else
+                return "Unauthorised";
+        }
+
+
+
         public string CheckRole(string UserID, string Password)
         {
             string res;
@@ -85,6 +102,7 @@ namespace IBITest.Layers.DAL
             SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
             SqlCommand command = new SqlCommand(String.Format( "SELECT Password, Role,FailCount,Status FROM UserRoles WHERE UserID = '{0}' ",  UserID), connection);
             connection.Open();
+
             SqlDataReader reader = command.ExecuteReader();
             int FailCount;
             reader.Read();

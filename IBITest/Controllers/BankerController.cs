@@ -12,9 +12,17 @@ namespace IBITest.Controllers
     {
         //
         // GET: /Banker/
-        [AuthorizeUser(AccessLevel = "Admin")]
+        
         public ActionResult DashBoard()
         {
+
+            string result = (new CommonDAL()).CheckValidation("Banker", this.Session);
+
+            if(result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if(result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             BankerDAL bd = new BankerDAL();
             long branchCode;
 
@@ -46,6 +54,13 @@ namespace IBITest.Controllers
         [HttpGet]
         public ActionResult GenerateToken()
         {
+            string result = (new CommonDAL()).CheckValidation("Banker", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             return View(/*new GenerateTokenViewModel()*/);
         }
 
@@ -71,6 +86,14 @@ namespace IBITest.Controllers
         [HttpGet]
         public ActionResult Requests()
         {
+            string result = (new CommonDAL()).CheckValidation("Banker", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
+
             BankerDAL obj = new BankerDAL();
             List<RequestViewModel> mdL = new List<RequestViewModel>();
             long branchCode;
@@ -234,32 +257,26 @@ namespace IBITest.Controllers
 
         public ActionResult CreditDebitCustomerAccount()
         {
+            string result = (new CommonDAL()).CheckValidation("Banker", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
+
             return View();
         }
+
+
+
         public char GetAccountType(int accountNumber)
         {
             BankerDAL objBankerDal = new BankerDAL();
             char accountType = objBankerDal.GetAccountType(accountNumber);
             ViewBag.accountType = accountType;
             return accountType;
-            /*
-            if (accountNumber == 2011)
-            {
-                ViewBag.accountType = "S";
-                return "S";
-            }
-            else if (accountNumber == 2012)
-            {
-                ViewBag.accountType = "L";
-                return "L";
-            }
-            else
-            {
-                ViewBag.accountType = "I";
-                return "I";
-            }
-             */
-
+            
         }
         public string SetBalance(int accountNumber, decimal amount, char accountType, char CreditOrDebit, string remarks)
         {
@@ -306,6 +323,8 @@ namespace IBITest.Controllers
             }
             
         }
+
+
         public ActionResult ApproveRequest(string val)
         {
             int requestID;
@@ -330,6 +349,15 @@ namespace IBITest.Controllers
 
         public ActionResult TransferRequest(string val)
         {
+            /*
+            string result = (new CommonDAL()).CheckValidation("Banker", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+            */
+
             int requestID;
             BankerDAL bankerDALObj = new BankerDAL();
 
@@ -383,8 +411,18 @@ namespace IBITest.Controllers
         public ActionResult SearchCustomerDetails()
         {
             //query
+            string result = (new CommonDAL()).CheckValidation("Banker", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
+
             return View();
         }
+
+
         [HttpPost]
         public JsonResult GetCustomersByName(string queryName)
         {
@@ -392,6 +430,8 @@ namespace IBITest.Controllers
             long branchCode = (Session["User"] as UserRole).branchCode;
             return Json(objBankerDal.GetCustomerByName(queryName,branchCode));
         }
+
+
         [HttpPost]
         public JsonResult GetCustomerByAccountNo(int accountNo)
         {
@@ -399,6 +439,8 @@ namespace IBITest.Controllers
             long branchCode = (Session["User"] as UserRole).branchCode;
             return Json(objBankerDal.GetCustomerByAccountNumber(accountNo, branchCode));
         }
+
+
         [HttpPost]
         public JsonResult GetCustomersWithLoan()
         {
@@ -406,6 +448,8 @@ namespace IBITest.Controllers
             long branchCode = (Session["User"] as UserRole).branchCode;
             return Json(objBankerDal.GetCustomersHavingLoan(branchCode));
         }
+
+
         [HttpPost]
         public JsonResult GetCustomerWithLockedUserID()
         {

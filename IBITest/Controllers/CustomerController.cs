@@ -15,8 +15,13 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
-            if (Session["User"] == null)
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
                 return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
 
             CustomerDAL customerDALObject = new CustomerDAL();
             
@@ -28,14 +33,18 @@ namespace IBITest.Controllers
 
             return View();
         }
-        public ActionResult FinishRegistration(string token)
-        {
 
+        public ActionResult FinishRegistration(string token)
+        {           
             //MessageBox.Show("I am in GET Now get user details according to token"+token);
             CustomerDAL obj = new CustomerDAL();
+            Customer customer = obj.GetUserByTokenID(token);
+            customer.DOB = Convert.ToDateTime(customer.DOB.ToShortDateString());
 
-            return View(obj.GetUserByTokenID(token));
+            return View(customer);
         }
+
+
         [HttpPost]
         public ActionResult FinishRegistration(Customer model)
         {
@@ -54,10 +63,16 @@ namespace IBITest.Controllers
             }
 
         }
+
+
         public ActionResult CreateNewAccount()
         {
-            if (Session["User"] == null)
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
                 return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
 
             CommonDAL obj = new CommonDAL();
             NewAccountRequestView model = new NewAccountRequestView();
@@ -94,6 +109,7 @@ namespace IBITest.Controllers
             return Json(obj);
         }
 
+
         public JsonResult GetListOfSavingAccounts()
         {
             List<AccountListViewModel> obj = new List<AccountListViewModel>();
@@ -107,12 +123,17 @@ namespace IBITest.Controllers
 
         public ActionResult MiniDetailedstatements()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             List<TransactionStatementViewModel> transactionsList = new List<TransactionStatementViewModel>();
             List<long> accountsList = new List<long>();
 
-            if (Session["User"] == null)
-                return RedirectToAction("Login", "CommonBiz");
-
+           
             CustomerDAL customerDALObject = new CustomerDAL();
             long customerID = (Session["User"] as UserRole).customerID;
 
@@ -141,6 +162,7 @@ namespace IBITest.Controllers
             return Json(customerDALObject.GetLastFiveTransactions(accountNumber));
         }
 
+
         [HttpPost]
         public ActionResult GetDetailedTransactions(long accountNumber, int fromDate, int fromMonth, int fromYear, int toDate, int toMonth, int toYear)
         {
@@ -161,9 +183,18 @@ namespace IBITest.Controllers
         
         public ActionResult AddPayee()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             //AddPayeeViewModel obj = new AddPayeeViewModel();
             return View();
         }
+
+
         public JsonResult ValidateAccountNumber(int accountNumber)
         {
             CustomerDAL objOfCustomerDAL = new CustomerDAL();
@@ -183,6 +214,15 @@ namespace IBITest.Controllers
         {
             CustomerDAL objOfCustomerDAL = new CustomerDAL();
 
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
+            ModelState.Clear();
+
             long customerID = (Session["User"] as UserRole).customerID;
             if (objOfCustomerDAL.ValidatePayeeAccountNumber(model.payeeAccountNumber, customerID) != null)
             {
@@ -197,12 +237,30 @@ namespace IBITest.Controllers
             }
             
         }
+
+
         public ActionResult RequestForAccountTransfer()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             return View();
         }
+
+
         public ActionResult TransferFunds()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             long customerID = (Session["User"] as UserRole).customerID;
             CustomerDAL objCustomerDAL = new CustomerDAL();
             //List<int> savingsAccounts = new List<int>(){4,8,9};
@@ -274,23 +332,53 @@ namespace IBITest.Controllers
        
         public ActionResult RequestClosureOfAccount()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             long customerID = (Session["User"] as UserRole).customerID;
             CustomerDAL objCustomerDAL = new CustomerDAL();
             ViewBag.savingsAccountList = objCustomerDAL.GetAllSavingsAccountByCustomerID(customerID);
             return View();
         }
+
+
         public ActionResult ViewRequestStatus()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             return View();
         }
+
+
         public ActionResult ViewOrUpdateProfile()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             return View();
         }
+
         public ActionResult UpdateUserOrTransactionPassword()
         {
-            if (Session["User"] == null)
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
                 return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
 
             return View();
         }
@@ -311,10 +399,25 @@ namespace IBITest.Controllers
 
         public ActionResult ApplyForLoan()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             return View();
         }
+
         public ActionResult MoneyManagaer()
         {
+            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
             return View();
         }
     }

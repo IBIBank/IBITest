@@ -62,14 +62,21 @@ namespace IBITest.Models
     {
         [Required]
         public long FromAccount { get; set; }
+
         [Required]
         //[Unlike("FromAccount", "FromAccount")]
         public long ToAccount { get; set; }
+        
         [Required]
+        [Range(1,25000)]
         public decimal Amount { get; set; }
+        
         [Required]
+        [DataType(DataType.Password)]
         public string TransactionPassword { get; set; }
+        
         [Required]
+        [StringLength(100)]
         public string remarks { get; set; }
     }
 }

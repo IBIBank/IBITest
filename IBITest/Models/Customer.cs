@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,9 @@ namespace IBITest.Models
         public string CustomerName { get; set; }
 
         [Required]
+        [DisplayName("Date of birth")]
+        [DateValidation(ErrorMessage = "The Date of birth cannot be in future")]
+        [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
 
         [Required]

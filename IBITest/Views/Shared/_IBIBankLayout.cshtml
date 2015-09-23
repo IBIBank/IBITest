@@ -15,7 +15,9 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
+                    <a href="@Url.Action("Index", "CommonBiz")">
                     <img src="~/Content/Logo.png" />
+                    </a>
                 </div>
                 <div class="float-right">
                     <p>@DateTime.Today.DayOfWeek , @DateTime.Today.ToString("MMM") @DateTime.Today.Day, @DateTime.Today.Year</p>
@@ -29,8 +31,18 @@
                     @{
                         if(Session["User"] != null)
                         {
-                           <h4> Hi  @((Session["User"] as UserRole).userID) !</h4> @Html.ActionLink("LogOut","LogOut","CommonBiz")   
-                           
+                            if((Session["User"] as UserRole).role.Equals("Admin"))
+                            {
+                                <h4> Hi <a href="@Url.Action("Dashboard", "Admin")" > @((Session["User"] as UserRole).userID) </a> !</h4> @Html.ActionLink("LogOut","LogOut","CommonBiz")                                                                
+                            }
+                            else if((Session["User"] as UserRole).role.Equals("Banker"))
+                            {
+                                <h4> Hi <a href="@Url.Action("Dashboard", "Banker")" > @((Session["User"] as UserRole).userID) </a> !</h4> @Html.ActionLink("LogOut","LogOut","CommonBiz")                                
+                            }
+                            else
+                            {
+                                <h4> Hi <a href="@Url.Action("Dashboard", "Customer")" > @((Session["User"] as UserRole).userID) </a> !</h4> @Html.ActionLink("LogOut","LogOut","CommonBiz")                                
+                            }
                         }                    
                     }
                     

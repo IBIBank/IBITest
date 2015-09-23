@@ -26,6 +26,8 @@ namespace IBITest.Controllers
             return View(objbankcountrymodel);
         }
 
+        
+
         [HttpPost]
         public ActionResult ValidateToken(string token)
         {
@@ -83,6 +85,7 @@ namespace IBITest.Controllers
             return objcity;
         }
 
+
         public List<BranchL> GetAllBranch(int cityid)
         {
             List<BranchL> objbranch = new List<BranchL>();
@@ -113,7 +116,7 @@ namespace IBITest.Controllers
         // GET: /Account/Login
         public ActionResult Login()
         {
-            if (Session["User"] != null)
+            if (this.Session["User"] != null)
             {
                 return View("InvalidSession");
             }
@@ -155,7 +158,7 @@ namespace IBITest.Controllers
             else if(role.Equals("Banker"))
                 ur.branchCode = (new BankerDAL()).GetBranchCodeByBankerID(model.UserName);
 
-            Session["User"] = ur;
+            this.Session["User"] = ur;
 
             if (role.Equals("Admin"))
             {
@@ -178,6 +181,12 @@ namespace IBITest.Controllers
         {
             Session["User"] = null;
             return RedirectToAction("Login");
+        }
+
+
+        public ActionResult Unauthorised()
+        {
+            return View();
         }
 
     }

@@ -213,6 +213,7 @@
     <Compile Include="Models\ClosureOfAccountAdminView.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DateValidationAttribute.cs" />
     <Compile Include="Models\FundTransferPayeeModel.cs" />
     <Compile Include="Models\FundTransferViewModel.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
@@ -390,6 +391,7 @@
     <Content Include="Views\Customer\TransferFunds.cshtml" />
     <Content Include="Views\Customer\UpdateUserOrTransactionPassword.cshtml" />
     <Content Include="Views\Banker\SearchCustomerDetails.cshtml" />
+    <Content Include="Views\CommonBiz\Unauthorised.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

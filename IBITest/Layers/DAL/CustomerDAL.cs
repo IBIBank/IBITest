@@ -672,7 +672,9 @@ namespace IBITest.Layers.DAL
                 string storedPassword = reader[0].ToString();
                 reader.Close();
 
-                return password.Equals(storedPassword);
+
+
+                return storedPassword.Equals((new CommonDAL()).GetHashedText(password));
             }
             return result;
         }

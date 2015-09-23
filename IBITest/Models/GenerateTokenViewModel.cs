@@ -14,6 +14,7 @@ namespace IBITest.Models
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
+        [DateValidation(ErrorMessage = "The date of birth cannot be in future")]
         public DateTime DOB { get; set; }
 
         [Required]
