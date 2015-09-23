@@ -17,17 +17,7 @@ namespace IBITest.Controllers
             BankerDAL banObj = new BankerDAL();
             CommonDAL commonDALObj = new CommonDAL();
 
-            List<TransactionStatementViewModel> list = newObj.GetDetailedTransactions(2,new DateTime (DateTime.Today.Year-1, DateTime.Today.Month, DateTime.Today.Day), new DateTime (DateTime.Today.Year+1, DateTime.Today.Month, DateTime.Today.Day));
-            AccountDetailsViewModel customerList = new AccountDetailsViewModel();
-
-            customerList = banObj.GetAccountDetails(1);
-
-            LoanRequestViewModel model = new LoanRequestViewModel { customerID = 1, age = 2, amount = 100, annualIncome = 5000000, branchName = "2", tenure = 12, typeOfLoan = 'P' };
-            
-
-           // foreach(var v in customerList)
-           MessageBox.Show(banObj.ApproveLoanRequest(1).ToString());
-                
+           
 
            return View(new TestModel());
         }

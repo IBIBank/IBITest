@@ -15,18 +15,35 @@ namespace IBITest.Controllers
 
         public ActionResult DashBoard()
         {
+            string result = (new CommonDAL()).CheckValidation("Admin", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
+
             AdminDAL objAdminDAL = new AdminDAL();
             ViewBag.BranchTransferRequests = objAdminDAL.GetNoOfAccTransferReq();
             ViewBag.AccountClosureRequests = objAdminDAL.GetNoOfAccClosureferReq();
             return View();
         }
+
+
         public ActionResult AddBranch()
         {
-            if (Session["User"] == null || !(Session["User"] as UserRole).role.Equals("Admin"))
-                return RedirectToAction("LogOut", "CommonBiz");
+
+            string result = (new CommonDAL()).CheckValidation("Admin", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
 
             return View();
         }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddBranch(BranchDetails model)
@@ -44,14 +61,30 @@ namespace IBITest.Controllers
             obj.AddBranch(model);
             return View("Dashboard");
         }
+
+
         public ActionResult ViewOrUpdateBranchDetails()
         {
+            string result = (new CommonDAL()).CheckValidation("Admin", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
+
+
             return View();
         }
+
+
         public ActionResult ApproveOrRejectRequests()
         {
-            if (Session["User"] == null || !(Session["User"] as UserRole).role.Equals("Admin") )
-                return RedirectToAction("LogOut", "CommonBiz");
+            string result = (new CommonDAL()).CheckValidation("Admin", this.Session);
+
+            if (result.Equals("LogIn"))
+                return RedirectToAction("Login", "CommonBiz");
+            else if (result.Equals("Unauthorised"))
+                return RedirectToAction("Unauthorised", "CommonBiz");
 
             List<SelectListItem> obj = new List<SelectListItem>()
             {
@@ -61,18 +94,24 @@ namespace IBITest.Controllers
             ViewBag.requestTypeList = obj;
             return View();
         }
+
+
         public JsonResult GetTransferOfAccountAdminRequest(string requestType)
         {           
             AdminDAL adminObj = new AdminDAL();
             List<TranferOfAccountAdminView> obj = adminObj.GetTransferAccountRequests();
             return Json(obj);
         }
+
+
         public JsonResult GetClosureOfAccountAdminRequest(string requestType)
         {
             AdminDAL objAdminDal = new AdminDAL();
             List<ClosureOfAccountAdminView> obj = objAdminDal.GetClosureOfAccountRequests();
             return Json(obj);
         }
+
+
         public void ApproveTOC(int[] approveRequestList)
         {
             List<int> approvedRequests = approveRequestList.ToList<int>();
@@ -80,13 +119,18 @@ namespace IBITest.Controllers
             objAdminDAL.ApproveAccountTransferRequest(approvedRequests);
             return;
         }
+
+
         public void ApproveCOA(int[] approveRequestList)
         {
             List<int> approvedRequests = approveRequestList.ToList<int>();
             AdminDAL objAdminDAL = new AdminDAL();
             objAdminDAL.ApproveAccountClosingRequest(approvedRequests);
             return;
+
         }
+
+
         public void RejectTOC(int[] rejectRequestList)
         {
             List<int> rejectRequests = rejectRequestList.ToList<int>();
@@ -94,6 +138,8 @@ namespace IBITest.Controllers
             objAdminDAL.RejectAccountTransferRequest(rejectRequests);
             return;
         }
+
+
         public void RejectCOA(int[] rejectRequestList)
         {
             List<int> rejectRequests = rejectRequestList.ToList<int>();
