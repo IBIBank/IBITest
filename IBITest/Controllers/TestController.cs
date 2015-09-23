@@ -26,7 +26,7 @@ namespace IBITest.Controllers
             
 
            // foreach(var v in customerList)
-           MessageBox.Show(newObj.AddLoanAccountRequest(model).ToString());
+           MessageBox.Show(banObj.ApproveLoanRequest(1).ToString());
                 
 
            return View(new TestModel());

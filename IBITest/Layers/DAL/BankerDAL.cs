@@ -552,7 +552,7 @@ namespace IBITest.Layers.DAL
 
                 // set request as serviced
 
-                command.CommandText = String.Format("UPDATE NewAccountRequest SET Status = 'A' WHERE RequestID = {0}",requestID);
+                command.CommandText = String.Format("UPDATE NewAccountRequest SET Status = 'A', ServiceDate = '{0}' WHERE RequestID = {1}", DateTime.Now.ToString(), requestID);
                 if (command.ExecuteNonQuery() > 0)
                     result = true;
 
@@ -565,10 +565,62 @@ namespace IBITest.Layers.DAL
 
         public bool ApproveLoanRequest(int requestID)
         {
+            long branchCode, customerID, accountNumber;
             bool result = false;
+            char typeOfLoan;
+            Byte[] addressProof, salaryProof;
+            Decimal annualIncome, amount, tenure;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT TypeOfLoan, CustomerID, BranchCode, AnnualIncome, Amount, Tenure, AddressProof, SalaryProof FROM LoanRequest WHERE RequestID = " + requestID.ToString(), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+
+                reader.Read();
+
+                typeOfLoan = Convert.ToChar(reader[0]);
+                customerID = Convert.ToInt64(reader[1]);
+                branchCode = Convert.ToInt64(reader[2]);
+                annualIncome = Convert.ToDecimal(reader[3]);
+                amount = Convert.ToDecimal(reader[4]);
+                tenure = Convert.ToDecimal(reader[5]);
+
+                /*
+                if (reader[2] != null)
+                    addressProof = (Byte[])reader[2];
+                else */
+                addressProof = null;
+                salaryProof = null;
+
+                reader.Close();
 
 
+                command.CommandText = String.Format("SELECT COUNT(AccountNumber) FROM Account");
+                reader = command.ExecuteReader();
 
+                reader.Read();                
+                accountNumber = Convert.ToInt64(reader[0]) + 1;
+                reader.Close();
+
+                // create account in account table
+
+                command.CommandText = String.Format("INSERT INTO Account VALUES('{0}','L','{1}','Active','{2}','{3}','{4}','{5}')", accountNumber, DateTime.Now.ToString(), amount.ToString(), branchCode, customerID, addressProof);
+                command.ExecuteNonQuery();
+
+                command.CommandText = String.Format("INSERT INTO Loans VALUES('{0}','{1}','{2}','{3}','{4}')", accountNumber, annualIncome, typeOfLoan, tenure, salaryProof);
+                command.ExecuteNonQuery();
+
+                // set request as serviced
+
+                command.CommandText = String.Format("UPDATE LoanRequest SET Status = 'A', ServiceDate = '{0}' WHERE RequestID = {1}", DateTime.Now.ToString(), requestID);
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
 
             return result;
         }
