@@ -188,7 +188,7 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker11','Banker11','"+commonDALObj.GetHashedText("banker11")+"','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker22','Banker22','"+commonDALObj.GetHashedText(banker22)+"','e@m.l')");
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker22','Banker22','"+commonDALObj.GetHashedText("banker22")+"','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM Customer");
