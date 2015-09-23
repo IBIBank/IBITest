@@ -174,7 +174,7 @@ namespace IBITest.Controllers
             //if(accountNumber==0)
             //    return null;
             //AddPayeeViewModel obj = new AddPayeeViewModel {payeeName="virat",branchName="kormangala" };
-
+            ViewBag.message = "";
             return Json(obj);
 
         }
@@ -184,8 +184,18 @@ namespace IBITest.Controllers
             CustomerDAL objOfCustomerDAL = new CustomerDAL();
 
             long customerID = (Session["User"] as UserRole).customerID;
-            objOfCustomerDAL.AddPayee(model, customerID);
-            return View();
+            if (objOfCustomerDAL.ValidatePayeeAccountNumber(model.payeeAccountNumber, customerID) != null)
+            {
+                objOfCustomerDAL.AddPayee(model, customerID);
+                ViewBag.message = "success";
+                return View();
+            }
+            else
+            {
+                ViewBag.message = "Operation failed";
+                return View();
+            }
+            
         }
         public ActionResult RequestForAccountTransfer()
         {
