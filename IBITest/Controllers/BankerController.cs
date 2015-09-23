@@ -406,7 +406,13 @@ namespace IBITest.Controllers
             long branchCode = (Session["User"] as UserRole).branchCode;
             return Json(objBankerDal.GetCustomersHavingLoan(branchCode));
         }
-        
+        [HttpPost]
+        public JsonResult GetCustomerWithLockedUserID()
+        {
+            BankerDAL objBankerDal = new BankerDAL();
+            long branchCode = (Session["User"] as UserRole).branchCode;
+            return Json(objBankerDal.GetLockedCustomers());
+        }
 
     }
 }
