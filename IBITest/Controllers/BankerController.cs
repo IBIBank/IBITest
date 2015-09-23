@@ -12,7 +12,7 @@ namespace IBITest.Controllers
     {
         //
         // GET: /Banker/
-
+        [AuthorizeUser(AccessLevel = "Admin")]
         public ActionResult DashBoard()
         {
             BankerDAL bd = new BankerDAL();

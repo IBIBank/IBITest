@@ -22,14 +22,14 @@ namespace IBITest.Controllers
 
             customerList = banObj.GetAccountDetails(1);
 
-           // foreach(var v in customerList)
-                MessageBox.Show(commonDALObj.GetHashedText("Som").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("12333424").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("banker11").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("customer1").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("adminnnn").Length.ToString());
+            LoanRequestViewModel model = new LoanRequestViewModel { customerID = 1, age = 2, amount = 100, annualIncome = 5000000, branchCode = 2, tenure = 12, typeOfLoan = 'P' };
+            
 
-            return View(new TestModel());
+           // foreach(var v in customerList)
+           MessageBox.Show(banObj.ApproveLoanRequest(1).ToString());
+                
+
+           return View(new TestModel());
         }
 
         [HttpPost]
