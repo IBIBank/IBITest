@@ -25,7 +25,26 @@
         {
             $("#queryString").hide();
             $("#searchButton").hide();
+            $("#detailsTable").empty();
             //fillHeader();
+            $.ajax({
+                url: "/Banker/GetCustomersWithLoan",
+                //data: { queryName: queryString },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    if (data == null) {
+                        alert("No records found");
+                    }
+                    else {
+                        fillHeader();
+                        filldata(data);
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
         }
         if (radioSelection == "locked")
         {
@@ -79,11 +98,29 @@
         }
         else//current=accountNO
         {
-            if (isNaN() == true)
+            if (isNaN(queryString) == true)
             {
                 alert("Account number is not valid");
                 return;
             }
+            $.ajax({
+                url: "/Banker/GetCustomerByAccountNo",
+                data: { accountNo: queryString },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    if (data == null) {
+                        alert("No records found");
+                    }
+                    else {
+                        fillHeader();
+                        filldata(data);
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
             
         }
     }
