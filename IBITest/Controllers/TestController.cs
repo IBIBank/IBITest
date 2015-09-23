@@ -22,12 +22,12 @@ namespace IBITest.Controllers
 
             customerList = banObj.GetAccountDetails(1);
 
+           int age = newObj.GetAgeByCustomerID(1);
+
+
            // foreach(var v in customerList)
-                MessageBox.Show(commonDALObj.GetHashedText("Som").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("12333424").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("banker11").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("customer1").Length.ToString());
-                MessageBox.Show(commonDALObj.GetHashedText("adminnnn").Length.ToString());
+           MessageBox.Show(age.ToString());
+                
 
             return View(new TestModel());
         }

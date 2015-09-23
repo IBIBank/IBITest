@@ -1125,6 +1125,29 @@ namespace IBITest.Layers.DAL
             return "Success";
         }
 
+        public int GetAgeByCustomerID(long customerID)
+        {
+            int age = 0;
+            DateTime DOB = new DateTime();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT DOB FROM Customer WHERE CustomerID = {0} ", customerID.ToString()), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                reader.Read();
+                DOB = Convert.ToDateTime(reader[0]);
+                reader.Close();                
+            }
+
+            DateTime today = DateTime.Today;
+            age = today.Year - DOB.Year;
+            if (DOB > today.AddYears(-age)) age--;
+
+            return age;
+        }
 
 
     }
