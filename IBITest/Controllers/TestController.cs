@@ -17,12 +17,13 @@ namespace IBITest.Controllers
             BankerDAL banObj = new BankerDAL();
 
             List<TransactionStatementViewModel> list = newObj.GetDetailedTransactions(2,new DateTime (DateTime.Today.Year-1, DateTime.Today.Month, DateTime.Today.Day), new DateTime (DateTime.Today.Year+1, DateTime.Today.Month, DateTime.Today.Day));
-            List<SearchCustomerViewModel> customerList = new List<SearchCustomerViewModel>();
+            AccountDetailsViewModel customerList = new AccountDetailsViewModel();
 
-            customerList = banObj.GetLockedCustomers();
+            customerList = banObj.GetAccountDetails(1);
 
-            foreach(var v in customerList)
-                MessageBox.Show(v.customerName);
+           // foreach(var v in customerList)
+                MessageBox.Show(customerList.accountNumber);
+                MessageBox.Show(customerList.cityName);
             
             return View(new TestModel());
         }

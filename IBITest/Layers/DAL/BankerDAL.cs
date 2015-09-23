@@ -1082,5 +1082,53 @@ namespace IBITest.Layers.DAL
             return customersList;
         }
 
+
+        public AccountDetailsViewModel GetAccountDetails(long accountNumber)
+        {
+            AccountDetailsViewModel accountDetails = new AccountDetailsViewModel();
+            long customerID, branchCode;
+            char accountType;
+            Decimal balance;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(String.Format("SELECT CustomerID, BranchCode, AccountType, Balance FROM Account WHERE AccountNumber = {0} ", accountNumber.ToString()), connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                reader.Read();
+
+                customerID = Convert.ToInt64(reader[0]);
+                branchCode = Convert.ToInt64(reader[1]);
+                accountType = Convert.ToChar(reader[2]);
+                balance = Convert.ToDecimal(reader[3]);
+
+                reader.Close();
+
+                command.CommandText = "SELECT BranchName, CityName FROM Branch WHERE BranchCode = " + branchCode.ToString();
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                accountDetails.accountNumber = accountNumber.ToString();
+                accountDetails.balance = balance.ToString();
+                accountDetails.branchName = reader[0].ToString();
+                accountDetails.cityName = reader[1].ToString();
+
+                if (accountType == 'S')
+                    accountDetails.accountType = String.Copy("SA");
+                else
+                    accountDetails.accountType = String.Copy("LA");
+
+                reader.Close();
+            }
+
+
+            return accountDetails;
+        }
+
+
+
+
     }
 }
