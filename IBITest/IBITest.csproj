@@ -383,13 +383,13 @@
     <Content Include="Views\Customer\RequestClosureOfAccount.cshtml" />
     <Content Include="Views\Customer\ViewRequestStatus.cshtml" />
     <Content Include="Views\Customer\MoneyManagaer.cshtml" />
-    <Content Include="Views\Customer\ApplyForLoan.cshtml" />
     <Content Include="Views\Banker\CreditDebitCustomerAccount.cshtml" />
     <Content Include="Views\Customer\AddPayee.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Customer\TransferFunds.cshtml" />
     <Content Include="Views\Customer\UpdateUserOrTransactionPassword.cshtml" />
     <Content Include="Views\Banker\SearchCustomerDetails.cshtml" />
+    <Content Include="Views\Customer\ApplyForLoan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

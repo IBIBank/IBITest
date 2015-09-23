@@ -311,7 +311,48 @@ namespace IBITest.Controllers
 
         public ActionResult ApplyForLoan()
         {
-            return View();
+            CommonDAL objCommonDal = new CommonDAL();
+            ViewBag.cityList = objCommonDal.GetCityList();
+            long customerID = (Session["User"] as UserRole).customerID;
+            CustomerDAL objCustomerDal = new CustomerDAL();
+            LoanRequestViewModel objLoanRequest = new LoanRequestViewModel();
+            objLoanRequest.customerID = customerID;
+            objLoanRequest.age = objCustomerDal.GetAgeByCustomerID(customerID);
+            objLoanRequest.salaryProof = new byte[1024];
+            objLoanRequest.addressProof = new byte[1024];
+            @ViewBag.loanTypeList = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = "Personal",Value="P"},
+                new SelectListItem(){Text = "Home",Value="H"},
+                new SelectListItem(){Text = "Vehicle",Value="V"},
+            };
+
+            return View(objLoanRequest);
+        }
+        [HttpPost]
+        public ActionResult ApplyForLoan(LoanRequestViewModel model)
+        {
+            
+            CommonDAL objCommonDal = new CommonDAL();
+            CustomerDAL objCustomerDal = new CustomerDAL();
+            ViewBag.cityList = objCommonDal.GetCityList();
+            @ViewBag.loanTypeList = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = "Personal",Value="P"},
+                new SelectListItem(){Text = "Home",Value="H"},
+                new SelectListItem(){Text = "Vehicle",Value="V"},
+            };
+            if(objCustomerDal.AddLoanAccountRequest(model) )
+            {
+                ModelState.AddModelError("", "You request for loan was successful. You may apply for yet another loan");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Operation failed");
+            }
+            
+
+            return View(model);
         }
         public ActionResult MoneyManagaer()
         {
