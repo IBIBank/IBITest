@@ -50,18 +50,36 @@
         {
             $("#queryString").hide();
             $("#searchButton").hide();
-            //fillHeader();
+            $("#detailsTable").empty();
+            $.ajax({
+                url: "/Banker/GetCustomerWithLockedUserID",
+                //data: { queryName: queryString },
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    if (data == null) {
+                        alert("No records found");
+                    }
+                    else {
+                        fillHeader();
+                        filldata(data);
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
         }
     }
     function fillHeader()
     {
-        $("#detailsTable").append("<tr><th>Account Number</th><th>Customer Name</th><th>Permanent Address</th><th>Communication Address</th><th>Contact No</th><th>Email</th><th>More Info</th></tr>");
+        $("#detailsTable").append("<tr><th>Account Number</th><th>Customer Name</th><th>Permanent Address</th><th>Communication Address</th><th>Contact No</th><th>Email</th></tr>");//<th>More Info</th>
     }
     function filldata(data)
     {
         for (var x = 0; x < data.length; x++)
         {
-            $("#detailsTable").append("<tr><td>" + data[x].accountNumber + "</td><td>" + data[x].customerName + "</td><td>" + data[x].permanentAddress + "</td><td>" + data[x].communicationAddress + "</td><td>" + data[x].contactNumber + "</td><td>" + data[x].email + "</td><td>View Account details</td></tr>");
+            $("#detailsTable").append("<tr><td>" + data[x].accountNumber + "</td><td>" + data[x].customerName + "</td><td>" + data[x].permanentAddress + "</td><td>" + data[x].communicationAddress + "</td><td>" + data[x].contactNumber + "</td><td>" + data[x].email + "</td></tr>");//<td>View Account details</td>
         }
     }
     function Search()

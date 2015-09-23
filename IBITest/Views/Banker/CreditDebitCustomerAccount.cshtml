@@ -15,6 +15,11 @@
     function getTypeOfAccount(accountNumber)
     {
         //alert("You selected account number " + accountNumber);
+        if (accountNumber <= 0)
+        {
+            alert("Account number must be positive");
+            return;
+        }
         $.ajax({
             url: "/Banker/GetAccountType",
             data: { accountNumber: accountNumber },
@@ -105,25 +110,45 @@
             }
         });
     }
+    function secondAccountNumberChanged(confirmedAccountNumber)
+    {
+        if (confirmedAccountNumber <= 0)
+        {
+            alert("Account number must be positive");
+            return;
+        }
+        if ($('#form1 #AccountNumber').val() != confirmedAccountNumber)
+        {
+            alert("Accounts dont match");
+        }
+    }
+    function amountChanged(amount)
+    {
+        if (amount <= 0)
+        {
+            alert("Amount must be positive");
+            return;
+        }
+    }
 
 </script>
 <h2>Credit - Debit Customer Account</h2>
 <form id="form1" action ="javascript:SubmitForm()">
     
     <label>Customer Account Number</label>
-    <input id="AccountNumber" type="number" onchange='getTypeOfAccount(this.value)' required/>
+    <input id="AccountNumber" type="number" min="1" onchange='getTypeOfAccount(this.value)' required/>
     <br />
 
     <label>Re-enter Account Number</label>
-    <input id ="ConfirmedAccountNumber" type="number" required />
+    <input id ="ConfirmedAccountNumber" min="1" type="number" onchange="secondAccountNumberChanged(this.value)" required />
     <br />
     
     <label>Amount</label>
-    <input id="Amount" type="number" min="1" max="25000" required/>
+    <input id="Amount" type="number" min="1" max="25000" onchange="amountChanged(this.value)" required/>
     <br />
     
     <label>Remarks</label>
-    <textarea id="Remarks" required></textarea>
+    <textarea id="Remarks" maxlength="100" required></textarea>
     <br />
     
     <button type="submit"  id="creditButton" formaction ="javascript:SubmitFormCredit()" disabled>Credit</button>
