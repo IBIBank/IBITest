@@ -186,7 +186,7 @@ namespace IBITest.Layers.DAL
                 reader.Close();
 
 
-                command.CommandText = String.Format("INSERT INTO LoanRequest (RequestID, TypeOfLoan, CustomerID, SubmissionDate, Status, BranchCode, AnnualIncome, Amount, Tenure, AddressProof, SalaryProof, CustomerName) VALUES('{0}', '{1}', '{2}', '{3}', 'S', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}') ", requestID, request.typeOfLoan, request.customerID, DateTime.Now.ToString(), request.branchCode.ToString(), request.annualIncome.ToString(), request.amount.ToString(), request.tenure.ToString(), request.addressProof, request.salaryProof, customerName);
+                command.CommandText = String.Format("INSERT INTO LoanRequest (RequestID, TypeOfLoan, CustomerID, SubmissionDate, Status, BranchCode, AnnualIncome, Amount, Tenure, AddressProof, SalaryProof, CustomerName) VALUES('{0}', '{1}', '{2}', '{3}', 'S', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}') ", requestID, request.typeOfLoan, request.customerID, DateTime.Now.ToString(), request.branchName, request.annualIncome.ToString(), request.amount.ToString(), request.tenure.ToString(), request.addressProof, request.salaryProof, customerName);
 
                 if (command.ExecuteNonQuery() > 0)
                     result = true;

@@ -35,7 +35,7 @@ namespace IBITest.Controllers
         }
 
         public ActionResult FinishRegistration(string token)
-        {           
+        {
             //MessageBox.Show("I am in GET Now get user details according to token"+token);
             CustomerDAL obj = new CustomerDAL();
             Customer customer = obj.GetUserByTokenID(token);
@@ -133,7 +133,7 @@ namespace IBITest.Controllers
             List<TransactionStatementViewModel> transactionsList = new List<TransactionStatementViewModel>();
             List<long> accountsList = new List<long>();
 
-           
+
             CustomerDAL customerDALObject = new CustomerDAL();
             long customerID = (Session["User"] as UserRole).customerID;
 
@@ -399,14 +399,48 @@ namespace IBITest.Controllers
 
         public ActionResult ApplyForLoan()
         {
-            string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
+            CommonDAL objCommonDal = new CommonDAL();
+            ViewBag.cityList = objCommonDal.GetCityList();
+            long customerID = (Session["User"] as UserRole).customerID;
+            CustomerDAL objCustomerDal = new CustomerDAL();
+            LoanRequestViewModel objLoanRequest = new LoanRequestViewModel();
+            objLoanRequest.customerID = customerID;
+            objLoanRequest.age = objCustomerDal.GetAgeByCustomerID(customerID);
+            objLoanRequest.salaryProof = new byte[1024];
+            objLoanRequest.addressProof = new byte[1024];
+            @ViewBag.loanTypeList = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = "Personal",Value="P"},
+                new SelectListItem(){Text = "Home",Value="H"},
+                new SelectListItem(){Text = "Vehicle",Value="V"},
+            };
 
-            if (result.Equals("LogIn"))
-                return RedirectToAction("Login", "CommonBiz");
-            else if (result.Equals("Unauthorised"))
-                return RedirectToAction("Unauthorised", "CommonBiz");
+            return View(objLoanRequest);
+        }
+        [HttpPost]
+        public ActionResult ApplyForLoan(LoanRequestViewModel model)
+        {
+            
+            CommonDAL objCommonDal = new CommonDAL();
+            CustomerDAL objCustomerDal = new CustomerDAL();
+            ViewBag.cityList = objCommonDal.GetCityList();
+            @ViewBag.loanTypeList = new List<SelectListItem>()
+            {
+                new SelectListItem(){Text = "Personal",Value="P"},
+                new SelectListItem(){Text = "Home",Value="H"},
+                new SelectListItem(){Text = "Vehicle",Value="V"},
+            };
+            if(objCustomerDal.AddLoanAccountRequest(model) )
+            {
+                ModelState.AddModelError("", "You request for loan was successful. You may apply for yet another loan");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Operation failed");
+            }
+            
 
-            return View();
+            return View(model);
         }
 
         public ActionResult MoneyManagaer()

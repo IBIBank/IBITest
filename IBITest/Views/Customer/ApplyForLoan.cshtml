@@ -1,6 +1,251 @@
-﻿@{
+﻿@model IBITest.Models.LoanRequestViewModel
+
+@{
     ViewBag.Title = "ApplyForLoan";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $(document).ready(
+        function ()
+        {
+            $("#alwaysHidden").hide();
+            $("#proceedButton").hide();
+            $("#AdditionalInfo").hide();
+            //typeOfLoan
+            //annualIncome
+            $("#customerID").prop("readonly", "true");
+            $("#age").prop("readonly", "true");
+            //$("#customerID").prop("disabled", "true");
+            //$("#age").prop("disabled", "true");
+            $("#typeOfLoan").val("");
+            $("#annualIncome").val("");
+            $("#amount").val("");
+            $("#tenure").val("");
 
-<h2>Apply For Loan</h2>
+        }
+    );
+    function IsEligible()
+    {
+        var typeOfLoan = $("#typeOfLoan").val();
+        var annualIncome = $("#annualIncome").val();
+        var monthlySalary = annualIncome / 12.0;
+        var amount = $("#amount").val();
+        var tenure = $("#tenure").val();
+        if (typeOfLoan == "Personal")
+        {
+            if(tenure>=12 && tenure <=24 && amount<=monthlySalary*5)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        else if (typeOfLoan == "Home") {
+            if (tenure >= 60 && tenure <= 120 && amount <= monthlySalary * 20) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else//loan type vehicle
+        {
+            if (tenure >= 12 && tenure <= 18 && amount <= monthlySalary * 3) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    function checkEligibility()
+    {
+        //alert("I am here");
+        /*
+            Check for eligibility
+            if eligible
+                display message 
+                disable check eligibility
+                make income, amount, tenure readonly
+                enable click to proceed
+            if not eligible
+                display message
+                hide proceed button
+
+        */
+        //$("#message").text("You are eligible for requested loan")
+        var eligible = IsEligible();
+        if (eligible) {
+            $("#message").text("You are eligible for requested loan");
+            
+            //$("#checkEligibilityButton").prop('clicked', 'false');
+            $("#checkEligibilityButton").prop('disabled', 'true');
+            //alert("type of loan is " + $("#typeOfLoan").val())
+            $("#typeOfLoan").val($("#listLoanType").val());
+            //listLoanType
+            $("#listLoanType").prop("disabled", "true");
+            $("#annualIncome").prop("readonly", "true");
+            $("#amount").prop("readonly", "true");
+            $("#tenure").prop("readonly", "true");
+
+            $("#proceedButton").show();
+        }
+        else
+        {
+            $("#message").text("You are not eligible for requested loan");
+        }
+    }
+    function proceed()
+    {
+        $("#AdditionalInfo").show();
+    }
+    function GetCity(cityName) {
+        //$("cityDropDown").val = cityName;
+        if (cityName === "") {
+            //do nothing
+            return;
+        }
+        var url = "/Customer/GetBranchesInCity";
+        //alert("You GetBranchesInCity city " + cityName);
+        $.ajax({
+            url: url,
+            data: { cityName: cityName },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                $("#branchDropDown").empty();
+
+                //$("#branchDropDown").append("<option value = '0' >" + "--Select--" + "</option>");
+                $("#branchDropDown").append("<option  value=''>" + "--Select--" + "</option>");
+                for (var x = 0; x < data.length; x++) {
+                    $("#branchDropDown").append("<option value = '" + data[x].Value + "' >" + data[x].Text + " </option>");
+                }
+
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+
+    }
+</script>
+<h2>ApplyForLoan</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>LoanRequestViewModel</legend>
+        <form >
+            <div class="editor-label">
+                @Html.LabelFor(model => model.customerID)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.customerID)
+                @Html.ValidationMessageFor(model => model.customerID)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.age)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.age)
+                @Html.ValidationMessageFor(model => model.age)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.annualIncome)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.annualIncome)
+                @Html.ValidationMessageFor(model => model.annualIncome)
+            </div>
+
+            @*<div class="editor-label">
+                @Html.LabelFor(model => model.typeOfLoan)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.typeOfLoan,new SelectList(@ViewBag.loanTypeList,"Value","Text"),"--Select--")
+                @Html.ValidationMessageFor(model => model.typeOfLoan)
+            </div>*@
+            <label>Type of Loan</label>
+            @Html.DropDownList("listLoanType", new SelectList(@ViewBag.loanTypeList, "Value", "Text"), "--Select--", new {@required=true })
+            <div class="editor-label">
+                @Html.LabelFor(model => model.amount)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.amount)
+                @Html.ValidationMessageFor(model => model.amount)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.tenure)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.tenure)
+                @Html.ValidationMessageFor(model => model.tenure)
+            </div>
+            <p id="message"><p>
+            <button id="checkEligibilityButton" type="submit" formaction="javascript:checkEligibility()">Check eligibility</button>
+        </form>
+        <button id="proceedButton" onclick="javascript:proceed()">Click to Proceed</button>
+
+        <div id="AdditionalInfo">
+            
+            @*
+                list of cities not part of form
+            *@
+            <label>City</label>
+            @Html.DropDownList("DropdownListForCities",new SelectList(@ViewBag.cityList),"--Select--",new {@required=true, @onchange="javascript:GetCity(this.value)"})
+
+            @*<div class="editor-label">
+                @Html.LabelFor(model => model.branchName)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.branchName,new SelectList(new List<string>()),"--Select--",new { @id="branchDropDown",@required=true})
+                @Html.ValidationMessageFor(model => model.branchName)
+            </div>*@
+            <div class="editor-label">
+                @Html.LabelFor(model => model.branchName)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.branchName,new SelectList(new List<string>()),"--Select--",new { @id="branchDropDown",@required=true})
+                @Html.ValidationMessageFor(model => model.branchName)
+            </div>
+            <label for="@(Model.salaryProof)">Salary Proof</label>  
+            <input type="file" name="@(Model.salaryProof)" id="file"/>
+
+            <label for="@(Model.addressProof)">Address Proof</label>  
+            <input type="file" name="@(Model.addressProof)" id="file"/>
+            <p>
+                <input type="submit" value="Apply For Loan" />
+            </p>
+        </div>
+
+        <div id="alwaysHidden">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.typeOfLoan)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.typeOfLoan,new SelectList(@ViewBag.loanTypeList,"Value","Text"),"--Select--")
+                @Html.ValidationMessageFor(model => model.typeOfLoan)
+            </div>
+                  
+        </div>
+
+    </fieldset>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
