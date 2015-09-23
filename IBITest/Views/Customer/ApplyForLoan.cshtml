@@ -9,6 +9,7 @@
     $(document).ready(
         function ()
         {
+            $("#alwaysHidden").hide();
             $("#proceedButton").hide();
             $("#AdditionalInfo").hide();
             //typeOfLoan
@@ -85,8 +86,9 @@
             //$("#checkEligibilityButton").prop('clicked', 'false');
             $("#checkEligibilityButton").prop('disabled', 'true');
             //alert("type of loan is " + $("#typeOfLoan").val())
-            //$("#typeOfLoan").val($("#typeOfLoan").val());
-            //$("#typeOfLoan").attr("disabled", "true");
+            $("#typeOfLoan").val($("#listLoanType").val());
+            //listLoanType
+            $("#listLoanType").prop("disabled", "true");
             $("#annualIncome").prop("readonly", "true");
             $("#amount").prop("readonly", "true");
             $("#tenure").prop("readonly", "true");
@@ -119,7 +121,7 @@
                 $("#branchDropDown").empty();
 
                 //$("#branchDropDown").append("<option value = '0' >" + "--Select--" + "</option>");
-                $("#branchDropDown").append("<option  >" + "--Select--" + "</option>");
+                $("#branchDropDown").append("<option  value=''>" + "--Select--" + "</option>");
                 for (var x = 0; x < data.length; x++) {
                     $("#branchDropDown").append("<option value = '" + data[x].Value + "' >" + data[x].Text + " </option>");
                 }
@@ -165,13 +167,15 @@
                 @Html.ValidationMessageFor(model => model.annualIncome)
             </div>
 
-            <div class="editor-label">
+            @*<div class="editor-label">
                 @Html.LabelFor(model => model.typeOfLoan)
             </div>
             <div class="editor-field">
                 @Html.DropDownListFor(model => model.typeOfLoan,new SelectList(@ViewBag.loanTypeList,"Value","Text"),"--Select--")
                 @Html.ValidationMessageFor(model => model.typeOfLoan)
-            </div>
+            </div>*@
+            <label>Type of Loan</label>
+            @Html.DropDownList("listLoanType", new SelectList(@ViewBag.loanTypeList, "Value", "Text"), "--Select--", new {@required=true })
             <div class="editor-label">
                 @Html.LabelFor(model => model.amount)
             </div>
@@ -200,6 +204,13 @@
             <label>City</label>
             @Html.DropDownList("DropdownListForCities",new SelectList(@ViewBag.cityList),"--Select--",new {@required=true, @onchange="javascript:GetCity(this.value)"})
 
+            @*<div class="editor-label">
+                @Html.LabelFor(model => model.branchName)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.branchName,new SelectList(new List<string>()),"--Select--",new { @id="branchDropDown",@required=true})
+                @Html.ValidationMessageFor(model => model.branchName)
+            </div>*@
             <div class="editor-label">
                 @Html.LabelFor(model => model.branchName)
             </div>
@@ -215,6 +226,17 @@
             <p>
                 <input type="submit" value="Apply For Loan" />
             </p>
+        </div>
+
+        <div id="alwaysHidden">
+            <div class="editor-label">
+                @Html.LabelFor(model => model.typeOfLoan)
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.typeOfLoan,new SelectList(@ViewBag.loanTypeList,"Value","Text"),"--Select--")
+                @Html.ValidationMessageFor(model => model.typeOfLoan)
+            </div>
+                  
         </div>
 
     </fieldset>

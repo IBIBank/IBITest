@@ -213,6 +213,7 @@
     <Compile Include="Models\ClosureOfAccountAdminView.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\DateValidationAttribute.cs" />
     <Compile Include="Models\FundTransferPayeeModel.cs" />
     <Compile Include="Models\FundTransferViewModel.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
