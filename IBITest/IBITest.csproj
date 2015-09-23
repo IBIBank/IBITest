@@ -216,6 +216,7 @@
     <Compile Include="Models\FundTransferPayeeModel.cs" />
     <Compile Include="Models\FundTransferViewModel.cs" />
     <Compile Include="Models\GenerateTokenViewModel.cs" />
+    <Compile Include="Models\LoanRequestViewModel.cs" />
     <Compile Include="Models\NewAccountRequestView.cs" />
     <Compile Include="Models\RequestViewModel.cs" />
     <Compile Include="Models\SearchCustomerViewModel.cs" />

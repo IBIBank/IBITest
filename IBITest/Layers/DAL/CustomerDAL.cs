@@ -165,6 +165,36 @@ namespace IBITest.Layers.DAL
         }
 
 
+
+        public bool AddLoanAccountRequest(LoanRequestViewModel request)
+        {
+            bool result = false;
+            CustomerDAL customerDALObj = new CustomerDAL();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                int requestID;
+
+                SqlCommand command = new SqlCommand("SELECT Count(RequestID) FROM LoanRequest ", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                string customerName = customerDALObj.GetCustomerNamebyCustomerID(request.customerID);
+               
+                reader.Read();
+                requestID = Convert.ToInt16(reader[0]) + 1;
+                reader.Close();
+
+
+                command.CommandText = String.Format("INSERT INTO LoanRequest (RequestID, TypeOfLoan, CustomerID, SubmissionDate, Status, BranchCode, AnnualIncome, Amount, Tenure, AddressProof, SalaryProof, CustomerName) VALUES('{0}', '{1}', '{2}', '{3}', 'S', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}') ", requestID, request.typeOfLoan, request.customerID, DateTime.Now.ToString(), request.branchCode.ToString(), request.annualIncome.ToString(), request.amount.ToString(), request.tenure.ToString(), request.addressProof, request.salaryProof, customerName);
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+            return result;
+        }
+
         public long GetCustomerIDbyUserID(string userID)
         {
             long customerID;
@@ -182,6 +212,26 @@ namespace IBITest.Layers.DAL
             }
 
             return customerID;
+        }
+
+
+
+        public string GetCustomerNamebyCustomerID(long customerID)
+        {
+            string customerName;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT CustomerName FROM Customer WHERE CustomerID = '{0}' ", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+
+                customerName = reader[0].ToString();
+                reader.Close();
+            }
+
+            return customerName;
         }
 
 

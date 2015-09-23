@@ -22,14 +22,14 @@ namespace IBITest.Controllers
 
             customerList = banObj.GetAccountDetails(1);
 
-           int age = newObj.GetAgeByCustomerID(1);
-
+            LoanRequestViewModel model = new LoanRequestViewModel { customerID = 1, age = 2, amount = 100, annualIncome = 5000000, branchCode = 2, tenure = 12, typeOfLoan = 'P' };
+            
 
            // foreach(var v in customerList)
-           MessageBox.Show(age.ToString());
+           MessageBox.Show(newObj.AddLoanAccountRequest(model).ToString());
                 
 
-            return View(new TestModel());
+           return View(new TestModel());
         }
 
         [HttpPost]
