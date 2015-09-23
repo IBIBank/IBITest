@@ -200,10 +200,10 @@
     <Compile Include="Layers\DAL\BankerDAL.cs" />
     <Compile Include="Layers\DAL\CommonDAL.cs" />
     <Compile Include="Layers\DAL\CustomerDAL.cs" />
+    <Compile Include="Models\AccountDetailsViewModel.cs" />
     <Compile Include="Models\AccountListViewModel.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\AddPayeeViewModel.cs" />
-    <Compile Include="Models\AjaxCallModelForGetDetailedTransactions.cs" />
     <Compile Include="Models\BankCountryModel.cs" />
     <Compile Include="Models\BranchDetails.cs" />
     <Compile Include="Models\BranchDetailsViewModel.cs" />
