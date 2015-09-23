@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using IBITest.Models;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace IBITest.Layers.DAL
 {
@@ -79,16 +81,16 @@ namespace IBITest.Layers.DAL
         public string CheckRole(string UserID, string Password)
         {
             string res;
-            SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-            SqlCommand cmd = new SqlCommand(String.Format( "SELECT Password, Role,FailCount,Status FROM UserRoles WHERE UserID = '{0}' ",  UserID), cn);
-            cn.Open();
-            SqlDataReader rd = cmd.ExecuteReader();
+            CommonDAL commonDALObj = new CommonDAL();
+            SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
+            SqlCommand command = new SqlCommand(String.Format( "SELECT Password, Role,FailCount,Status FROM UserRoles WHERE UserID = '{0}' ",  UserID), connection);
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
             int FailCount;
-            rd.Read();
+            reader.Read();
 
 
-
-            if (!rd.HasRows)
+            if (!reader.HasRows)
             {
                 res = String.Copy("DoesNotExist");
             }
@@ -103,10 +105,10 @@ namespace IBITest.Layers.DAL
                 else
                 {*/
                     //Account is active
-                if (rd[0].ToString().Equals(Password))
+                if (reader[0].ToString().Equals(commonDALObj.GetHashedText(Password)))
                 {
                     //correct password
-                    res = String.Copy(rd[1].ToString());
+                    res = String.Copy(reader[1].ToString());
                     //update last log in in UserRoles and set FailCount = 0
                 }
 
@@ -138,7 +140,7 @@ namespace IBITest.Layers.DAL
                    
                 
             }
-            cn.Close();
+            connection.Close();
 
             return res;
         }
@@ -152,19 +154,20 @@ namespace IBITest.Layers.DAL
                 string cmdtxt = "DELETE FROM UserRoles";
                 SqlCommand command = new SqlCommand(cmdtxt, connection);
                 connection.Open();
+                CommonDAL commonDALObj = new CommonDAL();
                 int rowaff = command.ExecuteNonQuery();
 
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn','adminnnn','Admin','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn', '"+commonDALObj.GetHashedText("adminnnn")+"','Admin','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','banker11','Banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','" + commonDALObj.GetHashedText("banker11") + "','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','customer1','Customer','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','" + commonDALObj.GetHashedText("customer1") + "','Customer','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','banker22','Banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','" + commonDALObj.GetHashedText("banker22") + "','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
@@ -182,16 +185,16 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("DELETE FROM Branch");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker11','Banker11','banker11','e@m.l')");
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker11','Banker11','"+commonDALObj.GetHashedText("banker11")+"','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker22','Banker22','banker22','e@m.l')");
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker22','Banker22','"+commonDALObj.GetHashedText(banker22)+"','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM Customer");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Customer (CustomerID, CustomerName,DOB, UserID, Password, PermanentAddress, CommunicationAddress, ContactNumber, Email, TransactionPassword, Token) VALUES('1','Customer','2015/12/12','Customer1','customer1','PAddress','CAddress','11','e@m.l','tpassword','IBI1234')");
+                command.CommandText = String.Copy("INSERT INTO Customer (CustomerID, CustomerName,DOB, UserID, Password, PermanentAddress, CommunicationAddress, ContactNumber, Email, TransactionPassword, Token) VALUES('1','Customer','2015/12/12','Customer1','"+commonDALObj.GetHashedText("customer1") + "','PAddress','CAddress','11','e@m.l','"+commonDALObj.GetHashedText("tpassword")+"','IBI1234')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
@@ -235,5 +238,16 @@ namespace IBITest.Layers.DAL
                 //insert into user profile too !!
             }
         }
+
+        public string GetHashedText(string inputData)
+        {
+            byte[] tmpSource;
+            byte[] tmpData;
+            tmpSource = ASCIIEncoding.ASCII.GetBytes(inputData);
+            tmpData = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
+            return Convert.ToBase64String(tmpData);
+        }
+
+
     }
 }

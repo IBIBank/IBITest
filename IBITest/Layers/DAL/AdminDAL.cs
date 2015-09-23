@@ -115,7 +115,7 @@ namespace IBITest.Layers.DAL
         {
 
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-
+            CommonDAL commonDALObj = new CommonDAL();
             SqlCommand cmd = new SqlCommand("SELECT MAX(BranchCode) FROM Branch ", cn);
             cn.Open();
 
@@ -139,14 +139,14 @@ namespace IBITest.Layers.DAL
 
 
             SqlConnection cn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-            string command = String.Format("INSERT INTO Branch VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", bd.BranchCode, bd.BranchName, bd.CityName, bd.Address, bd.ContactNumber, bd.BankerName, bd.BranchLogInID, bd.BranchLogInPassword, bd.Email);
+            string command = String.Format("INSERT INTO Branch VALUES('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", bd.BranchCode, bd.BranchName, bd.CityName, bd.Address, bd.ContactNumber, bd.BankerName, bd.BranchLogInID,commonDALObj.GetHashedText(bd.BranchLogInPassword), bd.Email);
 
             cn2.Open();
 
             SqlCommand cmd2 = new SqlCommand(command,cn2);            
             int res = cmd2.ExecuteNonQuery();
 
-            SqlCommand cmd3 = new SqlCommand(String.Format("INSERT INTO UserRoles VALUES('{0}','{1}', '{2}', '{3}','{4}','{5}', 'A')", id, bd.BranchLogInID, bd.BranchLogInPassword, "Banker",DateTime.Now.ToString(),"0"), cn2);
+            SqlCommand cmd3 = new SqlCommand(String.Format("INSERT INTO UserRoles VALUES('{0}','{1}', '{2}', '{3}','{4}','{5}', 'A')", id, bd.BranchLogInID, commonDALObj.GetHashedText(bd.BranchLogInPassword), "Banker",DateTime.Now.ToString(),"0"), cn2);
             cmd3.ExecuteNonQuery();
 
             cn2.Close();

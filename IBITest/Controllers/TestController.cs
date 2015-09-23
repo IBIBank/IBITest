@@ -15,6 +15,7 @@ namespace IBITest.Controllers
         {
             CustomerDAL newObj = new CustomerDAL();
             BankerDAL banObj = new BankerDAL();
+            CommonDAL commonDALObj = new CommonDAL();
 
             List<TransactionStatementViewModel> list = newObj.GetDetailedTransactions(2,new DateTime (DateTime.Today.Year-1, DateTime.Today.Month, DateTime.Today.Day), new DateTime (DateTime.Today.Year+1, DateTime.Today.Month, DateTime.Today.Day));
             AccountDetailsViewModel customerList = new AccountDetailsViewModel();
@@ -22,9 +23,12 @@ namespace IBITest.Controllers
             customerList = banObj.GetAccountDetails(1);
 
            // foreach(var v in customerList)
-                MessageBox.Show(customerList.accountNumber);
-                MessageBox.Show(customerList.cityName);
-            
+                MessageBox.Show(commonDALObj.GetHashedText("Som").Length.ToString());
+                MessageBox.Show(commonDALObj.GetHashedText("12333424").Length.ToString());
+                MessageBox.Show(commonDALObj.GetHashedText("banker11").Length.ToString());
+                MessageBox.Show(commonDALObj.GetHashedText("customer1").Length.ToString());
+                MessageBox.Show(commonDALObj.GetHashedText("adminnnn").Length.ToString());
+
             return View(new TestModel());
         }
 

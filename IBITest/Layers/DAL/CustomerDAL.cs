@@ -93,6 +93,7 @@ namespace IBITest.Layers.DAL
         public bool FinishReg(Customer c)
         {
             bool res;
+            CommonDAL commonDALObj = new CommonDAL();
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
                 string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, c.Password, c.CommunicationAddress, c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
@@ -116,7 +117,7 @@ namespace IBITest.Layers.DAL
                 int id = Convert.ToInt16(rd[0]) + 1;
                 rd.Close();
 
-                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 'A') ", id, c.UserID, c.Password, "Customer", DateTime.Now.ToString(), "0");
+                command.CommandText = String.Format("INSERT INTO UserRoles VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', 'A') ", id, c.UserID, commonDALObj.GetHashedText(c.Password), "Customer", DateTime.Now.ToString(), "0");
                 command.ExecuteNonQuery();
 
             }
@@ -1066,6 +1067,7 @@ namespace IBITest.Layers.DAL
 
         public string ValidateAndSetPassword(long customerID, string oldPassword, string newPassword, string passwordType)
         {
+            CommonDAL commonDALObj = new CommonDAL();
             if (oldPassword.Equals(newPassword))
                 return "Old and New Passwords cannot be same !";
 
@@ -1083,15 +1085,15 @@ namespace IBITest.Layers.DAL
                     var userID = reader[1].ToString();
                     reader.Close();
 
-                    if (!storedPassword.Equals(oldPassword))
+                    if (!storedPassword.Equals(commonDALObj.GetHashedText(oldPassword)))
                         return "Old Password entered is not correct !";
 
                     // update password in Customer and User Profile tables
 
-                    command.CommandText = String.Format("UPDATE Customer SET Password = '{0}' WHERE CustomerID = {1}", newPassword, customerID.ToString());
-                    command.ExecuteNonQuery();                    
+                    command.CommandText = String.Format("UPDATE Customer SET Password = '{0}' WHERE CustomerID = {1}", commonDALObj.GetHashedText(newPassword), customerID.ToString());
+                    command.ExecuteNonQuery();
 
-                    command.CommandText = String.Format("UPDATE UserRoles SET Password = '{0}' WHERE UserID = '{1}' ", newPassword, userID);
+                    command.CommandText = String.Format("UPDATE UserRoles SET Password = '{0}' WHERE UserID = '{1}' ", commonDALObj.GetHashedText(newPassword), userID);
                     command.ExecuteNonQuery();
 
                 }
@@ -1110,12 +1112,12 @@ namespace IBITest.Layers.DAL
                     var storedPassword = reader[0].ToString();
                     reader.Close();
 
-                    if (!storedPassword.Equals(oldPassword))
+                    if (!storedPassword.Equals(commonDALObj.GetHashedText(oldPassword)))
                         return "Password entered is not correct !";
 
                     // update password in Customer and User Profile tables
 
-                    command.CommandText = String.Format("UPDATE Customer SET TransactionPassword = '{0}' WHERE CustomerID = {1}", newPassword, customerID.ToString());
+                    command.CommandText = String.Format("UPDATE Customer SET TransactionPassword = '{0}' WHERE CustomerID = {1}", commonDALObj.GetHashedText(newPassword), customerID.ToString());
                     command.ExecuteNonQuery();                 
                 }
             }
