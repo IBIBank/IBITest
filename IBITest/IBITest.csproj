@@ -210,6 +210,7 @@
     <Compile Include="Models\BranchDetailsViewModel.cs" />
     <Compile Include="Models\BranchMiniViewModel.cs" />
     <Compile Include="Models\BranchTransferViewModel.cs" />
+    <Compile Include="Models\CloseAccountCustomerViewModel.cs" />
     <Compile Include="Models\ClosureOfAccountAdminView.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -381,7 +382,6 @@
     <Content Include="Views\CommonBiz\InvalidSession.cshtml" />
     <Content Include="Views\Customer\MiniDetailedstatements.cshtml" />
     <Content Include="Views\Customer\RequestForAccountTransfer.cshtml" />
-    <Content Include="Views\Customer\RequestClosureOfAccount.cshtml" />
     <Content Include="Views\Customer\ViewRequestStatus.cshtml" />
     <Content Include="Views\Customer\MoneyManagaer.cshtml" />
     <Content Include="Views\Banker\CreditDebitCustomerAccount.cshtml" />
@@ -391,6 +391,8 @@
     <Content Include="Views\Customer\UpdateUserOrTransactionPassword.cshtml" />
     <Content Include="Views\Banker\SearchCustomerDetails.cshtml" />
     <Content Include="Views\Customer\ApplyForLoan.cshtml" />
+    <Content Include="Views\Customer\EmiCalculator.cshtml" />
+    <Content Include="Views\Customer\RequestClosureOfAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

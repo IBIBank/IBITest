@@ -1,7 +1,39 @@
-﻿@{
+﻿@model IBITest.Models.CloseAccountCustomerViewModel
+
+@{
     ViewBag.Title = "RequestClosureOfAccount";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
 
 <h2>Request Closure Of Account</h2>
-@Html.DropDownList("SavingAccountToClose",new SelectList(@ViewBag.savingsAccountList), "--Select--")
+<br />
+<br />
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>CloseAccountCustomerViewModel</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.accountNumber)
+        </div>
+        <br />
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.accountNumber,new SelectList(@ViewBag.savingsAccountList), "--Select--")
+            @Html.ValidationMessageFor(model => model.accountNumber)
+        </div>
+        <p>@ViewBag.message<p>
+        <p>
+            <input type="submit" value="Close" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

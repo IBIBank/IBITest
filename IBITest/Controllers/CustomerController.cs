@@ -341,10 +341,18 @@ namespace IBITest.Controllers
 
             long customerID = (Session["User"] as UserRole).customerID;
             CustomerDAL objCustomerDAL = new CustomerDAL();
-            ViewBag.savingsAccountList = objCustomerDAL.GetAllSavingsAccountByCustomerID(customerID);
+            ViewBag.savingsAccountList = new List<long>() { 23213213, 121212, 12123123421 };
+            ViewBag.message = "";
             return View();
         }
-
+        [HttpPost]
+        public ActionResult RequestClosureOfAccount(long accountNumber)
+        {
+            //List<long> savingsAccountList = new List<long>() { 121212, 12123123421 };
+            ViewBag.savingsAccountList = new List<long>() { 121212, 12123123421 };
+            ViewBag.message = "Success";
+            return View();
+        }
 
         public ActionResult ViewRequestStatus()
         {
@@ -454,12 +462,14 @@ namespace IBITest.Controllers
 
             return View();
         }
+        public ActionResult EmiCalculator()
+        {
+            return View();
+        }
+        
     }
 
 }
 /*
-    
-    EMI Calculator
-    Money Managaer
-   
+    Money Managaer   
  */
