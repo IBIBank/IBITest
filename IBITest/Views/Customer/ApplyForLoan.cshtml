@@ -27,15 +27,18 @@
     );
     function IsEligible()
     {
-        var typeOfLoan = $("#typeOfLoan").val();
+        //alert("I am getting called");
+        var typeOfLoan = $("#listLoanType").val();
         var annualIncome = $("#annualIncome").val();
         var monthlySalary = annualIncome / 12.0;
         var amount = $("#amount").val();
         var tenure = $("#tenure").val();
-        if (typeOfLoan == "Personal")
+        //alert("type of loan is "+typeOfLoan )
+        if (typeOfLoan == "P")
         {
             if(tenure>=12 && tenure <=24 && amount<=monthlySalary*5)
             {
+                //alert("maximum amount is " + (monthlySalary * 5));
                 return true;
             }
             else
@@ -44,7 +47,7 @@
             }
 
         }
-        else if (typeOfLoan == "Home") {
+        else if (typeOfLoan == "H") {
             if (tenure >= 60 && tenure <= 120 && amount <= monthlySalary * 20) {
                 return true;
             }
@@ -176,7 +179,7 @@
                 @Html.ValidationMessageFor(model => model.typeOfLoan)
             </div>*@
             <label>Type of Loan</label>
-            @Html.DropDownList("listLoanType", new SelectList(@ViewBag.loanTypeList, "Value", "Text"), "--Select--", new {@required=true })
+            @Html.DropDownList("listLoanType", new SelectList(@ViewBag.loanTypeList, "Value", "Text"), "--Select--", new {@required=true})
             <div class="editor-label">
                 @Html.LabelFor(model => model.amount)
             </div>

@@ -365,16 +365,26 @@ namespace IBITest.Controllers
 
             long customerID = (Session["User"] as UserRole).customerID;
             CustomerDAL objCustomerDAL = new CustomerDAL();
-            ViewBag.savingsAccountList = new List<long>() { 23213213, 121212, 12123123421 };
+            ViewBag.savingsAccountList = objCustomerDAL.GetAccountsListAsLongListByCustomerID(customerID);
             ViewBag.message = "";
             return View();
         }
         [HttpPost]
-        public ActionResult RequestClosureOfAccount(long accountNumber)
+        public ActionResult RequestClosureOfAccount(CloseAccountCustomerViewModel model)
         {
+            long customerID = (Session["User"] as UserRole).customerID;
+            CustomerDAL objCustomerDAL = new CustomerDAL();
             //List<long> savingsAccountList = new List<long>() { 121212, 12123123421 };
-            ViewBag.savingsAccountList = new List<long>() { 121212, 12123123421 };
-            ViewBag.message = "Success";
+            ViewBag.savingsAccountList = objCustomerDAL.GetAccountsListAsLongListByCustomerID(customerID);
+            if (objCustomerDAL.AddCloseAccountRequest(model.accountNumber, customerID))
+            {
+                ViewBag.message = "Request for closure of account is successful";
+            }
+            else
+            {
+                ViewBag.message = "Request already exist";
+            }   
+            
             return View();
         }
 
