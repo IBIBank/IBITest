@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "EmiCalculator";
+    Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $(document).ready(
+        function ()
+        {
+            $("#calulatedEmi").hide();
+        }
+    )
+    function resetClicked()
+    {
+        $("#calulatedEmi").hide();
+    }
+    function calculateEmi()
+    {
+        var loanAmount = $("#loanAmount").val();
+        var tenureInMonths = $("#tenureInMonths").val();
+        var rateOfInterest = $("#rateOfInterest").val();
+        var monthlyRateOfIInterst = rateOfInterest/12.0;
+        var emi = loanAmount * monthlyRateOfIInterst * (Math.pow(1 + monthlyRateOfIInterst, tenureInMonths) / (Math.pow(1 + monthlyRateOfIInterst, tenureInMonths) - 1));
+        emi = emi.toFixed(2);
+
+        $("#calulatedEmi").show();
+        $("#emiValue").val(emi)
+    }
+</script>
+<h2>Emi Calculator</h2>
+<form>
+    <label>Loan Amount</label>
+    <input id="loanAmount" type="number" min="1" required />
+    <label>Tenure (in months)</label>
+    <input id="tenureInMonths" type="number" min="1" required />
+    <label>Rate of Interest(%)</label>
+    <input id="rateOfInterest" type="number" min="1"  required />
+    <div id="calulatedEmi">
+        <label>EMI in rupees</label>
+        <input id="emiValue" type="number"/>
+    </div>
+    <br />
+    <button type="submit" formaction="javascript:calculateEmi()">Calulate EMI</button>
+    <button type="reset" onclick="resetClicked()">Reset</button>
+</form>
