@@ -52,17 +52,20 @@
 
      <tbody>         
         @{
-            foreach(var v in Model)
+            if(Model != null)
             {
-                <tr>
-                    <td>@(v.RequestID) </td>
-                    <td>@(v.RequestType) </td>
-                    <td>@(v.CustomerName) </td>
-                    <td>@(v.SubmissionDate) </td>
-                    <td>@(v.serviceDate) </td>
-                    <td>@(v.Status) </td>
-                </tr>
-            }        
+                foreach(var v in Model)
+                {
+                    <tr>
+                        <td>@(v.RequestID) </td>
+                        <td>@(v.RequestType) </td>
+                        <td>@(v.CustomerName) </td>
+                        <td>@(v.SubmissionDate) </td>
+                        <td>@(v.serviceDate) </td>
+                        <td>@(v.Status) </td>
+                    </tr>
+                }        
+            }
         }
      </tbody>
 
@@ -70,7 +73,7 @@
 
 <div id="divImageHolder"></div>
 
-
+<p> Refresh page after processing requests !</p>
 
 
 <script>        
@@ -104,7 +107,7 @@
 
 
     function ApproveRequest(_requestID) {
-        alert("In Approve " + _requestID);
+        
         
         $.ajax({
             cache: false,

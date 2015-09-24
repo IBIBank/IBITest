@@ -203,7 +203,7 @@ namespace IBITest.Layers.DAL
                 }
 
                 else
-                    System.Windows.Forms.MessageBox.Show("Could Not access Customer Table !");
+                    c.CustomerID = 1;
 
                 reader.Close();
             }
@@ -545,10 +545,10 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
                 reader = command.ExecuteReader();
 
-                reader.Read();
 
-                if (Convert.ToInt64(reader[0]) != 0)
+                if (reader.HasRows)
                 {
+                    reader.Read();
                     accountNumber = Convert.ToInt64(reader[0]) + 1;
                 }
                 else
@@ -613,8 +613,15 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
                 reader = command.ExecuteReader();
 
-                reader.Read();                
-                accountNumber = Convert.ToInt64(reader[0]) + 1;
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    accountNumber = Convert.ToInt64(reader[0]) + 1;
+                }
+                else
+                    accountNumber = 1;
+
+                
                 reader.Close();
 
                 // create account in account table

@@ -21,7 +21,7 @@ namespace IBITest.Models
         public DateTime DOB { get; set; }
 
         [Required]
-        [RegularExpression(@"^(?!.*__.*)[A-Z][a-zA-Z0-9_-]+$", ErrorMessage = "Not a valid Log In ID for Banker")]
+        [RegularExpression(@"^(?!.*__.*)[A-Z][a-zA-Z0-9_-]+$", ErrorMessage = "Not a valid Log In ID ")]
         [StringLength(15, MinimumLength = 8, ErrorMessage = "Banker LogIn ID must be between 8 and 15 characters long")]
         public string UserID { get; set; }
 

@@ -334,7 +334,6 @@ namespace IBITest.Controllers
             int requestID;
             BankerDAL bankerDALObj = new BankerDAL();
            
-            System.Windows.Forms.MessageBox.Show(val.Length.ToString());
 
             if (val[0] == 'N')
             {

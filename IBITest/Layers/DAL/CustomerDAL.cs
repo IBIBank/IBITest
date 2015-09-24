@@ -71,7 +71,7 @@ namespace IBITest.Layers.DAL
             bool result;
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand(String.Format("SELECT UserID FROM UserRoles WHERE UserID = '{0}' ", userID), connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT Id FROM UserRoles WHERE UserID = '{0}' ", userID), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -96,7 +96,7 @@ namespace IBITest.Layers.DAL
             CommonDAL commonDALObj = new CommonDAL();
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, commonDALObj.GetHashedText(c.Password), c.CommunicationAddress, c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
+                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, commonDALObj.GetHashedText(c.Password), c.CommunicationAddress, commonDALObj.GetHashedText(c.TransactionPassword), c.PhotoIDProof, c.CustomerID);
 
 
                 SqlCommand command = new SqlCommand(cmdtxt, connection);
@@ -134,11 +134,12 @@ namespace IBITest.Layers.DAL
             {
                 int requestID;
 
-                SqlCommand command = new SqlCommand("SELECT MAX(RequestID) FROM NewAccountRequest ", connection);
+                SqlCommand command = new SqlCommand("SELECT COUNT(RequestID) FROM NewAccountRequest ", connection);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.HasRows)
+
+                if (reader.HasRows )
                 {
                     reader.Read();
                     requestID = Convert.ToInt16(reader[0]) + 1;
@@ -222,12 +223,17 @@ namespace IBITest.Layers.DAL
 
                 command.CommandText = "SELECT MAX(RequestID) FROM ClosingRequest";
                 reader = command.ExecuteReader();
-                reader.Read();
 
-                if (reader.IsDBNull(0))
+
+                if (!reader.HasRows)
+                {
                     requestID = 1;
+                }
                 else
+                {
+                    reader.Read();
                     requestID = Convert.ToInt16(reader[0]) + 1;
+                }
 
                 reader.Close();
 
@@ -260,6 +266,72 @@ namespace IBITest.Layers.DAL
             return result;
         }
 
+
+        /*
+        public bool AddAccountTransferRequest(long accountNumber, long customerID, long toBranchCode)
+        {
+            bool result = false;
+            long fromBranchCode;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                int requestID;
+
+                SqlCommand command = new SqlCommand("SELECT RequestID FROM BranchTransferRequest WHERE AccountNumber = " + accountNumber.ToString(), connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    result = false;
+                    reader.Close();
+                    return result;
+                }
+
+                reader.Close();
+
+                command.CommandText = "SELECT MAX(RequestID) FROM BranchTransferRequest";
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                if (reader.IsDBNull(0))
+                    requestID = 1;
+                else
+                    requestID = Convert.ToInt16(reader[0]) + 1;
+
+                reader.Close();
+
+                // get cust name and branch code
+
+                command.CommandText = "SELECT CustomerName FROM Customer WHERE CustomerID = " + customerID.ToString();
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                string customerName = reader[0].ToString();
+                reader.Close();
+
+
+                command.CommandText = "SELECT BranchCode FROM Account WHERE AccountNumber = " + accountNumber.ToString();
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                fromBranchCode = Convert.ToInt64(reader[0]);
+                reader.Close();
+
+
+                // store request
+
+                command.CommandText = String.Format("INSERT INTO ClosingRequest (RequestID, SubmissionDate, Status, AccountNumber, CustomerID, CustomerName, BranchCode) VALUES('{0}', '{1}', 'S', '{2}', '{3}', '{4}', '{5}') ", requestID, DateTime.Now.ToString(), accountNumber.ToString(), customerID.ToString(), customerName, fromBranchCode.ToString());
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+            return result;
+        }
+
+
+        */
 
 
 

@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using IBITest.Models;
 using IBITest.Layers.DAL;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace IBITest.Controllers
 {
@@ -18,7 +20,27 @@ namespace IBITest.Controllers
             CommonDAL commonDALObj = new CommonDAL();
 
 
-            MessageBox.Show(newObj.AddCloseAccountRequest(1,1).ToString());
+
+            int branchCode = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand("SELECT COUNT(PayeeID) FROM Payee ", connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                reader.Read();
+
+                if(!reader.HasRows)
+                    branchCode = Convert.ToInt16(reader[0]);
+                else
+                    MessageBox.Show("No data");
+
+                MessageBox.Show(branchCode.ToString());
+
+                reader.Close();
+            }
 
 
 

@@ -36,7 +36,7 @@
             @Html.LabelFor(model => model.DOB)
         </div>
         <div class="editor-field">
-            @Html.TextBoxFor(m => m.DOB, new { @readonly="readonly", @Value = Model.DOB.ToString("dd.MM.yyyy") })
+            @Html.TextBoxFor(m => m.DOB, new { @readonly="readonly", @Value = Model.DOB.ToString("MM.dd.yyyy") })
             @Html.ValidationMessageFor(model => model.DOB)
         </div>
 
@@ -104,15 +104,10 @@
             @Html.ValidationMessageFor(model => model.Token)
         </div>
 
-       <div>
-
-           Upload File Hari:  <input id="File1" type="file" name="Image" />
-       </div>
-
-
+      
 
         <label for="@(Model.PhotoIDProof)">PhotoID Proof</label>  
-        <input type="file" name="@(Model.PhotoIDProof)" id="file"/>
+        <input type="file" name="Image" id="file"/>
         <p>After Successful registration you will be redirected to Login page</p>
         <p>
             <input type="submit" value="Save" />

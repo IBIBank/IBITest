@@ -13,18 +13,18 @@
             //data: { requestType: requestType },
             cache: false,
             type: "POST",
+
             success: function (data) {
                 $("#tableOfSavingAccounts").empty();
                 $("#tableOfSavingAccounts").append('<tr><th>Account Number</th><th>Balance</th><th>Mini/Detailed statements</th></tr>');
                 $("#AccountDetailsLabel").text("Account Details");
-                for (var x = 0; x < data.length; x++) {
-                   
+                for (var x = 0; x < data.length; x++) {                   
 
                     $("#tableOfSavingAccounts").append('<tr><td>' + data[x].accountNumber + '</td><td>' + data[x].balance + '</td><td><a href =@Url.Action("MiniDetailedstatements","Customer")>Mini/Detailed Statements<a></td></tr>');
                 }
             },
             error: function (reponse) {
-                alert("error : " + reponse);
+              //  alert("error12 : " + reponse);
             }
         });
     }
@@ -44,7 +44,7 @@
 <h3>Requests Status</h3>
 <p> Approved Requests: <a class ="linkcolor">@ViewBag.approvedRequests</a></p>
 <p>Rejected Requests: <a class ="linkcolor">@ViewBag.rejectedRequests</a></p>
-<p>Transferred Requests: <a class ="linkcolor">@ViewBag.pendingRequests</a></p>
+<p>Pending Requests: <a class ="linkcolor">@ViewBag.pendingRequests</a></p>
 
 <h3>Profile Manager</h3>
 @Html.ActionLink("View Or Update Profile","ViewOrUpdateProfile","Customer")

@@ -289,7 +289,16 @@ namespace IBITest.Controllers
             CustomerDAL objCustomerDAL = new CustomerDAL();
             //List<int> savingsAccounts = new List<int>(){4,8,9};
             //ViewBag.savingsAccountList = savingsAccounts;
-            ViewBag.savingsAccountList = objCustomerDAL.GetAllSavingsAccountByCustomerID(customerID);
+            List<long>  savingsAccountList = objCustomerDAL.GetAllSavingsAccountByCustomerID(customerID);
+            if (savingsAccountList == null)
+            {
+                ViewBag.savingsAccountList = new List<long>();
+            }
+            else
+            {
+                ViewBag.savingsAccountList = savingsAccountList;
+            }
+            //ViewBag.savingsAccountList = objCustomerDAL.GetAllSavingsAccountByCustomerID(customerID);
 
             //List<SelectListItem> payeeAccounts = new List<SelectListItem>()
             //{
@@ -298,7 +307,16 @@ namespace IBITest.Controllers
             //    new SelectListItem(){Text = "suresh",Value="12"},
             //};
             //ViewBag.payeeAccounts = payeeAccounts;
-            ViewBag.payeeAccounts = objCustomerDAL.GetAllPayeeAccountByCustomerID(customerID);
+            List<FundTransferPayeeModel> payeeAccounts = objCustomerDAL.GetAllPayeeAccountByCustomerID(customerID);
+            if (payeeAccounts == null)
+            {
+                ViewBag.payeeAccounts = new List<FundTransferPayeeModel>();
+            }
+            else
+            {
+                ViewBag.payeeAccounts = payeeAccounts;   
+            }
+            //ViewBag.payeeAccounts = objCustomerDAL.GetAllPayeeAccountByCustomerID(customerID);
             ViewBag.message = "";
             return View();
         }

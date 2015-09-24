@@ -114,28 +114,32 @@ namespace IBITest.Layers.DAL
         public bool AddBranch(BranchDetails bd)
         {
 
-            SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
+            SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
             CommonDAL commonDALObj = new CommonDAL();
-            SqlCommand cmd = new SqlCommand("SELECT MAX(BranchCode) FROM Branch ", cn);
-            cn.Open();
+            SqlCommand cmd = new SqlCommand("SELECT MAX(BranchCode) FROM Branch ", connection);
+            connection.Open();
 
-            SqlDataReader rd = cmd.ExecuteReader();
-            rd.Read();
+            SqlDataReader reader = cmd.ExecuteReader();
 
-            if (rd.HasRows)
-                bd.BranchCode = Convert.ToInt64(rd[0]) + 1;
+
+
+            if (reader.HasRows)
+            {
+                reader.Read();
+                bd.BranchCode = Convert.ToInt64(reader[0]) + 1;
+            }
             else
                 bd.BranchCode = 1;
 
-            rd.Close();
+            reader.Close();
 
             cmd.CommandText = String.Format("SELECT MAX(Id) FROM UserRoles ");
             
-            rd = cmd.ExecuteReader();
-            rd.Read();
-            int id = Convert.ToInt16(rd[0]) + 1;
+            reader = cmd.ExecuteReader();
+            reader.Read();
+            int id = Convert.ToInt16(reader[0]) + 1;
 
-            cn.Close();
+            connection.Close();
 
 
             SqlConnection cn2 = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
