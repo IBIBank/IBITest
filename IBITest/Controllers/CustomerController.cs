@@ -46,13 +46,19 @@ namespace IBITest.Controllers
 
 
         [HttpPost]
-        public ActionResult FinishRegistration(Customer model)
+        public ActionResult FinishRegistration(Customer model, HttpPostedFileBase Image)
         {
             //MessageBox.Show("I am in POST");
             CustomerDAL obj = new CustomerDAL();
 
-            if (obj.IsUniqueUserID(model.UserID))
+            if (obj.IsUniqueUserID(model.UserID) && ModelState.IsValid)
             {
+                if (Image != null)
+                {
+                   // product.ImageMimeType = image.ContentType;
+                    model.PhotoIDProof = new byte[Image.ContentLength];
+                    Image.InputStream.Read(model.PhotoIDProof, 0, Image.ContentLength);
+                }
                 obj.FinishReg(model);
                 return RedirectToAction("Login", "CommonBiz");
             }
@@ -86,14 +92,32 @@ namespace IBITest.Controllers
         }
 
         [HttpPost]
-        public string CreateNewAccount(NewAccountRequestView model)
+        public ActionResult CreateNewAccount(NewAccountRequestView model, HttpPostedFileBase Image)
         {
             CustomerDAL customerDALobject = new CustomerDAL();
+           // ModelState.Clear();
+            if (Image != null)
+            {
+                
+                // product.ImageMimeType = image.ContentType;
+                model.AddresProof = new byte[Image.ContentLength];
+                Image.InputStream.Read(model.AddresProof, 0, Image.ContentLength);
+            }
+
+            CommonDAL obj = new CommonDAL();
+            ViewBag.cityList = obj.GetCityList();
 
             if (customerDALobject.AddNewAccountRequest(model))
-                return "Request Submitted. Thank You !";
+            {
+                ViewBag.message = "Request Submitted. Thank You !";
+                return View(model);
+            }
+
             else
-                return "Oops... Error in submitting request.";
+            {
+                ViewBag.message = "Oops... Error in submitting request.";
+                return View(model);
+            }
         }
 
 

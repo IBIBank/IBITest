@@ -17,7 +17,10 @@ namespace IBITest.Controllers
             BankerDAL banObj = new BankerDAL();
             CommonDAL commonDALObj = new CommonDAL();
 
-           
+
+            MessageBox.Show(newObj.AddCloseAccountRequest(1,1).ToString());
+
+
 
            return View(new TestModel());
         }

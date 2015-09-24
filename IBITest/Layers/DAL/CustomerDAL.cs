@@ -96,7 +96,7 @@ namespace IBITest.Layers.DAL
             CommonDAL commonDALObj = new CommonDAL();
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, c.Password, c.CommunicationAddress, c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
+                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, commonDALObj.GetHashedText(c.Password), c.CommunicationAddress, c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
 
 
                 SqlCommand command = new SqlCommand(cmdtxt, connection);
@@ -169,7 +169,7 @@ namespace IBITest.Layers.DAL
         public bool AddLoanAccountRequest(LoanRequestViewModel request)
         {
             bool result = false;
-            CustomerDAL customerDALObj = new CustomerDAL();
+           
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
@@ -179,7 +179,7 @@ namespace IBITest.Layers.DAL
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
-                string customerName = customerDALObj.GetCustomerNamebyCustomerID(request.customerID);
+                string customerName = GetCustomerNamebyCustomerID(request.customerID);
                
                 reader.Read();
                 requestID = Convert.ToInt16(reader[0]) + 1;
@@ -194,6 +194,74 @@ namespace IBITest.Layers.DAL
             }
             return result;
         }
+
+
+
+
+        public bool AddCloseAccountRequest(long accountNumber, long customerID)
+        {
+            bool result = false;
+            long branchCode;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                int requestID;
+
+                SqlCommand command = new SqlCommand("SELECT RequestID FROM ClosingRequest WHERE AccountNumber = " + accountNumber.ToString(), connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    result = false;
+                    reader.Close();
+                    return result;
+                }
+                
+                reader.Close();
+
+                command.CommandText = "SELECT MAX(RequestID) FROM ClosingRequest";
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                if (reader.IsDBNull(0))
+                    requestID = 1;
+                else
+                    requestID = Convert.ToInt16(reader[0]) + 1;
+
+                reader.Close();
+
+                // get cust name and branch code
+
+                command.CommandText = "SELECT CustomerName FROM Customer WHERE CustomerID = " + customerID.ToString();
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                string customerName = reader[0].ToString();
+                reader.Close();
+
+
+                command.CommandText = "SELECT BranchCode FROM Account WHERE AccountNumber = " + accountNumber.ToString();
+                reader = command.ExecuteReader();
+                reader.Read();
+
+                branchCode = Convert.ToInt64(reader[0]);
+                reader.Close();
+
+
+                // store request
+
+                command.CommandText = String.Format("INSERT INTO ClosingRequest (RequestID, SubmissionDate, Status, AccountNumber, CustomerID, CustomerName, BranchCode) VALUES('{0}', '{1}', 'S', '{2}', '{3}', '{4}', '{5}') ", requestID, DateTime.Now.ToString(), accountNumber.ToString(), customerID.ToString(), customerName, branchCode.ToString() );
+
+                if (command.ExecuteNonQuery() > 0)
+                    result = true;
+
+            }
+            return result;
+        }
+
+
+
 
         public long GetCustomerIDbyUserID(string userID)
         {
@@ -241,7 +309,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber, Balance FROM Account WHERE CustomerID = {0} ", customerID), connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber, Balance FROM Account WHERE CustomerID = {0} AND Status = 'Active' ", customerID), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -274,7 +342,7 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber FROM Account WHERE CustomerID = {0} ", customerID), connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber FROM Account WHERE CustomerID = {0} AND Status = 'Active' ", customerID), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();

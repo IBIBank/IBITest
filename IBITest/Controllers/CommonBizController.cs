@@ -109,9 +109,6 @@ namespace IBITest.Controllers
 
         }
 
-         
-        
-
         //
         // GET: /Account/Login
         public ActionResult Login()
