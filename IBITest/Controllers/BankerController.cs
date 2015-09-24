@@ -133,36 +133,40 @@ namespace IBITest.Controllers
                 case 1:
                     requestListTemp = obj.GetNewAccountRequests(branchCode);
 
-                    foreach (var v in requestListTemp)
-                        if (v.Status == 'S')
-                            requestList.Add(v);
+                    if (requestListTemp != null)
+                        foreach (var v in requestListTemp)
+                            if (v.Status == 'S')
+                                requestList.Add(v);
 
                     break;
 
                 case 2:
                     requestListTemp = obj.GetLoanRequests(branchCode);
 
-                    foreach (var v in requestListTemp)
-                        if (v.Status == 'S')
-                            requestList.Add(v);
+                    if (requestListTemp != null)
+                        foreach (var v in requestListTemp)
+                            if (v.Status == 'S')
+                                requestList.Add(v);
 
                     break;
 
                 case 3:
                     requestListTemp = obj.GetBranchTransferRequests(branchCode);
 
-                    foreach (var v in requestListTemp)
-                        if (v.Status == 'S')
-                            requestList.Add(v);
+                    if (requestListTemp != null)
+                        foreach (var v in requestListTemp)
+                            if (v.Status == 'S')
+                                requestList.Add(v);
 
                     break;
 
                 case 4:
                     requestListTemp = obj.GetClosingRequests(branchCode);
 
-                    foreach (var v in requestListTemp)
-                        if (v.Status == 'S')
-                            requestList.Add(v);
+                    if(requestListTemp != null)
+                        foreach (var v in requestListTemp)
+                            if (v.Status == 'S')
+                                requestList.Add(v);
                     
                     break;
             }
@@ -186,48 +190,48 @@ namespace IBITest.Controllers
 
             md = (Session["AllRequests"] as List<RequestViewModel>);
             
+            if(md != null)
+                switch (typeid)
+                {
+                    case 1:
+                        return Json(md);
 
-            switch (typeid)
-            {
-                case 1:
-                    return Json(md);
+                    case 2:                   
+                        foreach (var v in md)
+                        {
+                            if (v.Status == 'S')
+                                mdSorted.Add(v);
+                        }
 
-                case 2:                   
-                    foreach (var v in md)
-                    {
-                        if (v.Status == 'S')
-                            mdSorted.Add(v);
-                    }
+                        break;
 
-                    break;
+                    case 3:
 
-                case 3:
+                        foreach (var v in md)
+                        {
+                            if (v.Status == 'A')
+                                mdSorted.Add(v);
+                        }                  
+                        break;
 
-                    foreach (var v in md)
-                    {
-                        if (v.Status == 'A')
-                            mdSorted.Add(v);
-                    }                  
-                    break;
-
-                case 4:
-                    foreach (var v in md)
-                    {
-                        if (v.Status == 'R')
-                            mdSorted.Add(v);
-                    }
-                    break;
+                    case 4:
+                        foreach (var v in md)
+                        {
+                            if (v.Status == 'R')
+                                mdSorted.Add(v);
+                        }
+                        break;
 
 
-                case 5:
-                    foreach (var v in md)
-                    {
-                        if (v.Status == 'T')
-                            mdSorted.Add(v);
-                    }
-                    break;
+                    case 5:
+                        foreach (var v in md)
+                        {
+                            if (v.Status == 'T')
+                                mdSorted.Add(v);
+                        }
+                        break;
 
-            }
+                }
 
             return Json(mdSorted);
         }
@@ -241,7 +245,7 @@ namespace IBITest.Controllers
             if (val[0] == 'N')
             {
                 requestID = Convert.ToInt16(val.Substring(3));
-                Byte[] image = bankerDALObj.GetProofImageByNewAccountRequestID(requestID);
+                byte[] image = bankerDALObj.GetProofImageByNewAccountRequestID(requestID);
 
                 return Json(new { base64imgage = Convert.ToBase64String(image) }, JsonRequestBehavior.AllowGet);
             }

@@ -13,5 +13,6 @@ namespace IBITest.Models
         public DateTime SubmissionDate { get; set; }
         public DateTime ServiceDate { get; set; }
         public char Status { get; set; }
+        public string serviceDate { get; set; }
     }
 }

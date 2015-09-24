@@ -262,8 +262,11 @@ namespace IBITest.Layers.DAL
                         md.RequestID = String.Copy("TOA" + reader[0].ToString());
                         md.RequestType = String.Copy("TOA");
                         md.SubmissionDate = Convert.ToDateTime(reader[1].ToString());
-                        if (reader[2].ToString() != "")
-                            md.ServiceDate = Convert.ToDateTime(reader[2].ToString(), new DateTimeFormatInfo { FullDateTimePattern = "yyyy-mm-dd" });
+                        if (!reader.IsDBNull(2))
+                            md.serviceDate = Convert.ToDateTime(reader[2].ToString()).ToString();
+                        else
+                            md.serviceDate = "";
+
                         md.Status = Convert.ToChar(reader[3].ToString());
                         md.CustomerName = reader[8].ToString();
 
@@ -303,9 +306,11 @@ namespace IBITest.Layers.DAL
                         md.RequestID = String.Copy("COA" + reader[0].ToString());
                         md.RequestType = String.Copy("COA");
                         md.SubmissionDate = Convert.ToDateTime(reader[1].ToString());
-                       
-                        if(reader[2].ToString() != "")
-                            md.ServiceDate = Convert.ToDateTime(reader[2].ToString());
+
+                        if (!reader.IsDBNull(2))
+                            md.serviceDate = Convert.ToDateTime(reader[2].ToString()).ToString();
+                        else
+                            md.serviceDate = "";
                        
                         md.Status = Convert.ToChar(reader[3].ToString());
                         md.CustomerName = reader[6].ToString();
@@ -348,8 +353,11 @@ namespace IBITest.Layers.DAL
                         md.RequestType = String.Copy("AFL");
                         md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
 
-                        if (reader[2].ToString() != "")
-                               md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
+                        if (!reader.IsDBNull(4))
+                            md.serviceDate = Convert.ToDateTime(reader[4].ToString()).ToString();
+                        else
+                            md.serviceDate = "";
+
                         md.Status = Convert.ToChar(reader[5].ToString());
                         md.CustomerName = reader[12].ToString();
 
@@ -392,8 +400,11 @@ namespace IBITest.Layers.DAL
                         md.RequestType = String.Copy("NAC");
                         md.SubmissionDate = Convert.ToDateTime(reader[3].ToString());
 
-                        if (reader[4].ToString() != "")
-                             md.ServiceDate = Convert.ToDateTime(reader[4].ToString());
+                        if (!reader.IsDBNull(4))
+                            md.serviceDate = Convert.ToDateTime(reader[4].ToString()).ToString();
+                        else
+                            md.serviceDate = "";
+
                         md.Status = Convert.ToChar(reader[5].ToString());
                         md.CustomerName = reader[7].ToString();
 
@@ -490,7 +501,7 @@ namespace IBITest.Layers.DAL
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    Byte[] image = (Byte[])reader[0];
+                    byte[] image = ((byte[])reader[0]);
 
                     reader.Close();
                     return image;
@@ -522,16 +533,16 @@ namespace IBITest.Layers.DAL
                 branchCode = Convert.ToInt64(reader[0]);
                 customerID = Convert.ToInt64(reader[1]);
 
-                /*
-                if (reader[2] != null)
+                
+                if (reader.IsDBNull(2))
                     addressProof = (Byte[])reader[2];
-                else */
+                else 
                     addressProof = null;
                
                 reader.Close();
 
 
-                command.CommandText = String.Format("SELECT COUNT(*) FROM Account");
+                command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
                 reader = command.ExecuteReader();
 
                 reader.Read();
@@ -599,7 +610,7 @@ namespace IBITest.Layers.DAL
                 reader.Close();
 
 
-                command.CommandText = String.Format("SELECT COUNT(AccountNumber) FROM Account");
+                command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
                 reader = command.ExecuteReader();
 
                 reader.Read();                

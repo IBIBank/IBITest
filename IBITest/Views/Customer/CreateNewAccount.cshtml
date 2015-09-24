@@ -42,7 +42,8 @@
 </script>
 <h2>CreateNewAccount</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("CreateNewAccount", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -80,7 +81,7 @@
         <textbo name="@(Model.CustomerID)" value="1001"/>*@
 
         <label for="@(Model.AddresProof)">Address Proof</label>  
-        <input type="file" name="@(Model.AddresProof)" id="file"/>
+        <input type="file" name="Image" id="file"/>
 
         <p>
             <input type="submit" value="Create New Account" />
@@ -88,6 +89,7 @@
     </fieldset>
 }
 
+<p style ="text-decoration-color : red"  >@(ViewBag.message)</p>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

@@ -10,6 +10,6 @@ namespace IBITest.Models
         public string City { get; set; }
         public string Branch { get; set; }
         public Int64 CustomerID { get; set; }
-        public Byte[] AddresProof { get; set; }
+        public byte[] AddresProof { get; set; }
     }
 }

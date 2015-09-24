@@ -7,7 +7,8 @@
 
 <h2>FinishRegistration</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("FinishRegistration", "Customer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
@@ -102,6 +103,13 @@
             @Html.TextBoxFor(m => m.Token, new { @readonly="readonly" })
             @Html.ValidationMessageFor(model => model.Token)
         </div>
+
+       <div>
+
+           Upload File Hari:  <input id="File1" type="file" name="Image" />
+       </div>
+
+
 
         <label for="@(Model.PhotoIDProof)">PhotoID Proof</label>  
         <input type="file" name="@(Model.PhotoIDProof)" id="file"/>

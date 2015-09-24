@@ -96,7 +96,7 @@ namespace IBITest.Layers.DAL
             CommonDAL commonDALObj = new CommonDAL();
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, c.Password, c.CommunicationAddress, c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
+                string cmdtxt = String.Format("UPDATE Customer SET UserID = '{0}', Password = '{1}', CommunicationAddress = '{2}', TransactionPassword = '{3}', PhotoIDProof = '{4}' WHERE CustomerID = {5}", c.UserID, commonDALObj.GetHashedText(c.Password), c.CommunicationAddress, c.TransactionPassword, c.PhotoIDProof, c.CustomerID);
 
 
                 SqlCommand command = new SqlCommand(cmdtxt, connection);
