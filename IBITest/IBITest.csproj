@@ -239,12 +239,9 @@
     </Content>
     <Content Include="bin\IBITest.dll" />
     <Content Include="bin\IBITest.pdb" />
-    <Content Include="Content\BankLogo.png" />
     <Content Include="Content\Chrysanthemum.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\custom.css" />
-    <Content Include="Content\Logo1.png" />
     <Content Include="Content\Logo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -301,16 +298,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="Images\333.jpg" />
-    <Content Include="Images\444.jpg" />
-    <Content Include="Images\555.jpg" />
-    <Content Include="Folder1\images\clocklanding.jpg" />
     <Content Include="Global.asax" />
-    <Content Include="Images\CarouselImages\image1.jpg" />
-    <Content Include="Images\CarouselImages\image2.jpg" />
-    <Content Include="Images\CarouselImages\image3.jpg" />
-    <Content Include="Images\CarouselImages\image4.jpg" />
-    <Content Include="Images\NewAccountCreation\NAC2.jpg" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\IBITest.csprojResolveAssemblyReference.cache" />
@@ -319,7 +307,6 @@
     <Content Include="obj\Debug\IBITest.dll" />
     <Content Include="obj\Debug\IBITest.pdb" />
     <Content Include="obj\Debug\TempPE\BankDB.Designer.cs.dll" />
-    <Content Include="Preloader_2.gif" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -334,7 +321,6 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="backgroundImage.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -344,6 +330,19 @@
     </Content>
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Account\_ChangePasswordPartial.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -394,20 +393,14 @@
     <Content Include="Views\Banker\SearchCustomerDetails.cshtml" />
     <Content Include="Views\Customer\ApplyForLoan.cshtml" />
     <Content Include="Views\Customer\ViewOrUpdateProfile.cshtml" />
+    <Content Include="Views\Customer\RestService.cshtml" />
     <Content Include="Views\Customer\EmiCalculator.cshtml" />
-    <Content Include="Views\Test\UploadImage.cshtml" />
-    <Content Include="Views\Shared\_IBIBankLayout2.cshtml" />
-    <Content Include="Views\CommonBiz\HomePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\ApplyForLoan\" />
-    <Folder Include="Images\FinishRegistration\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -425,7 +418,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>51714</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:59048/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
