@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "RestService";
+    Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function CheckUserAvailability()
+    {
+        var username = $("#userNameTextBox").val();
+        //alert("You entered username " + username);
+        var serviceurl = "http://localhost:52240/Service1.svc/checkUserIDavailability?username=" + username;
+        jQuery.support.cors = true;
+        $.ajax({
+            url: serviceurl,
+            cache: false,
+            type: "GET",
+            async: false,
+            dataType: "jsonp",
+            success: function (data) {
+                console.log(data);
+                var retval = JSON.parse(data);
+
+                if (retval["available"] == false)
+                    alert("Username Not Available.")
+                else {
+                    //document.getElementById("Register").disabled = false;
+                    alert("Username Available.")
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                debugger;
+                alert("Service Error");
+            }
+        });
+    }
+</script>
+<h2>Rest Service</h2>
+<input type="text" id="userNameTextBox"/>
+<button onclick="CheckUserAvailability()">Check User Availabilty</button>

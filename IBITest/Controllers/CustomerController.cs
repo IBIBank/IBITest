@@ -555,6 +555,10 @@ namespace IBITest.Controllers
         {
             return View();
         }
+        public ActionResult RestService()
+        {
+            return View();
+        }
         
     }
 

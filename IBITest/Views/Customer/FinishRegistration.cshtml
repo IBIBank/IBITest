@@ -4,6 +4,43 @@
     ViewBag.Title = "FinishRegistration";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    function CheckUserAvailability()
+    {
+        //alert("I am called");
+        var username = $("#UserID").val();
+        //alert("You entered username " + username);
+        var serviceurl = "http://localhost:52240/Service1.svc/checkUserIDavailability?username=" + username;
+        jQuery.support.cors = true;
+        $.ajax({
+            url: serviceurl,
+            cache: false,
+            type: "GET",
+            async: false,
+            dataType: "jsonp",
+            success: function (data) {
+                console.log(data);
+                var retval = JSON.parse(data);
+
+                if (retval["available"] == false)
+                {
+                    alert("Username Not Available.")
+                    $("#UserID").prop("val","")
+                }
+                    
+                else {
+                    //document.getElementById("Register").disabled = false;
+                    alert("Username Available.")
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                debugger;
+                alert("Service Error");
+            }
+        });
+    }
+</script>
 
 <h2>FinishRegistration</h2>
 
@@ -46,8 +83,12 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.UserID)
             @Html.ValidationMessageFor(model => model.UserID)
+            <a onclick="CheckUserAvailability()">Check Availability</a>
         </div>
-
+        @*<div style="float:left" >*@
+            
+        @*</div>*@
+        
         <div class="editor-label">
             @Html.LabelFor(model => model.Password)
         </div>
