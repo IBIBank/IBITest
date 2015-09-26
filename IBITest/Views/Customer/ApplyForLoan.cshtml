@@ -6,6 +6,54 @@
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
+    
+
+    function UploadAddressProof() {
+        alert("In upload image");
+
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('file2');
+        //Iterating through each files selected in fileInput
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+        }
+        //Creating an XMLHttpRequest and sending
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Customer/UploadAddressProof');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText);
+            }
+        }
+        return false;
+    }
+
+    function UploadSalaryProof() {
+        alert("In upload image");
+
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('file');
+        //Iterating through each files selected in fileInput
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+        }
+        //Creating an XMLHttpRequest and sending
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Customer/UploadSalaryProof');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText);
+            }
+        }
+        return false;
+    }
+
+
+
     $(document).ready(
         function ()
         {
@@ -224,9 +272,16 @@
             </div>
             <label for="@(Model.salaryProof)">Salary Proof</label>  
             <input type="file" name="@(Model.salaryProof)" id="file"/>
+            <input id="Button1" type="button" value="Upload Salary Proof" onclick="UploadSalaryProof()"/>
 
             <label for="@(Model.addressProof)">Address Proof</label>  
-            <input type="file" name="@(Model.addressProof)" id="file"/>
+            <input type="file" name="@(Model.addressProof)" id="file2"/>
+            <input id="Button2" type="button" value="Upload Address Proof" onclick="UploadAddressProof()"/>
+
+
+
+
+
             <p>
                 <input type="submit" value="Apply For Loan" />
             </p>

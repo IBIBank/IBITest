@@ -488,7 +488,7 @@ namespace IBITest.Controllers
             {
                 requestID = Convert.ToInt16(val.Substring(3));
 
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images\\ApplyForLoan") + "\\" + "AFL" + requestID.ToString() + ".jpg";
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images\\ApplyForLoan") + "\\" + "AFL_SP_" + requestID.ToString() + ".jpg";
 
                 FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
                 byte[] data = new byte[(int)fileStream.Length];
