@@ -8,11 +8,15 @@ using IBITest.Layers.DAL;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Configuration;
+using System.IO;
 
 namespace IBITest.Controllers
 {
     public class TestController : Controller
     {
+
+        public static string ImagePath = "Images/"; //"App_Data/Images/";
+
         public ActionResult Index()
         {
             CustomerDAL newObj = new CustomerDAL();
@@ -20,31 +24,11 @@ namespace IBITest.Controllers
             CommonDAL commonDALObj = new CommonDAL();
 
 
+            MessageBox.Show(newObj.GetNextNewAccountRequestID().ToString());
 
-            int branchCode = 0;
+           
 
-            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
-            {
-                SqlCommand command = new SqlCommand("SELECT COUNT(PayeeID) FROM Payee ", connection);
-                connection.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                reader.Read();
-
-                if(!reader.HasRows)
-                    branchCode = Convert.ToInt16(reader[0]);
-                else
-                    MessageBox.Show("No data");
-
-                MessageBox.Show(branchCode.ToString());
-
-                reader.Close();
-            }
-
-
-
-           return View(new TestModel());
+           return View();
         }
 
         [HttpPost]
@@ -54,6 +38,50 @@ namespace IBITest.Controllers
 
             return View(model);
         }
+
+
+
+        [HttpGet]
+        public ActionResult UploadImage(string id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult UploadImage()
+        {
+            string imgPath = string.Empty;
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                //Use the following properties to get file's name, size and MIMEType
+                int fileSize = file.ContentLength;
+                string fileName = file.FileName;
+                string mimeType = file.ContentType;
+                System.IO.Stream fileContent = file.InputStream;
+                //To save file, use SaveAs method
+                imgPath = TestController.ImagePath + "TempImage.jpg";
+                file.SaveAs(Server.MapPath("~/") + imgPath); //File will be saved in directory
+            }
+            return Json(imgPath);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult GetBase64Image()
+        {
+            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images") + "\\" + "TempImage.jpg";
+
+            FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            byte[] data = new byte[(int)fileStream.Length];
+            fileStream.Read(data, 0, data.Length);
+
+            return Json(new { base64imgage = Convert.ToBase64String(data) }  , JsonRequestBehavior.AllowGet);
+        } 
+
+
 
 
 

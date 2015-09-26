@@ -104,58 +104,73 @@ namespace IBITest.Layers.DAL
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
-            int FailCount;
-            reader.Read();
-
+            int failCount;
 
             if (!reader.HasRows)
             {
                 res = String.Copy("DoesNotExist");
             }
             else
-            {
-                /*
-                if (rd[3].ToString().Equals("L"))
+            { // account exists
+                reader.Read();
+
+                if (reader[3].ToString().Equals("L"))  // Account is locked
+                {
                     res = String.Copy("Locked");
-                 * 
-                 * 
-
-                else
-                {*/
-                    //Account is active
-                if (reader[0].ToString().Equals(commonDALObj.GetHashedText(Password)))
-                {
-                    //correct password
-                    res = String.Copy(reader[1].ToString());
-                    //update last log in in UserRoles and set FailCount = 0
                 }
-
                 else
                 {
-                    res = String.Copy("Invalid");
-
-                    /*
-                    //Account is active but wrong password !
-
-                    // if customer entered wroong password, increment fail count and check if == 3
-                    if (rd[0].ToString().Equals("Customer"))
+                    //Account is active
+                    if (reader[0].ToString().Equals(commonDALObj.GetHashedText(Password)))
                     {
-                        FailCount = Convert.ToInt16(rd[2]);
+                        //correct password
+                        res = String.Copy(reader[1].ToString());
+                        
+                        //update last log in in UserRoles and set FailCount = 0
+                        reader.Close();
 
-                        if (FailCount == 3)
+                        command.CommandText = "UPDATE UserRoles SET FailCount = 0, LastLogInDate = '" + DateTime.Now.ToString() + "' WHERE UserID = '" + UserID + "'";
+                        command.ExecuteNonQuery();  
+                    }
+
+                    else
+                    {
+                        //Account is active but wrong password !
+                        if (reader[1].ToString().Equals("Customer"))
                         {
-                            // lock customer account
+                            failCount = Convert.ToInt16(reader[2]) + 1;
+
+                            if (failCount == 3)
+                            {
+                                // lock customer account and report
+                                reader.Close();
+
+                                command.CommandText = "UPDATE UserRoles SET FailCount = 3, Status = 'L' WHERE UserID = '" + UserID + "'";
+                                command.ExecuteNonQuery();
+
+                                res = String.Copy("Account has been locked. Contact your banker to unlock !");
+
+
+                            }
+                            else
+                            {
+                                // update failcount in UserRoles and warn
+                                reader.Close();
+
+                                command.CommandText = "UPDATE UserRoles SET FailCount = " + failCount.ToString() + " WHERE UserID = '" + UserID + "'";
+                                command.ExecuteNonQuery();
+
+                                res = String.Copy("Incorrect Password ! " + (3 - failCount).ToString() + " more attempts remaining.");
+
+                            }
                         }
                         else
-                        {
-                            FailCount += 1;
-                            // update failcount in UserRoles
+                        { // Admin or banker entered incorrect password
+                            res = String.Copy("Invalid");
                         }
+
                     }
-                     * 
-                     * */
-                }
-                   
+                } 
                 
             }
             connection.Close();

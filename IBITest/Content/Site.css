@@ -101,18 +101,40 @@ h5, h6 {
 /* main layout
 ----------------------------------------------------------*/
 .content-wrapper {
-    margin: 0 auto;
-    max-width: 960px;
+    margin: auto;
+    max-width: 1366px;
 }
 
 #body {
-    background-color: #efeeef;
-    clear: both;
-    padding-bottom: 35px;
+  /*background: -webkit-linear-gradient(#a6dbed, #ffffff);*/
+  clear: both;
+  margin: auto;
+  max-width: 1366px;
+  
+
 }
 
+
+.gradient {
+    /*background: rgba(29, 142, 199, 0.90);*/    
+    margin: auto;
+    max-width: 1366px;
+    background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(29, 142, 199, 0.70)), to(#fff));
+
+}
+
+.bgimage {
+  background-image: url("/backgroundImage.jpg");
+  background-size: contain;
+
+}
+
+
+
+
+
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
+        /*background: url("../Images/accent.png") no-repeat;*/
         padding-left: 10px;
         padding-top: 30px;
     }
@@ -127,7 +149,7 @@ header .content-wrapper {
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
+    background-color: #a6dbed;
     font-size: .8em;
     height: 100px;
 }
@@ -221,7 +243,7 @@ ul#menu {
 
     .featured .content-wrapper {
         background-color: #7ac0da;
-        background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+        background-image: -moz-image-rect();
         background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
         background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
@@ -674,8 +696,8 @@ tr.pager td {
     }
 
     .content-wrapper {
-        padding-right: 10px;
-        padding-left: 10px;
+        /*padding-right: 10px;
+        padding-left: 10px;*/
     }
 
     .featured .content-wrapper {

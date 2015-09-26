@@ -1,0 +1,105 @@
+﻿@using IBITest.Models
+<style>
+    /* Paste this css to your style sheet file or under head tag */
+/* This only works with JavaScript, 
+if it's not present, don't show loader */
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(/Preloader_2.gif) center no-repeat #fff;
+}
+
+</style>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title - IBI Bank</title>
+        <link href="~/favicon.bmp" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+
+     
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+        <script>
+            //paste this code under head tag or in a seperate js file.
+            // Wait for window load
+            $(window).load(function () {
+                // Animate loader off screen
+                $(".se-pre-con").delay(0).fadeOut("slow");
+            });
+        </script>
+
+       
+  </head> 
+    <body >
+          <div class="content-wrapper">
+                <div class="float-left">
+                    <a href="@Url.Action("Index", "CommonBiz")">
+                    <img src="/Content/BankLogo.png" />
+                    </a>
+                </div>
+                <div class="float-right">
+                    <p>@DateTime.Today.DayOfWeek , @DateTime.Today.ToString("MMM") @DateTime.Today.Day, @DateTime.Today.Year</p>
+                </div>
+                
+            </div>
+
+        
+       
+           <div class="content-wrapper" style="clear:left;">
+                    <div>
+                        <h2><b>Welcome</b></h2>
+                        <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">Your slide-in text goes here <a href="/CommonBiz/LogIn/"> Log In </a>    </marquee>
+                                        
+                    </div>
+                </div>
+
+       
+            <div id="body">
+                @RenderSection("featured", required: false)
+                <section  class ="gradient">
+                    @RenderBody()
+                </section>
+
+                    <div class="float-left">
+                        <p>&copy; @DateTime.Now.Year - IBI Bank</p>
+                    </div>
+            
+            </div>   
+                 
+       
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+
+    <div>
+        Some text
+    </div>
+
+</html>
+
+
+<script>
+    //kill all back button functionality
+    function noBack() { window.history.forward() }
+    noBack();
+    window.onload = noBack;
+    window.onpageshow = function (evt) { if (evt.persisted) noBack() }
+    window.onunload = function () { void (0) }
+    </script>

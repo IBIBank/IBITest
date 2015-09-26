@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using IBITest.Models;
 using IBITest.Layers.DAL;
+using System.IO;
 
 namespace IBITest.Controllers
 {
@@ -460,6 +461,48 @@ namespace IBITest.Controllers
             long branchCode = (Session["User"] as UserRole).branchCode;
             return Json(objBankerDal.GetLockedCustomers());
         }
+
+
+
+        [HttpGet]
+        public ActionResult GetBase64Image(string val)
+        {
+
+            int requestID;
+            BankerDAL bankerDALObj = new BankerDAL();
+
+            if (val[0] == 'N')
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images\\NewAccountCreation") + "\\" +  "NAC" + requestID.ToString()  +".jpg";
+
+                FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                byte[] data = new byte[(int)fileStream.Length];
+                fileStream.Read(data, 0, data.Length);
+
+                return Json(new { base64imgage = Convert.ToBase64String(data) }, JsonRequestBehavior.AllowGet);
+                
+            }
+            else
+            {
+                requestID = Convert.ToInt16(val.Substring(3));
+
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images\\ApplyForLoan") + "\\" + "AFL" + requestID.ToString() + ".jpg";
+
+                FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                byte[] data = new byte[(int)fileStream.Length];
+                fileStream.Read(data, 0, data.Length);
+
+                return Json(new { base64imgage = Convert.ToBase64String(data) }, JsonRequestBehavior.AllowGet);
+              
+            }
+
+            
+        } 
+
+
+
 
     }
 }

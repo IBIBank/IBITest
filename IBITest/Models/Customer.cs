@@ -22,7 +22,7 @@ namespace IBITest.Models
 
         [Required]
         [RegularExpression(@"^(?!.*__.*)[A-Z][a-zA-Z0-9_-]+$", ErrorMessage = "Not a valid Log In ID ")]
-        [StringLength(15, MinimumLength = 8, ErrorMessage = "Banker LogIn ID must be between 8 and 15 characters long")]
+        [StringLength(15, MinimumLength = 8, ErrorMessage = "LogIn ID must be between 8 and 15 characters long")]
         public string UserID { get; set; }
 
         [Required]

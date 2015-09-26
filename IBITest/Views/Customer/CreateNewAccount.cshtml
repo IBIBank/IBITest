@@ -39,6 +39,39 @@
     {
         //alert("You selected branch code "+ branchCode);
     }
+
+
+
+
+    function UploadImage() {
+        alert("In upload image");
+
+        var formdata = new FormData(); //FormData object
+        var fileInput = document.getElementById('file');
+        //Iterating through each files selected in fileInput
+        for (i = 0; i < fileInput.files.length; i++) {
+            //Appending each file to FormData object
+            formdata.append(fileInput.files[i].name, fileInput.files[i]);
+        }
+        //Creating an XMLHttpRequest and sending
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Customer/UploadImage');
+        xhr.send(formdata);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                alert(xhr.responseText);
+            }
+        }
+        return false;
+    }
+
+
+
+
+
+
+
+
 </script>
 <h2>CreateNewAccount</h2>
 
@@ -82,6 +115,8 @@
 
         <label for="@(Model.AddresProof)">Address Proof</label>  
         <input type="file" name="Image" id="file"/>
+
+        <input id="Button1" type="button" value="Upload" onclick="UploadImage()" />
 
         <p>
             <input type="submit" value="Create New Account" />

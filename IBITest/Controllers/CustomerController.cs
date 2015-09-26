@@ -91,21 +91,58 @@ namespace IBITest.Controllers
             return View(model);
         }
 
+
+
+
+
+        [HttpPost]
+        public JsonResult UploadImage()
+        {
+            string imgPath = string.Empty;
+            long requestID;
+            CustomerDAL customerDALObj = new CustomerDAL();
+
+           
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                    //Use the following properties to get file's name, size and MIMEType
+                    int fileSize = file.ContentLength;
+                    string fileName = file.FileName;
+                    string mimeType = file.ContentType;
+                    System.IO.Stream fileContent = file.InputStream;
+                    requestID = customerDALObj.GetNextNewAccountRequestID();
+                    //To save file, use SaveAs method
+                    imgPath = "Images/NewAccountCreation/" + "NAC" + requestID + ".jpg";
+                    file.SaveAs(Server.MapPath("~/") + imgPath); //File will be saved in directory
+                }
+                return Json("Image uploaded successfully !");
+           
+        }
+
+
+
+
+
+
+
+
+
         [HttpPost]
         public ActionResult CreateNewAccount(NewAccountRequestView model, HttpPostedFileBase Image)
         {
             CustomerDAL customerDALobject = new CustomerDAL();
-           // ModelState.Clear();
-            if (Image != null)
-            {
-                
-                // product.ImageMimeType = image.ContentType;
-                model.AddresProof = new byte[Image.ContentLength];
-                Image.InputStream.Read(model.AddresProof, 0, Image.ContentLength);
-            }
+           // ModelState.Clear();           
 
             CommonDAL obj = new CommonDAL();
             ViewBag.cityList = obj.GetCityList();
+
+            if (Image == null)
+            {
+                ViewBag.message = "Please upload image first ! ";
+                return View(model);
+            }
+            
 
             if (customerDALobject.AddNewAccountRequest(model))
             {
@@ -138,7 +175,7 @@ namespace IBITest.Controllers
         {
             List<AccountListViewModel> obj = new List<AccountListViewModel>();
 
-            obj = (new CustomerDAL()).GetAccountsListByCustomerID((Session["User"] as UserRole).customerID);
+            obj = (new CustomerDAL()).GetAccountsListByCustomerID((this.Session["User"] as UserRole).customerID);
 
             return Json(obj);
         }
