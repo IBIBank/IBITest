@@ -1342,5 +1342,55 @@ namespace IBITest.Layers.DAL
         }
 
 
+
+        public int GetNextNewAccountRequestID()
+        {
+            int requestID = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(RequestID) FROM NewAccountRequest "), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    requestID = Convert.ToInt16(reader[0]) + 1;
+                    reader.Close();
+                }
+                else
+                    requestID = 1;
+            }
+
+            return requestID;
+        }
+
+        public int GetNextLoanAccountRequestID()
+        {
+            int requestID = 0;
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT COUNT(RequestID) FROM LoanRequest "), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    requestID = Convert.ToInt16(reader[0]) + 1;
+                    reader.Close();
+                }
+                else
+                    requestID = 1;
+            }
+
+            return requestID;
+        }
+
+
     }
 }

@@ -86,8 +86,12 @@
         $("#divImageHolder").html(imag)
     };
 
+    function Clear() {
+        $("#divImageHolder").html("")
+
+    }
+
     function GetProofImage(_requestID) {
-        alert(_requestID);
         $.ajax({
             cache: false,
             type: "GET",
@@ -108,7 +112,7 @@
 
     function ApproveRequest(_requestID) {
         
-        
+        Clear();
         $.ajax({
             cache: false,
             type: "POST",
@@ -132,9 +136,7 @@
 
 
     function RejectRequest(_requestID) {
-        alert("In Reject " + _requestID);
-
-        alert(_requestID);
+        Clear();
         $.ajax({
             cache: false,
             type: "POST",
@@ -160,9 +162,7 @@
     }
 
     function TransferRequest(_requestID) {
-        alert("In Transfer " + _requestID);
-
-        alert(_requestID);
+        Clear();
         $.ajax({
             cache: false,
             type: "POST",
@@ -184,7 +184,7 @@
     }
     
     function FilterRequests(SelectValue) {
-
+        Clear();
         if (SelectValue != 0) {
             $('#mytable thead').remove();
 
@@ -236,7 +236,7 @@
     }
 
     function ProcessRequests(SelectValue) {
-
+        Clear();
         if (SelectValue == 1 || SelectValue == 2) {
 
             $('#mytable thead').remove();
@@ -273,7 +273,7 @@
                     for (var x = 0; x < data.length; x++) {
                         var submissionDate = new Date(parseInt(data[x].SubmissionDate.substr(6)));
 
-                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + submissionDate + "</td> <td> <a onclick = \"GetProofImage('" + data[x].RequestID + "')\"> View Proof </a> </td> <td><a onclick = \"ApproveRequest('" + data[x].RequestID + "' ) \"> Approve </a> </td> <td><a onclick = \"RejectRequest( '" + data[x].RequestID + "' ) \" > Reject </a> </td></tr>";
+                        trhtml += "<tr> <td>" + data[x].RequestID + "</td> <td> " + data[x].RequestType + "</td> <td>" + data[x].CustomerName + "</td><td> " + submissionDate + "</td> <td> <a onclick = \"GetImage('" + data[x].RequestID + "')\"> View Proof </a> </td> <td><a onclick = \"ApproveRequest('" + data[x].RequestID + "' ) \"> Approve </a> </td> <td><a onclick = \"RejectRequest( '" + data[x].RequestID + "' ) \" > Reject </a> </td></tr>";
                     }
                     $('#mytable').append(trhtml);
                 },
@@ -332,6 +332,7 @@
     }
 
     function fun(i) {
+        Clear();
         if (i == 1) {
             $('#mytable thead').remove();
             $('#mytable tbody').remove();
@@ -369,9 +370,45 @@
                    
     }
 
-    
-       
+    var imgs = null;
+    var imageUrl = "/Banker/GetBase64Image";
+
+    var displayImage = function (base64Data) {
+        var imag = "<img "
+                 + "src='" + "data:image/jpg;base64,"
+                 + base64Data + "'/>";
+
+        $("#divImageHolder").html(imag)
+    };
+
+
+
+   function GetImage(_requestID) {
+        if (imgs != null) {
+            displayImage(imgs.base64imgage);
+            return;
+        }
+
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "/Banker/GetBase64Image",
+            contentType: 'application/json',
+            dataType: "json",
+            data: {val: _requestID},
+            success: function (data) {
+                imgs = data;
+                displayImage(imgs.base64imgage);
+            },
+            error: function (xhr) {
+                alert("Error occurred while loading the image. "
+                    + xhr.responseText);
+            }
+        });
+    }
+
 
    
 </script>
 
+ 

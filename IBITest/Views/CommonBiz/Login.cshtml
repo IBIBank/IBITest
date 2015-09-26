@@ -7,11 +7,13 @@
 
 <h2>Login</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
+    
+    <fieldset style="border:groove; padding-left:15px; padding-top:10px; padding-bottom:20px">
         <legend>LoginCredentials</legend>
 
         <div class="editor-label">

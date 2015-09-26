@@ -23,7 +23,7 @@ namespace IBITest.Controllers
             objbankcountrymodel.BranchModel = new List<BranchL>();
             objbankcountrymodel.CityModel = GetAllCities();
 
-            return View(objbankcountrymodel);
+            return View("HomePage",objbankcountrymodel);
         }
 
         
@@ -137,16 +137,38 @@ namespace IBITest.Controllers
                 ModelState.AddModelError("", "The user name does not exist !");
                 return View(model);
                 //return RedirectToAction("Login");
-            }
-            
+            }            
 
-            if (role.Equals("Invalid"))
+            else if (role.Equals("Locked"))
             {
-                ModelState.AddModelError("", "The password provided is incorrect.");
+                ModelState.AddModelError("", "Your account is currently locked. Please contact your banker to unlock !");
                 return View(model);
                 //return RedirectToAction("Login");
             }
-            
+
+            else if (role.Equals("Account has been locked. Contact your banker to unlock !"))
+            {
+                ModelState.AddModelError("", "Account has been locked. Contact your banker to unlock !");
+                return View(model);
+                //return RedirectToAction("Login");
+            }
+
+            else if (role.Contains("more attempts remaining"))
+            {
+                ModelState.AddModelError("", role);
+                return View(model);
+                //return RedirectToAction("Login");
+            }
+
+            else if (role.Contains("Invalid"))
+            {
+                ModelState.AddModelError("", "Incorrect Password !");
+                return View(model);
+                //return RedirectToAction("Login");
+            }
+
+
+
             UserRole ur = new UserRole {userID = model.UserName, role = role};
             
             

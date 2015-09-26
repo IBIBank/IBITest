@@ -97,22 +97,53 @@ h5, h6 {
         text-decoration: none;
     }
 
+/* Home Page
+    -------------------------------------------- */
+
+.homePagenavBar {
+    background: blue;
+}
+
+.navigation {
+    background: red;
+}
 
 /* main layout
 ----------------------------------------------------------*/
 .content-wrapper {
-    margin: 0 auto;
-    max-width: 960px;
+    margin: auto;
+    padding-left:40px;
 }
 
 #body {
-    background-color: #efeeef;
-    clear: both;
-    padding-bottom: 35px;
+  /*background: -webkit-linear-gradient(#a6dbed, #ffffff);*/
+  clear: both;
+  margin: auto;
+  
+  max-width:80%;
+  margin:auto;
+
 }
 
+
+.gradient {
+    /*background: rgba(29, 142, 199, 0.90);*/    
+    margin: auto;
+
+}
+
+.bgimage {
+  background-image: url("/backgroundImage.jpg");
+  background-size: contain;
+
+}
+
+
+
+
+
     .main-content {
-        background: url("../Images/accent.png") no-repeat;
+        /*background: url("../Images/accent.png") no-repeat;*/
         padding-left: 10px;
         padding-top: 30px;
     }
@@ -123,11 +154,12 @@ h5, h6 {
 
 header .content-wrapper {
     padding-top: 20px; 
+    max-width:80%;
 }
 
 footer {
     clear: both;
-    background-color: #e2e2e2;
+    background-color: #a6dbed;
     font-size: .8em;
     height: 100px;
 }
@@ -221,7 +253,7 @@ ul#menu {
 
     .featured .content-wrapper {
         background-color: #7ac0da;
-        background-image: -ms-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
+        background-image: -moz-image-rect();
         background-image: -o-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
         background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #7ac0da), color-stop(1, #a4d4e6));
         background-image: -webkit-linear-gradient(left, #7ac0da 0%, #a4d4e6 100%);
@@ -252,12 +284,6 @@ hgroup.title h2 {
     margin-left: 3px;
 }
 
-/* features */
-section.feature {
-    width: 300px;
-    float: left;
-    padding: 10px;
-}
 
 /* ordered list */
 ol.round {
@@ -674,8 +700,8 @@ tr.pager td {
     }
 
     .content-wrapper {
-        padding-right: 10px;
-        padding-left: 10px;
+        /*padding-right: 10px;
+        padding-left: 10px;*/
     }
 
     .featured .content-wrapper {
