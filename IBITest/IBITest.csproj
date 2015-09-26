@@ -394,6 +394,7 @@
     <Content Include="Views\Customer\ApplyForLoan.cshtml" />
     <Content Include="Views\Customer\ViewOrUpdateProfile.cshtml" />
     <Content Include="Views\Customer\RestService.cshtml" />
+    <Content Include="Views\Customer\EmiCalculator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -417,7 +418,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>51714</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:59048/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
