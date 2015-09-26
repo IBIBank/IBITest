@@ -97,20 +97,31 @@ h5, h6 {
         text-decoration: none;
     }
 
+/* Home Page
+    -------------------------------------------- */
+
+.homePagenavBar {
+    background: blue;
+}
+
+.navigation {
+    background: red;
+}
 
 /* main layout
 ----------------------------------------------------------*/
 .content-wrapper {
     margin: auto;
-    max-width: 1366px;
+    padding-left:40px;
 }
 
 #body {
   /*background: -webkit-linear-gradient(#a6dbed, #ffffff);*/
   clear: both;
   margin: auto;
-  max-width: 1366px;
   
+  max-width:80%;
+  margin:auto;
 
 }
 
@@ -118,8 +129,6 @@ h5, h6 {
 .gradient {
     /*background: rgba(29, 142, 199, 0.90);*/    
     margin: auto;
-    max-width: 1366px;
-    background-image: -webkit-gradient(linear, left top, right bottom, from(rgba(29, 142, 199, 0.70)), to(#fff));
 
 }
 
@@ -145,6 +154,7 @@ h5, h6 {
 
 header .content-wrapper {
     padding-top: 20px; 
+    max-width:80%;
 }
 
 footer {
@@ -274,12 +284,6 @@ hgroup.title h2 {
     margin-left: 3px;
 }
 
-/* features */
-section.feature {
-    width: 300px;
-    float: left;
-    padding: 10px;
-}
 
 /* ordered list */
 ol.round {

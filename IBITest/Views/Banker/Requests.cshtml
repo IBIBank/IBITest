@@ -86,8 +86,12 @@
         $("#divImageHolder").html(imag)
     };
 
+    function Clear() {
+        $("#divImageHolder").html("")
+
+    }
+
     function GetProofImage(_requestID) {
-        alert(_requestID);
         $.ajax({
             cache: false,
             type: "GET",
@@ -108,7 +112,7 @@
 
     function ApproveRequest(_requestID) {
         
-        
+        Clear();
         $.ajax({
             cache: false,
             type: "POST",
@@ -132,9 +136,7 @@
 
 
     function RejectRequest(_requestID) {
-        alert("In Reject " + _requestID);
-
-        alert(_requestID);
+        Clear();
         $.ajax({
             cache: false,
             type: "POST",
@@ -160,9 +162,7 @@
     }
 
     function TransferRequest(_requestID) {
-        alert("In Transfer " + _requestID);
-
-        alert(_requestID);
+        Clear();
         $.ajax({
             cache: false,
             type: "POST",
@@ -184,7 +184,7 @@
     }
     
     function FilterRequests(SelectValue) {
-
+        Clear();
         if (SelectValue != 0) {
             $('#mytable thead').remove();
 
@@ -236,7 +236,7 @@
     }
 
     function ProcessRequests(SelectValue) {
-
+        Clear();
         if (SelectValue == 1 || SelectValue == 2) {
 
             $('#mytable thead').remove();
@@ -332,6 +332,7 @@
     }
 
     function fun(i) {
+        Clear();
         if (i == 1) {
             $('#mytable thead').remove();
             $('#mytable tbody').remove();

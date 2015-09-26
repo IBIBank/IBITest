@@ -15,6 +15,9 @@ if it's not present, don't show loader */
 	background: url(/Preloader_2.gif) center no-repeat #fff;
 }
 
+.navigation{
+    width:100%;
+    }
 
 </style>
 
@@ -362,10 +365,6 @@ if it's not present, don't show loader */
                         
                         
                         
-                     
-                        
-                        
-                        
                         
                                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
                                             <script>
@@ -387,8 +386,7 @@ if it's not present, don't show loader */
                                             </script>
 
 
-                                            <!doctype html>
-                                            <html>
+                                            
                                               <head>
                                                 <!-- Load jQuery from Google's CDN -->
                                                 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -444,7 +442,7 @@ if it's not present, don't show loader */
   		                                            </ul>
   	                                            </div>
                                               </body>
-                                            </html>
+                                       
 
 
 
@@ -464,7 +462,7 @@ if it's not present, don't show loader */
                                             }
 
                                             .nav li a {
-	                                            background: #333;
+	                                            background: #000;
 	                                            color: #fff;
 	                                            display: block;
 	                                            padding: 7px 8px;
@@ -523,7 +521,7 @@ if it's not present, don't show loader */
                 </div>
             </div>
     </header>
-        <div id="bodyHomePage" class ="gradient">
+        <div id="body" >
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()

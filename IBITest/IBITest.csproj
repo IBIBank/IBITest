@@ -243,6 +243,7 @@
     <Content Include="Content\Chrysanthemum.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\custom.css" />
     <Content Include="Content\Logo1.png" />
     <Content Include="Content\Logo.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -305,6 +306,10 @@
     <Content Include="Images\555.jpg" />
     <Content Include="Folder1\images\clocklanding.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\CarouselImages\image1.jpg" />
+    <Content Include="Images\CarouselImages\image2.jpg" />
+    <Content Include="Images\CarouselImages\image3.jpg" />
+    <Content Include="Images\CarouselImages\image4.jpg" />
     <Content Include="Images\NewAccountCreation\NAC2.jpg" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
