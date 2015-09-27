@@ -124,10 +124,9 @@ namespace IBITest.Layers.DAL
 
             reader.Read();
 
-
-            if (reader.HasRows)
+            if (!reader.IsDBNull(0))
             {
-                reader.Read();
+                
                 bd.BranchCode = Convert.ToInt64(reader[0]) + 1;
             }
             else
