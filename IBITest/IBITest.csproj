@@ -215,6 +215,7 @@
     <Compile Include="Models\ClosureOfAccountAdminView.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerRequestViewModel.cs" />
     <Compile Include="Models\DateValidationAttribute.cs" />
     <Compile Include="Models\FundTransferPayeeModel.cs" />
     <Compile Include="Models\FundTransferViewModel.cs" />
@@ -237,12 +238,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="About.html" />
     <Content Include="App_Data\Database1.mdf" />
     <Content Include="App_Data\Database1_log.ldf">
       <DependentUpon>Database1.mdf</DependentUpon>
     </Content>
+    <Content Include="backgroundImage.jpg" />
     <Content Include="bin\IBITest.dll" />
     <Content Include="bin\IBITest.pdb" />
+    <Content Include="ContactUs.html" />
     <Content Include="Content\BankLogo.png" />
     <Content Include="Content\Chrysanthemum.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -326,6 +330,7 @@
     <Content Include="css\style-desktop.css" />
     <Content Include="css\style-mobile.css" />
     <Content Include="css\style.css" />
+    <Content Include="favicon.bmp" />
     <Content Include="Images\ApplyForLoan\AFL_AP_2.jpg" />
     <Content Include="Images\ApplyForLoan\AFL_AP_3.jpg" />
     <Content Include="Images\ApplyForLoan\AFL_SP_2.jpg" />

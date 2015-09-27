@@ -65,7 +65,7 @@ if it's not present, don't show loader */
             <div class="content-wrapper" style="clear:left;">
                 <div>
                     <h2><b>Welcome</b></h2>
-                    <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">Your slide-in text goes here <a href="/CommonBiz/LogIn/"> Log In </a>    </marquee>
+                    <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">IBI Bank welcomes you to IBI Online.  Now access all our amazing services at the click of a button ! Contact your nearest branch to open an account.  </marquee>
                     @{
                         if (Session["User"] != null)
                         {
@@ -114,7 +114,7 @@ if it's not present, don't show loader */
   				                                            <a href="#">Branch Functions</a>
   				                                            <ul>
   					                                            <li><a href="/Admin/AddBranch">Add Branch</a></li>
-  					                                            <li><a href="/Admin/ViewOrUpdateBranchDetails">View / Update Branch Details</a></li>
+  					                                            <li><a href="/Admin/ViewOrUpdateBranchDetails">View Branch Details</a></li>
   				                                            </ul>
   			                                            </li>  			                                                                                       
 
@@ -207,7 +207,7 @@ if it's not present, don't show loader */
                             }
                             else if ((Session["User"] as UserRole).role.Equals("Banker"))
                             {
-                                <h4> Hi <a href="@Url.Action("Dashboard", "Banker")" > @((Session["User"] as UserRole).userID) </a> ! <a href="/CommonBiz/LogOut/" align="right"> Log Out  </a> </h4>                                
+                                <h4> Hi <a href="@Url.Action("Dashboard", "Banker")" > @((Session["User"] as UserRole).userID) </a> ! <a href="/CommonBiz/LogOut/" style="float:right"> Log Out  </a> </h4>                                
                         
                         
                         
@@ -398,17 +398,15 @@ if it's not present, don't show loader */
   			                                            <li>
   				                                            <a href="#">Requests Manager </a>  	
                                                             <ul>
-  				                                                <li><a href="/Customer/CreateNewAccount">Apply for new account</a></li>
-  				                                                <li><a href="/Customer/RequestForAccountTransfer">Request account transfer</a></li>
+   				                                                <li><a href="/Customer/ViewRequestStatus">View Requests Status</a></li>
+ 				                                                <li><a href="/Customer/CreateNewAccount">Apply for new account</a></li>
   				                                                <li><a href="/Customer/RequestClosureOfAccount">Request closure of account</a></li>
-  				                                                <li><a href="/Customer/ViewRequestStatus">View requests status</a></li>
   			                                                </ul> 			
   			                                            </li>
 
                                                         <li>
   			                                                <a href="#">Profile Manager</a>
   			                                                <ul>
-  				                                                <li><a href="/Customer/ViewOrUpdateProfile">View or Update Profile</a></li>
   				                                                <li><a href="/Customer/UpdateUserOrTransactionPassword">Change Password</a></li>
   			                                                </ul>
   		                                                </li>
@@ -417,7 +415,6 @@ if it's not present, don't show loader */
   			                                            <a href="#">Value Added Services</a>
   			                                                <ul>
   				                                                <li><a href="/Customer/ApplyForLoan">Apply for loans</a></li>
-  				                                                <li><a href="/Customer/MoneyManagaer">Money Manager</a></li>
   			                                                </ul>
   		                                                </li>
 
