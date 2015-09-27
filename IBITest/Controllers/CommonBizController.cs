@@ -23,7 +23,7 @@ namespace IBITest.Controllers
             objbankcountrymodel.BranchModel = new List<BranchL>();
             objbankcountrymodel.CityModel = GetAllCities();
 
-            return View("HomePage",objbankcountrymodel);
+            return View(objbankcountrymodel);
         }
 
         

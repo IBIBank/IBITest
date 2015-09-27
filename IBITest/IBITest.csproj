@@ -239,10 +239,27 @@
     </Content>
     <Content Include="bin\IBITest.dll" />
     <Content Include="bin\IBITest.pdb" />
+    <Content Include="Content\BankLogo.png" />
     <Content Include="Content\Chrysanthemum.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Logo.png" />
+    <Content Include="Content\templated-linear\css\font\fontawesome-webfont.svg" />
+    <Content Include="Content\templated-linear\css\images\mobileUI-site-nav-opener-bg.svg" />
+    <Content Include="Content\templated-linear\css\images\toggle.svg" />
+    <Content Include="Content\templated-linear\css\skel-noscript.css" />
+    <Content Include="Content\templated-linear\css\style-1000px.css" />
+    <Content Include="Content\templated-linear\css\style-desktop.css" />
+    <Content Include="Content\templated-linear\css\style-mobile.css" />
+    <Content Include="Content\templated-linear\css\style.css" />
+    <Content Include="Content\templated-linear\js\html5shiv.js" />
+    <Content Include="Content\templated-linear\js\init.js" />
+    <Content Include="Content\templated-linear\js\skel-panels.min.js" />
+    <Content Include="Content\templated-linear\js\skel.min.js" />
+    <Content Include="Content\templated-linear\left-sidebar.html" />
+    <Content Include="Content\templated-linear\LICENSE.txt" />
+    <Content Include="Content\templated-linear\no-sidebar.html" />
+    <Content Include="Content\templated-linear\right-sidebar.html" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -297,11 +314,48 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="css\font\fontawesome-webfont.svg" />
+    <Content Include="css\images\mobileUI-site-nav-opener-bg.svg" />
+    <Content Include="css\images\toggle.svg" />
+    <Content Include="css\skel-noscript.css" />
+    <Content Include="css\style-1000px.css" />
+    <Content Include="css\style-desktop.css" />
+    <Content Include="css\style-mobile.css" />
+    <Content Include="css\style.css" />
+    <Content Include="js\html5shiv.js" />
+    <Content Include="js\init.js" />
+    <Content Include="js\skel-panels.min.js" />
+    <Content Include="js\skel.min.js" />
+    <Content Include="Views\Shared\css\font\fontawesome-webfont.svg" />
+    <Content Include="Views\Shared\css\images\mobileUI-site-nav-opener-bg.svg" />
+    <Content Include="Views\Shared\css\images\toggle.svg" />
+    <Content Include="Views\Shared\css\skel-noscript.css" />
+    <Content Include="Views\Shared\css\style-1000px.css" />
+    <Content Include="Views\Shared\css\style-desktop.css" />
+    <Content Include="Views\Shared\css\style-mobile.css" />
+    <Content Include="Views\Shared\css\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\header.jpg" />
+    <Content Include="Views\Shared\js\html5shiv.js" />
+    <Content Include="Views\Shared\js\init.js" />
+    <Content Include="Views\Shared\js\skel-panels.min.js" />
+    <Content Include="Views\Shared\js\skel.min.js" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\IBITest.csprojResolveAssemblyReference.cache" />
+    <Content Include="Content\templated-linear\css\font\fontawesome-webfont.eot" />
+    <Content Include="Content\templated-linear\css\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\templated-linear\css\font\fontawesome-webfont.woff" />
+    <Content Include="Content\templated-linear\css\font\FontAwesome.otf" />
+    <Content Include="Views\Shared\css\font\fontawesome-webfont.eot" />
+    <Content Include="Views\Shared\css\font\fontawesome-webfont.ttf" />
+    <Content Include="Views\Shared\css\font\fontawesome-webfont.woff" />
+    <Content Include="Views\Shared\css\font\FontAwesome.otf" />
+    <Content Include="css\font\fontawesome-webfont.eot" />
+    <Content Include="css\font\fontawesome-webfont.ttf" />
+    <Content Include="css\font\fontawesome-webfont.woff" />
+    <Content Include="css\font\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="obj\Debug\IBITest.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\IBITest.dll" />
@@ -395,6 +449,10 @@
     <Content Include="Views\Customer\ViewOrUpdateProfile.cshtml" />
     <Content Include="Views\Customer\RestService.cshtml" />
     <Content Include="Views\Customer\EmiCalculator.cshtml" />
+    <Content Include="Views\CommonBiz\HomePage.cshtml" />
+    <Content Include="Views\CommonBiz\Unauthorised.cshtml" />
+    <Content Include="Views\Shared\_IBIBankLayout2.cshtml" />
+    <Content Include="Views\Shared\_Layoutnew.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
