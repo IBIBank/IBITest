@@ -327,6 +327,7 @@
     <Content Include="css\style-desktop.css" />
     <Content Include="css\style-mobile.css" />
     <Content Include="css\style.css" />
+    <Content Include="Images\header2.jpg" />
     <Content Include="js\html5shiv.js" />
     <Content Include="js\init.js" />
     <Content Include="js\skel-panels.min.js" />
@@ -460,6 +461,7 @@
     <Content Include="Views\CommonBiz\Unauthorised.cshtml" />
     <Content Include="Views\Shared\_IBIBankLayout2.cshtml" />
     <Content Include="Views\Shared\_Layoutnew.cshtml" />
+    <Content Include="Views\Shared\_Layoutnew2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
