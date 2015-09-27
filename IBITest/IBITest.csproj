@@ -326,13 +326,11 @@
     <Content Include="css\style-desktop.css" />
     <Content Include="css\style-mobile.css" />
     <Content Include="css\style.css" />
-    <Content Include="Images\333.jpg" />
-    <Content Include="Images\444.jpg" />
-    <Content Include="Images\555.jpg" />
-    <Content Include="Images\CarouselImages\image1.jpg" />
-    <Content Include="Images\CarouselImages\image2.jpg" />
-    <Content Include="Images\CarouselImages\image3.jpg" />
-    <Content Include="Images\CarouselImages\image4.jpg" />
+    <Content Include="Images\ApplyForLoan\AFL_AP_2.jpg" />
+    <Content Include="Images\ApplyForLoan\AFL_AP_3.jpg" />
+    <Content Include="Images\ApplyForLoan\AFL_SP_2.jpg" />
+    <Content Include="Images\ApplyForLoan\AFL_SP_3.jpg" />
+    <Content Include="Images\header2.jpg" />
     <Content Include="Images\NewAccountCreation\NAC1.jpg" />
     <Content Include="Images\NewAccountCreation\NAC3.jpg" />
     <Content Include="Images\NewAccountCreation\NAC4.jpg" />
@@ -475,6 +473,7 @@
     <Content Include="Views\CommonBiz\Unauthorised.cshtml" />
     <Content Include="Views\Shared\_IBIBankLayout2.cshtml" />
     <Content Include="Views\Shared\_Layoutnew.cshtml" />
+    <Content Include="Views\Shared\_Layoutnew2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -483,6 +482,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\FinishRegistration\" />
     <Folder Include="obj\Release\TempPE\" />
   </ItemGroup>
   <PropertyGroup>

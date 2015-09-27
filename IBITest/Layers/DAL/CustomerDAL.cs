@@ -223,15 +223,15 @@ namespace IBITest.Layers.DAL
 
                 command.CommandText = "SELECT MAX(RequestID) FROM ClosingRequest";
                 reader = command.ExecuteReader();
+                reader.Read();
 
 
-                if (!reader.HasRows)
+                if (reader.IsDBNull(0))
                 {
                     requestID = 1;
                 }
                 else
                 {
-                    reader.Read();
                     requestID = Convert.ToInt16(reader[0]) + 1;
                 }
 
