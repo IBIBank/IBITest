@@ -14,9 +14,13 @@
                 cache: false,
                 type: "POST",
                 success: function (data) {
-                    if (data != null)
+                    if (data != null) {
+                        for(var x=0;x<data.length;x++)
+                            $("#branchDetails").append("<tr><td>" + data[x].branchCode + "</td><td>" + data[x].branchName + "</td><td>" + data[x].cityName + "</td><td>" + data[x].address + "</td><td>" + data[x].contactNumber + "</td><td>" + data[x].bankerName + "</td><td>" + data[x].email + "</td></tr>")
+                    }
+                    else
                     {
-                        $("#branchDetails").append("<tr><td>Branch Code</td><td>Branch Name</td><td>City</td><td>Address</td><td>Contact Number</td><td>Banker Name</td><td>Email</td></tr>")
+                        
                     }
                 },
                 error: function (reponse) {
@@ -26,14 +30,16 @@
         }
     );
 </script>
-<table id="branchDetails">
-    <tr>
-        <th>Branch Code</th>
-        <th>Branch Name</th>
-        <th>City</th>
-        <th>Address</th>
-        <th>Contact Number</th>
-        <th>Banker Name</th>
-        <th>Email</th>
-    </tr>
-</table>
+<div class="datagrid">
+    <table id="branchDetails">
+        <tr>
+            <th>Branch Code</th>
+            <th>Branch Name</th>
+            <th>City</th>
+            <th>Address</th>
+            <th>Contact Number</th>
+            <th>Banker Name</th>
+            <th>Email</th>
+        </tr>
+    </table>
+</div>

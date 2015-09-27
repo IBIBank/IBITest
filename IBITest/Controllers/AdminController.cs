@@ -75,10 +75,11 @@ namespace IBITest.Controllers
 
             return View();
         }
-        //public JsonResult GetListOfBranch()
-        //{
-            
-        //}
+        public JsonResult GetListOfBranch()
+        {
+            AdminDAL objAdminDal = new AdminDAL();
+            return Json(objAdminDal.GetAllBranchDetails());
+        }
 
 
         public ActionResult ApproveOrRejectRequests()

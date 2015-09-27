@@ -194,11 +194,12 @@ namespace IBITest.Layers.DAL
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
+
 
                 // Call Read before accessing data. 
-                if (reader.HasRows)
+                if (!reader.IsDBNull(0))
                 {
-                    reader.Read();
                     c.CustomerID = Convert.ToInt64(reader[0]) + 1;
                 }
 
@@ -534,7 +535,7 @@ namespace IBITest.Layers.DAL
                 customerID = Convert.ToInt64(reader[1]);
 
                 
-                if (reader.IsDBNull(2))
+                if (!reader.IsDBNull(2))
                     addressProof = (Byte[])reader[2];
                 else 
                     addressProof = null;
@@ -544,11 +545,11 @@ namespace IBITest.Layers.DAL
 
                 command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
                 reader = command.ExecuteReader();
+                reader.Read();
 
 
-                if (reader.HasRows)
+                if (!reader.IsDBNull(0))
                 {
-                    reader.Read();
                     accountNumber = Convert.ToInt64(reader[0]) + 1;
                 }
                 else
