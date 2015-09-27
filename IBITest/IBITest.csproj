@@ -210,6 +210,7 @@
     <Compile Include="Models\BranchDetailsViewModel.cs" />
     <Compile Include="Models\BranchMiniViewModel.cs" />
     <Compile Include="Models\BranchTransferViewModel.cs" />
+    <Compile Include="Models\BranchViewModel.cs" />
     <Compile Include="Models\CloseAccountCustomerViewModel.cs" />
     <Compile Include="Models\ClosureOfAccountAdminView.cs" />
     <Compile Include="Models\CommonBizModel.cs" />
@@ -325,7 +326,16 @@
     <Content Include="css\style-desktop.css" />
     <Content Include="css\style-mobile.css" />
     <Content Include="css\style.css" />
+    <Content Include="Images\ApplyForLoan\AFL_AP_2.jpg" />
+    <Content Include="Images\ApplyForLoan\AFL_AP_3.jpg" />
+    <Content Include="Images\ApplyForLoan\AFL_SP_2.jpg" />
+    <Content Include="Images\ApplyForLoan\AFL_SP_3.jpg" />
     <Content Include="Images\header2.jpg" />
+    <Content Include="Images\NewAccountCreation\NAC1.jpg" />
+    <Content Include="Images\NewAccountCreation\NAC3.jpg" />
+    <Content Include="Images\NewAccountCreation\NAC4.jpg" />
+    <Content Include="Images\NewAccountCreation\NAC5.jpg" />
+    <Content Include="Images\NewAccountCreation\NAC6.jpg" />
     <Content Include="js\html5shiv.js" />
     <Content Include="js\init.js" />
     <Content Include="js\skel-panels.min.js" />
@@ -472,6 +482,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\FinishRegistration\" />
     <Folder Include="obj\Release\TempPE\" />
   </ItemGroup>
   <PropertyGroup>

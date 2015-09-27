@@ -194,11 +194,11 @@ namespace IBITest.Layers.DAL
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
+                reader.Read();
 
                 // Call Read before accessing data. 
-                if (reader.HasRows)
+                if (!reader.IsDBNull(0))
                 {
-                    reader.Read();
                     c.CustomerID = Convert.ToInt64(reader[0]) + 1;
                 }
 
