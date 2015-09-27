@@ -196,6 +196,7 @@ namespace IBITest.Layers.DAL
                 SqlDataReader reader = command.ExecuteReader();
                 reader.Read();
 
+
                 // Call Read before accessing data. 
                 if (!reader.IsDBNull(0))
                 {
@@ -534,7 +535,7 @@ namespace IBITest.Layers.DAL
                 customerID = Convert.ToInt64(reader[1]);
 
                 
-                if (reader.IsDBNull(2))
+                if (!reader.IsDBNull(2))
                     addressProof = (Byte[])reader[2];
                 else 
                     addressProof = null;

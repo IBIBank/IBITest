@@ -122,9 +122,12 @@ namespace IBITest.Layers.DAL
             SqlDataReader reader = cmd.ExecuteReader();
             reader.Read();
 
+            reader.Read();
 
-            if (!reader.IsDBNull(0))
+
+            if (reader.HasRows)
             {
+                reader.Read();
                 bd.BranchCode = Convert.ToInt64(reader[0]) + 1;
             }
             else
