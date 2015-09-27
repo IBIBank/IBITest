@@ -399,6 +399,51 @@ namespace IBITest.Layers.DAL
 
 
 
+        public List<BranchViewModel> GetAllBranchDetails()
+        {
+            List<BranchViewModel> branchList = new List<BranchViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT * FROM Branch"), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data. 
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        BranchViewModel branch = new BranchViewModel();
+
+                        branch.branchCode = reader[0].ToString();
+                        branch.branchName = reader[1].ToString();
+                        branch.cityName = reader[2].ToString();
+                        branch.address = reader[3].ToString();
+                        branch.contactNumber = reader[4].ToString();
+                        branch.bankerName = reader[5].ToString();
+                        branch.branchLogInID = reader[6].ToString();
+                        branch.branchPassword = reader[7].ToString();
+                        branch.email = reader[8].ToString();
+
+                        branchList.Add(branch);
+                    }
+                }
+
+                else
+                {
+                    reader.Close();
+                    return null;
+                }
+
+            }
+
+
+
+            return branchList;
+        }
+
 
     }
 }

@@ -19,14 +19,13 @@ namespace IBITest.Controllers
 
         public ActionResult Index()
         {
-            CustomerDAL newObj = new CustomerDAL();
-            BankerDAL banObj = new BankerDAL();
-            CommonDAL commonDALObj = new CommonDAL();
+           CustomerDAL newObj = new CustomerDAL();
+           AdminDAL adminObj = new AdminDAL();
 
+           List<BranchViewModel> list= adminObj.GetAllBranchDetails();
 
-            MessageBox.Show(newObj.GetNextNewAccountRequestID().ToString());
-
-           
+           foreach(var v in list)
+               MessageBox.Show(v.branchCode);
 
            return View();
         }

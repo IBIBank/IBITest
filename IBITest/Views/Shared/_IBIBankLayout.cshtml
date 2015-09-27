@@ -15,9 +15,7 @@ if it's not present, don't show loader */
 	background: url(/Preloader_2.gif) center no-repeat #fff;
 }
 
-.navigation{
-    width:100%;
-    }
+
 
 </style>
 
@@ -53,14 +51,14 @@ if it's not present, don't show loader */
     <body>
         <div class="se-pre-con"></div>
         <header>
-            <div >
+            <div class="content-wrapper" >
                 <div class="float-left">
                     <a href="@Url.Action("Index", "CommonBiz")">
                     <img src="~/Content/BankLogo.png" />
                     </a>
                 </div>
                 <div class="float-right">
-                    <p>@DateTime.Today.DayOfWeek , @DateTime.Today.ToString("MMM") @DateTime.Today.Day, @DateTime.Today.Year</p>
+                    <p style="color:blue; font-size:20px">@DateTime.Today.DayOfWeek , @DateTime.Today.ToString("MMM") @DateTime.Today.Day, @DateTime.Today.Year</p>
                 </div>
                 
             </div>
@@ -387,15 +385,9 @@ if it's not present, don't show loader */
 
 
                                             
-                                              <head>
-                                                <!-- Load jQuery from Google's CDN -->
-                                                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-                                              <!-- Source our javascript file with the jQUERY code -->
-    
-                                              </head>
-                                              <body>
+                                             
                                                 <!-- Use this navigation div as your menu bar div -->
-  	                                            <div class="navigation">
+  	                                            <div >
   		                                            <ul class="nav">
   			                                            <li>
   				                                            <a href="/Customer/Dashboard">My Dashboard</a>
@@ -441,10 +433,8 @@ if it's not present, don't show loader */
 
   		                                            </ul>
   	                                            </div>
-                                              </body>
-                                       
 
-
+                                            
 
                                             <style>
 
@@ -457,12 +447,14 @@ if it's not present, don't show loader */
 
                                             .nav li {
 	                                            float: left;
-	                                            width: 160px;
-	                                            position: relative;
+	                                            width: 16.5%;
+                                                height:4%;
+	                                            position: relative;    
+                                                background-image: linear-gradient(#069,#f3f8f7);   
+                                                   
                                             }
 
                                             .nav li a {
-	                                            background: #000;
 	                                            color: #fff;
 	                                            display: block;
 	                                            padding: 7px 8px;
@@ -482,11 +474,14 @@ if it's not present, don't show loader */
 	                                            margin-left: 0px;
 	                                            list-style: none;
 	                                            padding: 0px;
+                                                background:#069;
                                             }
 
                                             .nav ul li {
-	                                            width: 190px;
+	                                            width: 100%;
 	                                            float: left;
+                                                background:#069;
+
                                             }
 
                                             .nav ul a {
@@ -496,10 +491,12 @@ if it's not present, don't show loader */
 	                                            color: #fff;
 	                                            text-decoration: none;
 	                                            border-bottom: 1px solid #222;
+                                                background:#069;
+
                                             }
 
                                             .nav ul li a:hover {
-	                                            color: #069;
+	                                            color: #000;
                                             }
 
 
