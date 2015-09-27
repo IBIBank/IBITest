@@ -544,11 +544,11 @@ namespace IBITest.Layers.DAL
 
                 command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
                 reader = command.ExecuteReader();
+                reader.Read();
 
 
-                if (reader.HasRows)
+                if (!reader.IsDBNull(0))
                 {
-                    reader.Read();
                     accountNumber = Convert.ToInt64(reader[0]) + 1;
                 }
                 else
@@ -612,10 +612,10 @@ namespace IBITest.Layers.DAL
 
                 command.CommandText = String.Format("SELECT MAX(AccountNumber) FROM Account");
                 reader = command.ExecuteReader();
+                reader.Read();
 
-                if (reader.HasRows)
+                if (!reader.IsDBNull(0))
                 {
-                    reader.Read();
                     accountNumber = Convert.ToInt64(reader[0]) + 1;
                 }
                 else
