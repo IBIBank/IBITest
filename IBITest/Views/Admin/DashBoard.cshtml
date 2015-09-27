@@ -4,12 +4,15 @@
 }
 
 <h2>Admin DashBoard</h2>
-@Html.ActionLink("Add Branch", "AddBranch","Admin")
-@Html.ActionLink("Approve or Reject Requets","ApproveOrRejectRequests","Admin")
-@Html.ActionLink("View or Update Branch Details","ViewOrUpdateBranchDetails","Admin")
 <br />
-<p>Number of Branch Transfer Requests : <a href="/Admin/ApproveOrRejectRequests">@ViewBag.BranchTransferRequests</a></p>
-
-<p>Number of Account Closure Requests : <a href="/Admin/ApproveOrRejectRequests">@ViewBag.AccountClosureRequests</a></p>
+<br />
 
 
+<br />
+
+<div style="border:groove; width:30%">
+<h3>Number of Branch Transfer Requests : <a href="/Admin/ApproveOrRejectRequests">@ViewBag.BranchTransferRequests</a></h3>
+
+<h3>Number of Account Closure Requests : <a href="/Admin/ApproveOrRejectRequests">@ViewBag.AccountClosureRequests</a></h3>
+    <br />
+</div>

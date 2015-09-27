@@ -1424,5 +1424,108 @@ namespace IBITest.Layers.DAL
         }
 
 
+        public List<CustomerRequestViewModel> ViewLoanAccountRequest(long customerID)
+        {
+            List<CustomerRequestViewModel> requestList = new List<CustomerRequestViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT RequestID, SubmissionDate, Status FROM LoanRequest WHERE CustomerID = {0}", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return requestList;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        CustomerRequestViewModel request = new CustomerRequestViewModel();
+
+                        request.requestID = reader[0].ToString();
+                        request.submissionDate = reader[1].ToString();
+                        request.status = reader[2].ToString();
+
+                        requestList.Add(request);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return requestList;
+        }
+
+
+        public List<CustomerRequestViewModel> ViewClosingAccountRequest(long customerID)
+        {
+            List<CustomerRequestViewModel> requestList = new List<CustomerRequestViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT RequestID, SubmissionDate, Status FROM ClosingRequest WHERE CustomerID = {0}", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return requestList;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        CustomerRequestViewModel request = new CustomerRequestViewModel();
+
+                        request.requestID = reader[0].ToString();
+                        request.submissionDate = reader[1].ToString();
+                        request.status = reader[2].ToString();
+
+                        requestList.Add(request);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return requestList;
+        }
+
+
+        public List<CustomerRequestViewModel> ViewNewAccountRequest(long customerID)
+        {
+            List<CustomerRequestViewModel> requestList = new List<CustomerRequestViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT RequestID, SubmissionDate, Status FROM NewAccountRequest WHERE CustomerID = {0}", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return requestList;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        CustomerRequestViewModel request = new CustomerRequestViewModel();
+
+                        request.requestID = reader[0].ToString();
+                        request.submissionDate = reader[1].ToString();
+                        request.status = reader[2].ToString();
+
+                        requestList.Add(request);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return requestList;
+        }
+
+
+
     }
 }
