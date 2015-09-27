@@ -207,7 +207,7 @@ if it's not present, don't show loader */
                             }
                             else if ((Session["User"] as UserRole).role.Equals("Banker"))
                             {
-                                <h4> Hi <a href="@Url.Action("Dashboard", "Banker")" > @((Session["User"] as UserRole).userID) </a> ! <a href="/CommonBiz/LogOut/"> Log Out  </a> </h4>                                
+                                <h4> Hi <a href="@Url.Action("Dashboard", "Banker")" > @((Session["User"] as UserRole).userID) </a> ! <a href="/CommonBiz/LogOut/" align="right"> Log Out  </a> </h4>                                
                         
                         
                         
@@ -348,7 +348,7 @@ if it's not present, don't show loader */
                             }
                             else
                             {
-                                <h4> Hi <a href="@Url.Action("Dashboard", "Customer")" > @((Session["User"] as UserRole).userID) </a> ! <div > @Html.ActionLink("LogOut", "LogOut", "CommonBiz")  </div> </h4>                                
+                                <h4> Hi <a href="@Url.Action("Dashboard", "Customer")" > @((Session["User"] as UserRole).userID) </a> ! <div align="right" > @Html.ActionLink("LogOut", "LogOut", "CommonBiz")  </div> </h4>                                
                         
                         
                         

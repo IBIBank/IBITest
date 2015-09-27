@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
 
-<h2>MiniDetailedstatements</h2>
+<h2>View Account Statements</h2>
 
 @using IBITest.Models
 
@@ -28,8 +28,8 @@
 </div>
 
 
-
-<table id ="mytable" class ="display">
+<div class="datagrid">
+<table id ="mytable" >
     <tbody> 
         @{
             if(ViewBag.transactionDetails != null)
@@ -61,7 +61,7 @@
      </tbody>
 
  </table>
-
+    </div>
                                                                  
 <script>
 
