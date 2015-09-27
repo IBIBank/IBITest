@@ -381,7 +381,39 @@ namespace IBITest.Layers.DAL
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
             {
-                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber, Balance FROM Account WHERE CustomerID = {0} AND Status = 'Active' ", customerID), connection);
+                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber, Balance FROM Account WHERE CustomerID = {0} AND Status = 'Active' AND AccountType = 'S'", customerID), connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (!reader.HasRows)
+                    return null;
+
+                else
+                {
+                    while (reader.Read())
+                    {
+                        AccountListViewModel account = new AccountListViewModel();
+
+                        account.accountNumber = Convert.ToInt64(reader[0]);
+                        account.balance = Convert.ToDecimal(reader[1]);
+
+                        accountsList.Add(account);
+                    }
+                    reader.Close();
+                }
+            }
+
+            return accountsList;
+        }
+
+        public List<AccountListViewModel> GetLoanAccountsListByCustomerID(long customerID)
+        {
+            List<AccountListViewModel> accountsList = new List<AccountListViewModel>();
+
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))
+            {
+                SqlCommand command = new SqlCommand(String.Format("SELECT AccountNumber, Balance FROM Account WHERE CustomerID = {0} AND Status = 'Active' AND AccountType = 'L'", customerID), connection);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
