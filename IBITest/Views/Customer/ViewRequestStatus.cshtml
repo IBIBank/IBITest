@@ -18,7 +18,51 @@
                 $("#tableOfNewAccountRequests").append('<tr><th>Request ID</th><th>Submission Date</th><th>Status</th></tr>');
                 $("#labelNewAccountRequests").text("New Account requests");
                 for (var x = 0; x < data.length; x++) {
-                    $("#tableOfNewAccountRequests").append('<tr><td>' + data[x].accountNumber + '</td><td>' + data[x].balance + '</td><td>' + data[x].balance + '</td></tr>');
+                    $("#tableOfNewAccountRequests").append('<tr><td>' + data[x].requestID + '</td><td>' + data[x].submissionDate + '</td><td>' + data[x].status + '</td></tr>');
+                }
+            },
+            error: function (reponse) {
+                alert("error12 : " + reponse);
+            }
+        });
+    }
+    $("#tableOfLoanRequests").ready()
+    {
+        $.ajax({
+            url: "/Customer/GetListOfLoanRequests",
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                if (data.length == 0) {
+                    return;
+                }
+                $("#tableOfLoanRequests").empty();
+                $("#tableOfLoanRequests").append('<tr><th>Request ID</th><th>Submission Date</th><th>Status</th></tr>');
+                $("#labelLoanRequests").text("Loan requests");
+                for (var x = 0; x < data.length; x++) {
+                    $("#tableOfLoanRequests").append('<tr><td>' + data[x].requestID + '</td><td>' + data[x].submissionDate + '</td><td>' + data[x].status + '</td></tr>');
+                }
+            },
+            error: function (reponse) {
+                alert("error12 : " + reponse);
+            }
+        });
+    }
+    $("#tableOfClosureOfAccountRequests").ready()
+    {
+        $.ajax({
+            url: "/Customer/GetListOfClosureOfAccountRequests",
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                if (data.length == 0) {
+                    return;
+                }
+                $("#tableOfClosureOfAccountRequests").empty();
+                $("#tableOfClosureOfAccountRequests").append('<tr><th>Request ID</th><th>Submission Date</th><th>Status</th></tr>');
+                $("#labelClosureOfAccountRequests").text("Closure Of Account requests");
+                for (var x = 0; x < data.length; x++) {
+                    $("#tableOfClosureOfAccountRequests").append('<tr><td>' + data[x].requestID + '</td><td>' + data[x].submissionDate + '</td><td>' + data[x].status + '</td></tr>');
                 }
             },
             error: function (reponse) {
@@ -30,17 +74,20 @@
 <h2>View Request Status</h2>
 <br />
 <h2 id ="labelNewAccountRequests"></h2>
+<br />
 <div class="datagrid">    
     <table id="tableOfNewAccountRequests" >
 
     </table>
 </div>
+
 <h2 id ="labelLoanRequests"></h2>
 <div class="datagrid">    
     <table id="tableOfLoanRequests" >
 
     </table>
 </div>
+
 <h2 id ="labelClosureOfAccountRequests"></h2>
 <div class="datagrid">    
     <table id="tableOfClosureOfAccountRequests" >

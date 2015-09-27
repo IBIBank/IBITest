@@ -461,8 +461,26 @@ namespace IBITest.Controllers
 
             return View();
         }
+        public JsonResult GetListOfNewAccountRequests()
+        {
+            CustomerDAL objCustomerDal = new CustomerDAL();
+            long customerID = (Session["User"] as UserRole).customerID;
+            return Json(objCustomerDal.ViewNewAccountRequest(customerID));
+        }
 
+        public JsonResult GetListOfLoanRequests()
+        {
+            CustomerDAL objCustomerDal = new CustomerDAL();
+            long customerID = (Session["User"] as UserRole).customerID;
+            return Json(objCustomerDal.ViewLoanAccountRequest(customerID));
+        }
 
+        public JsonResult GetListOfClosureOfAccountRequests()
+        {
+            CustomerDAL objCustomerDal = new CustomerDAL();
+            long customerID = (Session["User"] as UserRole).customerID;
+            return Json(objCustomerDal.ViewClosingAccountRequest(customerID));
+        }
         public ActionResult ViewOrUpdateProfile()
         {
             string result = (new CommonDAL()).CheckValidation("Customer", this.Session);
