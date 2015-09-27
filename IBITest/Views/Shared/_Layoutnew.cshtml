@@ -1,0 +1,163 @@
+﻿@using IBITest.Models
+<style>  
+      
+.no-js #loader { display: none;  }
+.js #loader { display: block; position: absolute; left: 100px; top: 0; }
+.se-pre-con {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url(/Preloader_2.gif) center no-repeat #fff;
+}
+
+</style>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+
+
+
+
+<!DOCTYPE HTML>
+<!--
+	Linear by TEMPLATED
+    templated.co 
+    Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+<html>
+	<head>
+        <title>@ViewBag.Title - IBI Bank</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,300,700,500,900' rel='stylesheet' type='text/css'>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel-noscript.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-desktop.css" />
+		</noscript>
+
+        <link href="~/favicon.bmp" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+
+     
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+        <script>
+            //paste this code under head tag or in a seperate js file.
+            // Wait for window load
+            $(window).load(function () {
+                // Animate loader off screen
+                $(".se-pre-con").delay(1500).fadeOut("slow");
+            });
+        </script>
+	</head>
+
+
+	<body class="homepage">
+
+	<!-- Header -->
+		<div id="header">
+			<div id="nav-wrapper"> 
+				<!-- Nav -->
+				<nav id="nav">
+					<ul>
+						<li class="active"><a href="/">HOME</a></li>
+						<li><a href="left-sidebar.html">ABOUT</a></li>
+						<li><a href="right-sidebar.html">CONTACT US</a></li>
+					</ul>
+				</nav>
+			</div>
+			<div class="container"> 
+				
+				<!-- Logo -->
+				<div id="logo">
+					<h1><a href="#">IBI Bank</a></h1>
+					<span class="tag">The People's Online Bank Of India</span>
+				</div>
+			</div>
+		</div>
+
+	<!-- Featured -->
+		<div id="featured">
+			<div class="container">
+				<header>
+					<h2>IBI Bank Online</h2>
+				</header>
+				<p>Welcome to one of India's leading and by far the most trusted bank in Asia ! </p>
+				<hr />
+				<div class="row">
+                    <section class="4u">
+						<span class="pennant"><span class="fa fa-lock"></span></span>
+						<h3>Absolute Security</h3>
+						<p>Our customers are the most valuable assets we have and as such the security of their money is our primary concern</p>
+						<a href="#" class="button button-style1">Read More</a>
+					</section>
+
+					<section class="4u">
+						<span class="pennant"><span class="fa fa-briefcase"></span></span>
+						<h3>Value added services</h3>
+						<p>Open an account with us today and get an experience our value added customer service tailored for your needs</p>
+						<a href="#" class="button button-style1">Read More</a>
+					</section>
+					
+					<section class="4u">
+						<span class="pennant"><span class="fa fa-globe"></span></span>
+						<h3>Global Presence</h3>
+						<p>Access our services.. wherever you are, whenever you want, all at the click of a button ! We provide services in about 100 countries across the globe</p>
+						<a href="#" class="button button-style1">Read More</a>
+					</section>
+
+				</div>
+			</div>
+		</div>
+
+	<!-- Main -->
+		<div id="main">
+			 @RenderBody()
+		</div>
+
+	<!-- Tweet -->
+		<div id="tweet">
+			<div class="container">
+				<section>
+					<blockquote>&ldquo;The Customer Experience is the next competitive battleground&rdquo;</blockquote>
+				</section>
+			</div>
+		</div>
+
+	<!-- Footer -->
+		
+	<!-- Copyright -->
+		<div id="copyright">
+			<div>
+				Design: <a href="http://templated.co">TEMPLATED</a> Images: <a href="http://unsplash.com">Unsplash</a> (<a href="http://unsplash.com/cc0">CC0</a>)
+			</div>
+		</div>
+
+
+
+        <script>
+            //kill all back button functionality
+            function noBack() { window.history.forward() }
+            noBack();
+            window.onload = noBack;
+            window.onpageshow = function (evt) { if (evt.persisted) noBack() }
+            window.onunload = function () { void (0) }
+    </script>
+
+
+
+
+	</body>
+</html>
+
+
