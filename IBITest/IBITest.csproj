@@ -314,6 +314,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="ContactUs.html" />
     <Content Include="css\font\fontawesome-webfont.svg" />
     <Content Include="css\images\mobileUI-site-nav-opener-bg.svg" />
     <Content Include="css\images\toggle.svg" />
@@ -356,6 +357,7 @@
     <Content Include="css\font\fontawesome-webfont.ttf" />
     <Content Include="css\font\fontawesome-webfont.woff" />
     <Content Include="css\font\FontAwesome.otf" />
+    <Content Include="About.html" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="obj\Debug\IBITest.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\IBITest.dll" />

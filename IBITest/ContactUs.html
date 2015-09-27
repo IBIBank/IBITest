@@ -1,4 +1,4 @@
-﻿@using IBITest.Models
+﻿
 <style>  
       
 .no-js #loader { display: none;  }
@@ -30,7 +30,7 @@
 -->
 <html>
 	<head>
-        <title>@ViewBag.Title - IBI Bank</title>
+        <title> About IBI Bank</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -48,9 +48,6 @@
         <meta name="viewport" content="width=device-width" />
 
      
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-
         <script>
             //paste this code under head tag or in a seperate js file.
             // Wait for window load
@@ -72,7 +69,7 @@
 					<ul>
 						<li class="active"><a href="/">HOME</a></li>
 						<li><a href="About.html">ABOUT</a></li>
-						<li><a href="ContactUs.html">CONTACT US</a></li>
+						<li><a href="#">CONTACT US</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -88,42 +85,20 @@
 
 	<!-- Featured -->
 		<div id="featured">
-			<div class="container">
-				<header>
-					<h2>IBI Bank Online</h2>
+	        <div class="container">
+               <header>
+					<h2>Contact Us</h2>
 				</header>
-				<p>Welcome to one of India's leading and by far the most trusted bank in Asia ! </p>
+				<p>Marathahalli, Bangalore</p>
+                <p>www.IBIBank.com</p>
+                <p>CustomerCare@IBIBank.com</p>
 				<hr />
-				<div class="row">
-                    <section class="4u">
-						<span class="pennant"><span class="fa fa-lock"></span></span>
-						<h3>Absolute Security</h3>
-						<p>Our customers are the most valuable assets we have and as such the security of their money is our primary concern</p>
-						<a href="#" class="button button-style1">Read More</a>
-					</section>
-
-					<section class="4u">
-						<span class="pennant"><span class="fa fa-briefcase"></span></span>
-						<h3>Value added services</h3>
-						<p>Open an account with us today and get an experience our value added customer service tailored for your needs</p>
-						<a href="#" class="button button-style1">Read More</a>
-					</section>
-					
-					<section class="4u">
-						<span class="pennant"><span class="fa fa-globe"></span></span>
-						<h3>Global Presence</h3>
-						<p>Access our services.. wherever you are, whenever you want, all at the click of a button ! We provide services in about 100 countries across the globe</p>
-						<a href="#" class="button button-style1">Read More</a>
-					</section>
-
-				</div>
-			</div>
+            </div>
 		</div>
 
 	<!-- Main -->
-		<div id="main">
-			 @RenderBody()
-		</div>
+        
+       		
 
 	<!-- Tweet -->
 		<div id="tweet">
