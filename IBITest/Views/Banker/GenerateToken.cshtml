@@ -5,6 +5,8 @@
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
 
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <h2>GenerateToken</h2>
 
@@ -18,15 +20,15 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.CustomerName)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Enter the name of the customer">
             @Html.EditorFor(model => model.CustomerName)
             @Html.ValidationMessageFor(model => model.CustomerName)
         </div>
 
-        <div class="editor-label">
+        <div class="editor-label" >
             @Html.LabelFor(model => model.DOB,new { @class = "date-picker" })
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Enter a valid date of birth.">
             @Html.EditorFor(model => model.DOB)
             @Html.ValidationMessageFor(model => model.DOB)
         </div>
@@ -42,7 +44,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.ContactNumber)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Contact number must be between 10 - 11 digits">
             @Html.EditorFor(model => model.ContactNumber)
             @Html.ValidationMessageFor(model => model.ContactNumber)
         </div>

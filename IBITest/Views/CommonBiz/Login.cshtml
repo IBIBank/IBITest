@@ -4,6 +4,8 @@
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 <h2>Login</h2>
 
@@ -19,7 +21,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.UserName)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="UserName must be between 8-15 characters and start with an uppercase letter.">
             @Html.EditorFor(model => model.UserName)
             @Html.ValidationMessageFor(model => model.UserName)
         </div>
@@ -27,19 +29,19 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Password)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Password must be between 8-15 characters and must contain at least one uppercase letter, at least one digit and at least one special character">
             @Html.EditorFor(model => model.Password)
             @Html.ValidationMessageFor(model => model.Password)
         </div>
 
         <p>
-            <input type="submit" value="Log In" />
+            <input type="submit" value="Log In" class="button"/>
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Back to Welcome Page", "Index")
+    @Html.ActionLink("Back to Home Page", "Index")
 </div>
 
 @section Scripts {
