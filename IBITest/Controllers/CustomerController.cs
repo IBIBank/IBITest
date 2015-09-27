@@ -179,7 +179,14 @@ namespace IBITest.Controllers
 
             return Json(obj);
         }
+        public JsonResult GetListOfLoanAccounts()
+        {
+            List<AccountListViewModel> obj = new List<AccountListViewModel>();
 
+            obj = (new CustomerDAL()).GetLoanAccountsListByCustomerID((this.Session["User"] as UserRole).customerID);
+
+            return Json(obj);
+        }
 
 
         public ActionResult MiniDetailedstatements()

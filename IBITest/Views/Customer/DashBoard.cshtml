@@ -15,6 +15,9 @@
             type: "POST",
 
             success: function (data) {
+                if (data.length == 0) {
+                    return;
+                }
                 $("#tableOfSavingAccounts").empty();
                 $("#tableOfSavingAccounts").append('<tr><th>Account Number</th><th>Balance</th><th>Mini/Detailed statements</th></tr>');
                 $("#AccountDetailsLabel").text("Savings Account Details");
@@ -25,6 +28,33 @@
             },
             error: function (reponse) {
               //  alert("error12 : " + reponse);
+            }
+        });
+    }
+    $("#tableOfLoanAccounts").ready()
+    {
+        //alert("load table called");
+        $.ajax({
+            url: "/Customer/GetListOfLoanAccounts",
+            //data: { requestType: requestType },
+            cache: false,
+            type: "POST",
+
+            success: function (data) {
+                if (data.length == 0)
+                {
+                    return;
+                }
+                $("#tableOfLoanAccounts").empty();
+                $("#tableOfLoanAccounts").append('<tr><th>Account Number</th><th>Balance</th><th>Mini/Detailed statements</th></tr>');
+                $("#LoanAccountDetailsLabel").text("Loan Account Details");
+                for (var x = 0; x < data.length; x++) {
+
+                    $("#tableOfLoanAccounts").append('<tr><td>' + data[x].accountNumber + '</td><td>' + data[x].balance + '</td><td><a href =@Url.Action("MiniDetailedstatements","Customer")>Mini/Detailed Statements<a></td></tr>');
+                }
+            },
+            error: function (reponse) {
+                //  alert("error12 : " + reponse);
             }
         });
     }
@@ -43,6 +73,12 @@
 <h2 id ="AccountDetailsLabel"></h2>
 <div class="datagrid">    
     <table id="tableOfSavingAccounts" >
+
+    </table>
+</div>
+<h2 id ="LoanAccountDetailsLabel"></h2>
+<div class="datagrid">    
+    <table id="tableOfLoanAccounts" >
 
     </table>
 </div>
