@@ -1444,7 +1444,7 @@ namespace IBITest.Layers.DAL
                     {
                         CustomerRequestViewModel request = new CustomerRequestViewModel();
 
-                        request.requestID = reader[0].ToString();
+                        request.requestID = "AFL"+reader[0].ToString();
                         request.submissionDate = reader[1].ToString();
                         request.status = reader[2].ToString();
 
@@ -1478,7 +1478,7 @@ namespace IBITest.Layers.DAL
                     {
                         CustomerRequestViewModel request = new CustomerRequestViewModel();
 
-                        request.requestID = reader[0].ToString();
+                        request.requestID = "COA"+reader[0].ToString();
                         request.submissionDate = reader[1].ToString();
                         request.status = reader[2].ToString();
 
@@ -1512,7 +1512,7 @@ namespace IBITest.Layers.DAL
                     {
                         CustomerRequestViewModel request = new CustomerRequestViewModel();
 
-                        request.requestID = reader[0].ToString();
+                        request.requestID = "NAC"+reader[0].ToString();
                         request.submissionDate = reader[1].ToString();
                         request.status = reader[2].ToString();
 
