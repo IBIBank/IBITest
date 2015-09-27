@@ -3,4 +3,37 @@
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
 
-<h2>View Or Update Branch Details</h2>
+<h2>View Branch Details</h2>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+    $(document).ready(
+        function ()
+        {
+            $.ajax({
+                url: "/Admin/GetListOfBranch",
+                cache: false,
+                type: "POST",
+                success: function (data) {
+                    if (data != null)
+                    {
+                        $("#branchDetails").append("<tr><td>Branch Code</td><td>Branch Name</td><td>City</td><td>Address</td><td>Contact Number</td><td>Banker Name</td><td>Email</td></tr>")
+                    }
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+    );
+</script>
+<table id="branchDetails">
+    <tr>
+        <th>Branch Code</th>
+        <th>Branch Name</th>
+        <th>City</th>
+        <th>Address</th>
+        <th>Contact Number</th>
+        <th>Banker Name</th>
+        <th>Email</th>
+    </tr>
+</table>
