@@ -10,6 +10,5 @@ namespace IBITest.Models
         public string requestID { get; set; }
         public string submissionDate { get; set; }
         public string status { get; set; }
-
     }
 }
