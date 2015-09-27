@@ -4,11 +4,12 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
+    Layout = "~/Views/Shared/_Layoutnew.cshtml";
 }
 
-@Html.ActionLink("Login", "Login","CommonBiz")
-<h1>View Branch Details</h1>
+
+<h1 class="content-wrapper" style="padding-bottom:30px; color:#8ee9b9" >@Html.ActionLink("Login", "Login", "CommonBiz")</h1>
+<h1 class="content-wrapper">View Branch Details</h1>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 <script >
@@ -76,12 +77,11 @@
     }
 </script>
 
-<div>
-    <p>Select City</p>
-    
-   @Html.DropDownList("ddlstate", new SelectList(Model.CityModel, "Id", "CityName"), "--Select--", new { @id = "ddlstate", @style = "width:200px;", @onchange = "javascript:GetCity(this.value);" })
-    <p>Select Branch</p>
-   @Html.DropDownList("ddlbranch", new SelectList(Model.BranchModel, "Id", "BranchName"), "--Select--", new { @id = "ddlbranch", @style = "width:200px;" , @onchange = "javascript:GetBranch(this.value);" })
+<div class="content-wrapper" style="padding-top:20px">
+
+    <p>Select City: &nbsp&nbsp&nbsp&nbsp&nbsp @Html.DropDownList("ddlstate", new SelectList(Model.CityModel, "Id", "CityName"), "--Select--", new { @id = "ddlstate", @style = "width:200px;", @onchange = "javascript:GetCity(this.value);" })</p>
+   
+     <p>Select Branch: &nbsp @Html.DropDownList("ddlbranch", new SelectList(Model.BranchModel, "Id", "BranchName"), "--Select--", new { @id = "ddlbranch", @style = "width:200px;" , @onchange = "javascript:GetBranch(this.value);" })</p>
     
 <br />
     <br />
@@ -98,14 +98,14 @@
 
 <br />
 <br />
-<div>
+<div class="content-wrapper">
 
     <br />
     @using (Html.BeginForm("ValidateToken","CommonBiz"))
     { 
         <label> Register with Token</label>
         <input type="text" name="token" />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Register" class="button button-style1" />
     }
    
 </div>

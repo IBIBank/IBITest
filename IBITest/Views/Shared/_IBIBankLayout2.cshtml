@@ -118,9 +118,6 @@ if it's not present, don't show loader */
                 $(".se-pre-con").delay(0).fadeOut("slow");
             });
         </script>       
-  </head> 
-
-    <body >
 
 
          <div class="navigation">
@@ -145,8 +142,7 @@ if it's not present, don't show loader */
   	    </div>
 
 
-
-          <div class="content-wrapper">
+         <div >
                 <div class="float-left">
                     <a href="@Url.Action("Index", "CommonBiz")">
                     <img src="/Content/BankLogo.png" />
@@ -155,10 +151,14 @@ if it's not present, don't show loader */
                    
                 </div>
                 <div>
-                    <p style ="color:blue; font-size:30px; float:right">@DateTime.Today.DayOfWeek , @DateTime.Today.ToString("MMM") @DateTime.Today.Day, @DateTime.Today.Year</p>
+                    <p style ="color:blue; font-size:20px; float:right; padding-top:10px; padding-right:10px">@DateTime.Today.DayOfWeek , @DateTime.Today.ToString("MMM") @DateTime.Today.Day, @DateTime.Today.Year</p>
                 </div>
                 
             </div>
+
+  </head> 
+
+    <body >
 
 
        
