@@ -329,6 +329,9 @@
     <Content Include="js\init.js" />
     <Content Include="js\skel-panels.min.js" />
     <Content Include="js\skel.min.js" />
+    <Content Include="obj\Release\IBITest.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Release\IBITest.dll" />
+    <Content Include="obj\Release\IBITest.pdb" />
     <Content Include="Preloader_2.gif" />
     <Content Include="Views\Shared\css\font\fontawesome-webfont.svg" />
     <Content Include="Views\Shared\css\images\mobileUI-site-nav-opener-bg.svg" />
@@ -360,6 +363,8 @@
     <Content Include="css\font\fontawesome-webfont.ttf" />
     <Content Include="css\font\fontawesome-webfont.woff" />
     <Content Include="css\font\FontAwesome.otf" />
+    <Content Include="obj\Release\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <Content Include="obj\Release\IBITest.csprojResolveAssemblyReference.cache" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="obj\Debug\IBITest.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\IBITest.dll" />
@@ -463,6 +468,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="obj\Release\TempPE\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

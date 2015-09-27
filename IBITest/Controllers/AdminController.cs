@@ -75,6 +75,10 @@ namespace IBITest.Controllers
 
             return View();
         }
+        //public JsonResult GetListOfBranch()
+        //{
+            
+        //}
 
 
         public ActionResult ApproveOrRejectRequests()
