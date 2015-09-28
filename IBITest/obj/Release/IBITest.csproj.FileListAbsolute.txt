@@ -83,4 +83,3 @@ C:\Users\akale\Documents\IBITest\IBITest\bin\zh-Hans\System.Spatial.resources.dl
 C:\Users\akale\Documents\IBITest\IBITest\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\akale\Documents\IBITest\IBITest\obj\Release\IBITest.dll
 C:\Users\akale\Documents\IBITest\IBITest\obj\Release\IBITest.pdb
-C:\Users\akale\Documents\IBITest\IBITest\obj\Release\IBITest.csprojResolveAssemblyReference.cache

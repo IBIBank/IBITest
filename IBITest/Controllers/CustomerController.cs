@@ -545,7 +545,7 @@ namespace IBITest.Controllers
         //{
         //    string imgPath = string.Empty;
         //    long requestID;
-            
+
         //    for (int i = 0; i < Request.Files.Count; i++)
         //    {
         //        HttpPostedFileBase file = Request.Files[i]; //Uploaded file
@@ -554,8 +554,8 @@ namespace IBITest.Controllers
         //        string fileName = file.FileName;
         //        string mimeType = file.ContentType;
         //        System.IO.Stream fileContent = file.InputStream;
-        //        requestID =  
-        //        //To save file, use SaveAs method
+        //        requestID =
+        //            //To save file, use SaveAs method
         //        imgPath = "Images/FinishRegistration/" + "CID_" + requestID + ".jpg";
         //        file.SaveAs(Server.MapPath("~/") + imgPath); //File will be saved in directory
         //    }
