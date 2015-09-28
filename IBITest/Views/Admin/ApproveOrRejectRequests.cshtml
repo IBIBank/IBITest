@@ -7,7 +7,6 @@
 <script>
     function getListOfRequests(requestType) {
         if (requestType == "") {
-            alert("You selectd request type none");
             $("#mytable").empty();
             return;
         }
@@ -54,6 +53,7 @@
 
     }
     function Approve() {
+        
         var selected = $("#mytable input:checked").length;
         var requestType = $("#dropdown").val();
         if (selected == 0 || requestType=="") {

@@ -330,6 +330,9 @@
     <Content Include="css\style-desktop.css" />
     <Content Include="css\style-mobile.css" />
     <Content Include="css\style.css" />
+    <Content Include="dist\sweetalert-dev.js" />
+    <Content Include="dist\sweetalert.css" />
+    <Content Include="dist\sweetalert.min.js" />
     <Content Include="favicon.bmp" />
     <Content Include="Images\ApplyForLoan\AFL_AP_2.jpg" />
     <Content Include="Images\ApplyForLoan\AFL_AP_3.jpg" />

@@ -140,14 +140,14 @@
         var fromDate = Date.parse($("#date1").val())
 
         if (isNaN(fromDate) == true) {
-            alert("Select a Proper From Date !");
+            swal("Error", "Select a proper From Date", "warning");
             return;
         }       
         
         var toDate = Date.parse($("#date2").val())
 
         if (isNaN(toDate) == true) {
-            alert("Select a Proper To Date !");
+            swal("Error", "Select a proper To Date", "warning");
             return;
         }
        
@@ -155,7 +155,7 @@
         date2 = new Date(($("#date2").val()));
         
         if (date1 > date2) {
-            alert("From Date must be before To Date !");
+            swal("Error", "From Date must be before To Date", "warning");
             return;
         }
 

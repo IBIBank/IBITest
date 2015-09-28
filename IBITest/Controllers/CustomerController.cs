@@ -540,28 +540,30 @@ namespace IBITest.Controllers
             return View(objLoanRequest);
         }
 
-        //[HttpPost]
-        //public JsonResult UploadPhotoIDProof()
-        //{
-        //    string imgPath = string.Empty;
-        //    long requestID;
+        [HttpPost]
+        public JsonResult UploadPhotoIDProof(string Token)
+        {
+            string imgPath = string.Empty;
+            CustomerDAL customerDALObj = new CustomerDAL();
+            Customer customer;
 
-        //    for (int i = 0; i < Request.Files.Count; i++)
-        //    {
-        //        HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-        //        //Use the following properties to get file's name, size and MIMEType
-        //        int fileSize = file.ContentLength;
-        //        string fileName = file.FileName;
-        //        string mimeType = file.ContentType;
-        //        System.IO.Stream fileContent = file.InputStream;
-        //        requestID =
-        //            //To save file, use SaveAs method
-        //        imgPath = "Images/FinishRegistration/" + "CID_" + requestID + ".jpg";
-        //        file.SaveAs(Server.MapPath("~/") + imgPath); //File will be saved in directory
-        //    }
-        //    return Json("Image uploaded successfully !");
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                //Use the following properties to get file's name, size and MIMEType
+                int fileSize = file.ContentLength;
+                string fileName = file.FileName;
+                string mimeType = file.ContentType;
+                System.IO.Stream fileContent = file.InputStream;
 
-        //}
+                customer = customerDALObj.GetUserByTokenID(Token);
+                    //To save file, use SaveAs method
+                imgPath = "Images/FinishRegistration/" + "CID_" + customer.CustomerID + ".jpg";
+                file.SaveAs(Server.MapPath("~/") + imgPath); //File will be saved in directory
+            }
+            return Json("Image uploaded successfully !");
+
+        }
 
 
         [HttpPost]
