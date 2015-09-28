@@ -100,7 +100,11 @@ namespace IBITest.Layers.DAL
             string res;
             CommonDAL commonDALObj = new CommonDAL();
             SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
-            SqlCommand command = new SqlCommand(String.Format( "SELECT Password, Role,FailCount,Status FROM UserRoles WHERE UserID = '{0}' ",  UserID), connection);
+            string query = "SELECT Password, Role,FailCount,Status FROM UserRoles WHERE UserID = @userID ";
+           
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.Add(new SqlParameter("@userID", UserID));
+
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
