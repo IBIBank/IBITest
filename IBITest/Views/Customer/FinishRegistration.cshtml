@@ -45,7 +45,7 @@
     }
 
 
-    function UploadImage() {
+    function UploadImage(token) {
         alert("In upload image");
 
         var formdata = new FormData(); //FormData object
@@ -176,7 +176,7 @@
       
 
         <label for="@(Model.PhotoIDProof)">PhotoID Proof</label>  
-        <input type="file" name="Image" id="file"/> <input id="Button1" type="button" value="Upload" onclick="UploadImage()" />
+        <input type="file" name="Image" id="file"/> <input id="Button1" type="button" value="Upload" onclick="UploadImage( $('#Token').val() )" />
         <p>After Successful registration you will be redirected to Login page</p>
         <p>
             <input type="submit" value="Save" />

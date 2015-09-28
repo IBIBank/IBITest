@@ -23,7 +23,7 @@ namespace IBIService
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class Service1
     {
-        public static string ConnectionString = @"Data Source=(localdb)\Projects;Initial Catalog=Database1;Integrated Security=True";
+        public static string ConnectionString = ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString();
 
         [OperationContract]
         [WebInvoke(Method = "GET", ResponseFormat = WebMessageFormat.Json, UriTemplate = "checkUserIDavailability?username={userName}")]
@@ -33,7 +33,7 @@ namespace IBIService
             {
                 using (SqlConnection sqlDBConnection = new SqlConnection(ConnectionString))
                 {
-                    StringBuilder sqlstmt = new StringBuilder("select * from [dbo].[UserRoles] where UserID = @userName COLLATE Latin1_General_CS_AS ");
+                    StringBuilder sqlstmt = new StringBuilder("select * from [dbo].[UserRoles] where UserID = @userName");
                     //sqlstmt.Append(Convert.ToString(userid));
                     SqlCommand myCommand = new SqlCommand(sqlstmt.ToString(), sqlDBConnection);
                     myCommand.CommandType = CommandType.Text;

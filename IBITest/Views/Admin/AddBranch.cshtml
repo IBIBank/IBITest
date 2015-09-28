@@ -68,7 +68,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.ContactNumber)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Valide contact numbers are between 10 and 11 digits">
             @Html.EditorFor(model => model.ContactNumber)
             @Html.ValidationMessageFor(model => model.ContactNumber)
         </div>
@@ -76,7 +76,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Email)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Valid email address corresponding to IBI.com domain">
             @Html.EditorFor(model => model.Email)
             @Html.ValidationMessageFor(model => model.Email)
         </div>
