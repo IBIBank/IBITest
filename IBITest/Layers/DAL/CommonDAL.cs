@@ -227,7 +227,7 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("DELETE FROM Customer");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Customer (CustomerID, CustomerName,DOB, UserID, Password, PermanentAddress, CommunicationAddress, ContactNumber, Email, TransactionPassword, Token) VALUES('1','Customer','2015/12/12','Customer1','"+commonDALObj.GetHashedText("customer1") + "','PAddress','CAddress','11','e@m.l','"+commonDALObj.GetHashedText("tpassword")+"','IBI1234')");
+                command.CommandText = String.Copy("INSERT INTO Customer (CustomerID, CustomerName,DOB, UserID, Password, PermanentAddress, CommunicationAddress, ContactNumber, Email, TransactionPassword, Token) VALUES('1001','Customer','2015/12/12','Customer1','"+commonDALObj.GetHashedText("customer1") + "','PAddress','CAddress','11','e@m.l','"+commonDALObj.GetHashedText("tpassword")+"','IBI1234')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
