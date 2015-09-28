@@ -9,7 +9,7 @@
     function validate() {
         var accountNumber = $("#payeeAccountNumber").val();
         if (isNaN(accountNumber) == true) {
-            alert("Not a number");
+            swal("Oops!","Not a valid account number","warning");
             return;
         }
 
@@ -22,7 +22,7 @@
             success: function (data) {
 
                 if (!data) {
-                    alert("Account Number is invalid");
+                    swal("Error","Account Number is invalid","error");
                 }
                 else {
                     $('#payeeName').val(data.payeeName);
