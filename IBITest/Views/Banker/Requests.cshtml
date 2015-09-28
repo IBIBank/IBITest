@@ -37,9 +37,8 @@
     </select>    
 </p>
 
-<div class="datagird">
-<table id ="mytable" class ="display">
-     <thead>
+<div class="datagrid">
+<table id ="mytable" >     
          <tr>
              <th>RequestID</th>
              <th>Request Type</th>
@@ -48,7 +47,7 @@
              <th>Service Date</th>
              <th>Status</th>
          </tr>
-     </thead>
+    
 
      <tbody>         
         @{
@@ -186,7 +185,6 @@
     function FilterRequests(SelectValue) {
         Clear();
         if (SelectValue != 0) {
-            $('#mytable thead').remove();
 
             
 
@@ -200,8 +198,7 @@
                 success: function (data) {
                     $('#mytable tbody > tr').remove();
                     if (data.length > 0) {
-                        $('#mytable').append(
-                             "<thead>" +
+                        $('#mytable').append(                             
                               "<tr>" +
                                   "<th>Request ID</th>" +
                                   "<th>Request Type</th>" +
@@ -209,8 +206,7 @@
                                   "<th>Submission Date</th>" +
                                   "<th>Service Date</th>" +
                                   "<th>Status</th>" +
-                              "</tr>" +
-                            "</thead>");
+                              "</tr>" );
                     }
                     else {
                         alert("No records to display !");
@@ -254,8 +250,7 @@
                     $('#mytable tbody > tr').remove();
                     var trhtml = "";
                     if (data.length > 0) {
-                        $('#mytable').append(
-                            "<thead>" +
+                        $('#mytable').append(                           
                                 "<tr>" +
                                     "<th>Request ID</th>" +
                                     "<th>Request Type</th>" +
@@ -264,8 +259,7 @@
                                     "<th>View Proof</th>" +
                                     "<th>Approve</th>" +
                                     "<th>Reject</th>" +
-                                "</tr>" +
-                            "</thead>");
+                                "</tr>");
                     }
                     else {
                         alert("No Records to display !");
@@ -298,8 +292,7 @@
                 success: function (data) {
                     $('#mytable tbody > tr').remove();
                     if (data.length > 0) {
-                        $('#mytable').append(
-                            "<thead>" +
+                        $('#mytable').append(                           
                              "<tr>" +
                                  "<th>Request ID</th>" +
                                  "<th>Request Type</th>" +
@@ -307,8 +300,7 @@
                                  "<th>Submission Date</th>" +
                                  "<th>Transfer</th>" +
                                  "<th>Reject</th>" +
-                             "</tr>" +
-                           "</thead>");
+                             "</tr>");
                     }
                     else {
                         alert("No Records to display !");
