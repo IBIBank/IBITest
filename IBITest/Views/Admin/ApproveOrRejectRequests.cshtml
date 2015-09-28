@@ -57,7 +57,7 @@
         var selected = $("#mytable input:checked").length;
         var requestType = $("#dropdown").val();
         if (selected == 0 || requestType=="") {
-            alert("You have not selected anything")
+            swal("Error","You have not selected anything","warning")
             return;
         }
         else {
@@ -66,7 +66,7 @@
             //call method
             //verify list of requestd's
             //change their satus in db
-            alert("Confirm!! You chosen " + selected + " requests to approve");
+            swal("Confirmation","Confirm!! You chosen " + selected + " requests to approve","info");
             //alert("requestid's are "+$("#mytable input:checked")[0].value)
             var selected = [];
             $('#mytable input:checked').each(function () {
@@ -85,7 +85,7 @@
                     traditional: true,
                     success: function (data) {
 
-                        alert("Approved successfully" + data)
+                        swal("Success","Approved successfully" + data,"success")
                     },
                     error: function (reponse) {
                         alert("error : " + reponse);
@@ -102,7 +102,7 @@
                     traditional: true,
                     success: function (data) {
 
-                        alert("Approved successfully" + data)
+                        swal("Success", "Approved successfully" + data, "success")
                     },
                     error: function (reponse) {
                         alert("error : " + reponse);
@@ -116,7 +116,7 @@
         var selected = $("#mytable input:checked").length;
         var requestType = $("#dropdown").val();
         if (selected == 0 || requestType == "") {
-            alert("You have not selected anything")
+            swal("Error","You have not selected anything","warning")
             return;
         }
         else {
@@ -125,7 +125,7 @@
             //call method
             //verify list of requestd's
             //change their satus in db
-            alert("Confirm!! You chosen " + selected + " requests to reject");
+            swal("Confirm","Confirm!! You chosen " + selected + " requests to reject","info");
             //alert("requestid's are "+$("#mytable input:checked")[0].value)
             var selected = [];
             $('#mytable input:checked').each(function () {
@@ -143,7 +143,7 @@
                     traditional: true,
                     success: function (data) {
 
-                        alert("Rejected successfully" + data)
+                        swal("Success","Rejected successfully" + data,"success")
                     },
                     error: function (reponse) {
                         alert("error : " + reponse);
@@ -160,7 +160,7 @@
                     traditional: true,
                     success: function (data) {
 
-                        alert("Rejected successfully" + data)
+                        swal("Success","Rejected successfully" + data,"success")
                     },
                     error: function (reponse) {
                         alert("error : " + reponse);

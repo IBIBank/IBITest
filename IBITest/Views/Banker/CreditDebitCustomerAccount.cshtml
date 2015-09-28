@@ -17,7 +17,7 @@
         //alert("You selected account number " + accountNumber);
         if (accountNumber <= 0)
         {
-            alert("Account number must be positive");
+            swal("Error","Account number must be positive","warning");
             return;
         }
         $.ajax({
@@ -37,7 +37,7 @@
                 }
                 else
                 {
-                    alert("Account number does not exist");
+                    swal("Error","Account number does not exist","error");
                     $("#creditButton").prop('disabled', true);
                     $("#debitButton").prop('disabled', true);
                 }
@@ -55,7 +55,7 @@
         var reenterAccountNumber = $('#form1 #ConfirmedAccountNumber').val();
         if (accountNumber != reenterAccountNumber)
         {
-            alert("Account numbers dont match")
+            swal("Error","Account numbers dont match","warning")
             return;
         }
         var amount = $('#form1 #Amount').val();
@@ -69,7 +69,13 @@
             type: "POST",
             traditional: true,
             success: function (data) {
-                alert(data);
+                if (data == "Credit Successful" || data == "Debit successful" || data == "Credit Successful and Closed account") {
+                    swal("Success", data, "success");
+                }
+                else {
+                    swal("Error", data, "error");
+                }
+
                 $('#AccountNumber').val("");
                 $('#ConfirmedAccountNumber').val("");
                 $('#Amount').val("");
@@ -85,7 +91,7 @@
         var accountNumber = $('#form1 #AccountNumber').val();
         var reenterAccountNumber = $('#form1 #ConfirmedAccountNumber').val();
         if (accountNumber != reenterAccountNumber) {
-            alert("Account numbers dont match");
+            swal("Error","Account numbers dont match","warning");
             return;
         }
         var amount = $('#form1 #Amount').val();
@@ -99,7 +105,12 @@
             type: "POST",
             traditional: true,
             success: function (data) {
-                alert(data);
+                if (data == "Credit Successful" || data == "Debit successful" || data == "Credit Successful and Closed account") {
+                    swal("Success", data, "success");
+                }
+                else {
+                    swal("Error", data, "error");
+                }
                 $('#AccountNumber').val("");
                 $('#ConfirmedAccountNumber').val("");
                 $('#Amount').val("");
@@ -114,19 +125,19 @@
     {
         if (confirmedAccountNumber <= 0)
         {
-            alert("Account number must be positive");
+            swal("error","Account number must be positive","warning");
             return;
         }
         if ($('#form1 #AccountNumber').val() != confirmedAccountNumber)
         {
-            alert("Accounts dont match");
+            swal("Error","Account Numbers don't match","error");
         }
     }
     function amountChanged(amount)
     {
         if (amount <= 0)
         {
-            alert("Amount must be positive");
+            swal("Error","Amount must be positive","warning");
             return;
         }
     }

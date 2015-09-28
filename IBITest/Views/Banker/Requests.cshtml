@@ -101,7 +101,7 @@
                 displayImage(data.base64imgage);
             },
             error: function (xhr) {
-                alert("Error occurred while sfsbfs loading the image. "
+                alert("Error occurred while  loading the image. "
                     + xhr.responseText);
             }
         });
@@ -176,7 +176,7 @@
                 }
             },
             error: function (xhr) {
-                alert("Error occurred while sfsbfs loading the image. "
+                alert("Error occurred while  loading the image. "
                     + xhr.responseText);
             }
         });
@@ -205,7 +205,7 @@
                               "</tr>" );
                     }
                     else {
-                        alert("No records to display !");
+                        swal("No records","No records to display !","warning");
                     }
                     var trhtml = "";
                     for (var x = 0; x < data.length; x++) {
@@ -258,7 +258,7 @@
                                 "</tr>");
                     }
                     else {
-                        alert("No Records to display !");
+                        swal("No records", "No records to display !", "warning");
                     }
                     for (var x = 0; x < data.length; x++) {
                         var submissionDate = new Date(parseInt(data[x].SubmissionDate.substr(6)));
@@ -299,7 +299,7 @@
                              "</tr>");
                     }
                     else {
-                        alert("No Records to display !");
+                        swal("No records", "No records to display !", "warning");
                     }
                     var trhtml = "";
                     for (var x = 0; x < data.length; x++) {

@@ -34,7 +34,7 @@
                 type: "POST",
                 success: function (data) {
                     if (data == null) {
-                        alert("No records found");
+                        swal("No records", "No records to display !", "warning");
                     }
                     else {
                         fillHeader();
@@ -118,7 +118,7 @@
         {
             if (isNaN(queryString) == true)
             {
-                alert("Account number is not valid");
+                swal("Error","Account number is not valid","warning");
                 return;
             }
             $.ajax({
