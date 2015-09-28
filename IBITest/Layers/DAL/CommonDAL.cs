@@ -53,7 +53,7 @@ namespace IBITest.Layers.DAL
         }
 
 
-        public BranchDetailsViewModel GetBranchDetails(Int64 BranchCode)
+        public BranchDetailsViewModel GetBranchDetails(long BranchCode)
         {
             SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString());
             SqlCommand cmd = new SqlCommand("SELECT BranchName,CityName,Address,ContactNumber, Email FROM Branch WHERE BranchCode = " + BranchCode, cn);

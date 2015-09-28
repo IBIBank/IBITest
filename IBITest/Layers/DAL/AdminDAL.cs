@@ -73,7 +73,7 @@ namespace IBITest.Layers.DAL
             return res;
         }
 
-        public BranchDetails GetBranchDetails(Int64 BranchCode)
+        public BranchDetails GetBranchDetails(long BranchCode)
         {
             BranchDetails bd = new BranchDetails();
 
@@ -257,7 +257,7 @@ namespace IBITest.Layers.DAL
         
         public bool ApproveAccountClosingRequest(List<int> ClosingList)
         {
-            List<Int64> closingAccountNumbersList = new List<long>();
+            List<long> closingAccountNumbersList = new List<long>();
          //   SqlDataReader reader = new SqlDataReader();
 
             using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database1ConnectionString"].ToString()))

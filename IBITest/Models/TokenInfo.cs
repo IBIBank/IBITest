@@ -7,7 +7,7 @@ namespace IBITest.Models
 {
     public class TokenInfo
     {
-        public Int64 CustomerID { get; set; }
+        public long CustomerID { get; set; }
         public string Token { get; set; }
     }
 }

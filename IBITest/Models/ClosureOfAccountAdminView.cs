@@ -8,7 +8,7 @@ namespace IBITest.Models
     public class ClosureOfAccountAdminView
     {
         public int requestID { get; set; }
-        public Int64 customerID { get; set; }
-        public Int64 accountNumber { get; set; }
+        public long customerID { get; set; }
+        public long accountNumber { get; set; }
     }
 }

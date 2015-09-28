@@ -12,7 +12,7 @@ namespace IBITest.Controllers
     public class CommonBizController : Controller
     {
         // GET: /CommonBiz/
-        static List<Int64> BranchCode;
+        static List<long> BranchCode;
         public ActionResult Index()
         {
             CommonDAL syncobj = new CommonDAL();
@@ -89,7 +89,7 @@ namespace IBITest.Controllers
         public List<BranchL> GetAllBranch(int cityid)
         {
             List<BranchL> objbranch = new List<BranchL>();
-            BranchCode = new List<Int64>();
+            BranchCode = new List<long>();
             CommonDAL cd = new CommonDAL();
             List<string> listcity = cd.GetCityList();
 
