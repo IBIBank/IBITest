@@ -24,7 +24,8 @@ namespace IBITest.Models
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(15, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 15 characters long")]        
+        [StringLength(15, MinimumLength = 8, ErrorMessage = "Password must be between 8 and 15 characters long")]
+        [RegularExpression(@"((?=.*\d)(?=.*[A-Z])(?=.*\W).{8,15})", ErrorMessage = "Not a valid Password")]
         public string BranchLogInPassword { get; set; }
         public string Address { get; set; }
 

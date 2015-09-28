@@ -73,6 +73,7 @@ namespace IBITest.Models
         
         [Required]
         [DataType(DataType.Password)]
+        [RegularExpression(@"((?=.*\d)(?=.*[A-Z])(?=.*\W).{8,15})", ErrorMessage = "Not a valid Password")]
         public string TransactionPassword { get; set; }
         
         [Required]

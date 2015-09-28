@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
 
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <h2>AddBranch</h2>
 
 @using (Html.BeginForm()) {
@@ -41,7 +44,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.BranchLogInID)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="UserID must be 8-15 characters long and begin with an uppercase letter.">
             @Html.EditorFor(model => model.BranchLogInID)
             @Html.ValidationMessageFor(model => model.BranchLogInID)
         </div>
@@ -49,7 +52,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.BranchLogInPassword)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Password must be between 8-15 characters and must contain at least one uppercase character, at least one digit and at least one special character.">
             @Html.EditorFor(model => model.BranchLogInPassword)
             @Html.ValidationMessageFor(model => model.BranchLogInPassword)
         </div>
@@ -87,8 +90,8 @@
         </div>*@
 
         <p>
-            <input type="submit" value="Add Branch" />
-            <input id="Reset1" type="reset" value="reset" />
+            <input type="submit" value="Add Branch" class="button" />
+            <input id="Reset1" type="reset" value="reset" class="button"/>
 
         </p>
     </fieldset>

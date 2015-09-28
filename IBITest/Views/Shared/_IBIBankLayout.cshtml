@@ -65,7 +65,6 @@ if it's not present, don't show loader */
             <div class="content-wrapper" style="clear:left;">
                 <div>
                     <h2><b>Welcome</b></h2>
-                    <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">IBI Bank welcomes you to IBI Online.  Now access all our amazing services at the click of a button ! Contact your nearest branch to open an account.  </marquee>
                     @{
                         if (Session["User"] != null)
                         {
@@ -348,6 +347,8 @@ if it's not present, don't show loader */
                             }
                             else
                             {
+                                <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">IBI Bank welcomes you to IBI Online.  Now access all our amazing services at the click of a button! Contact your nearest branch to open an account today!  </marquee>
+
                                 <h4> Hi <a href="@Url.Action("Dashboard", "Customer")" > @((Session["User"] as UserRole).userID) </a> ! <div align="right" > @Html.ActionLink("LogOut", "LogOut", "CommonBiz")  </div> </h4>                                
                         
                         
@@ -407,14 +408,14 @@ if it's not present, don't show loader */
                                                         <li>
   			                                                <a href="#">Profile Manager</a>
   			                                                <ul>
-  				                                                <li><a href="/Customer/UpdateUserOrTransactionPassword">Change Password</a></li>
+  				                                                <li><a href="/Customer/UpdateUserOrTransactionPassword">Change Your Password</a></li>
   			                                                </ul>
   		                                                </li>
 
                                                         <li>
   			                                            <a href="#">Value Added Services</a>
   			                                                <ul>
-  				                                                <li><a href="/Customer/ApplyForLoan">Apply for loans</a></li>
+  				                                                <li><a href="/Customer/ApplyForLoan"> Apply  for  a Loan Account </a></li>
   			                                                </ul>
   		                                                </li>
 
@@ -476,6 +477,7 @@ if it's not present, don't show loader */
 	                                            color: #fff;
 	                                            text-decoration: none;
 	                                            border-bottom: 1px solid #222;
+                                                width: 100%;
                                             }
 
                                             .nav ul li a:hover {
@@ -495,7 +497,13 @@ if it's not present, don't show loader */
                         
                         
                             }
-                        }                    
+                        }   
+                        else
+                        {
+                               <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">IBI Bank welcomes you to IBI Online.  Now access all our amazing services at the click of a button! Contact your nearest branch to open an account today!  </marquee>
+
+                        }
+                                         
                     }
                     
                 </div>

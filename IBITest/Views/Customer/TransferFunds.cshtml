@@ -4,6 +4,9 @@
     ViewBag.Title = "TransferFunds";
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
     //function SubmitForm()
@@ -36,7 +39,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.FromAccount)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Select Source Account">
             @Html.DropDownListFor(model => model.FromAccount, new SelectList(@ViewBag.savingsAccountList), "--Select--")
             @Html.ValidationMessageFor(model => model.FromAccount)
         </div>
@@ -44,7 +47,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.ToAccount)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Select Destination Account Nick Name">
             @Html.DropDownListFor(model => model.ToAccount, new SelectList(@ViewBag.payeeAccounts, "payeeAccountNumber", "payeeNickName"), "--Select--")
             @Html.ValidationMessageFor(model => model.ToAccount)
         </div>
@@ -52,7 +55,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Amount)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Enter the amount to trnsfer. Amount must be positive and less than INR 25,000">
             @Html.EditorFor(model => model.Amount)
             @Html.ValidationMessageFor(model => model.Amount)
         </div>
@@ -60,7 +63,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.TransactionPassword)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Enter your transaction password">
             @Html.EditorFor(model => model.TransactionPassword)
             @Html.ValidationMessageFor(model => model.TransactionPassword)
         </div>
@@ -68,7 +71,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.remarks)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Enter remarks. Limited to 100 characters.">
             @Html.EditorFor(model => model.remarks)
             @Html.ValidationMessageFor(model => model.remarks)
         </div>

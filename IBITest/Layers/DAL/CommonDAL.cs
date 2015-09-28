@@ -191,16 +191,16 @@ namespace IBITest.Layers.DAL
                 int rowaff = command.ExecuteNonQuery();
 
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn', '"+commonDALObj.GetHashedText("adminnnn")+"','Admin','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('1','Adminnnn', '"+commonDALObj.GetHashedText("A1@nnnnn")+"','Admin','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','" + commonDALObj.GetHashedText("banker11") + "','Banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('2','Banker11','" + commonDALObj.GetHashedText("B1@nnnnn") + "','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','" + commonDALObj.GetHashedText("customer1") + "','Customer','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('3','Customer1','" + commonDALObj.GetHashedText("C1@nnnnn") + "','Customer','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','" + commonDALObj.GetHashedText("banker22") + "','Banker','2015/2/2','0','A')");
+                command.CommandText = String.Copy("INSERT INTO UserRoles VALUES('4','Banker22','" + commonDALObj.GetHashedText("B1@nnnnn") + "','Banker','2015/2/2','0','A')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
@@ -218,10 +218,10 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("DELETE FROM Branch");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker11','Banker11','"+commonDALObj.GetHashedText("banker11")+"','e@m.l')");
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('1','Branch1','City1','Address1','11','Banker11','Banker11','"+commonDALObj.GetHashedText("B1@nnnnn")+"','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker22','Banker22','"+commonDALObj.GetHashedText("banker22")+"','e@m.l')");
+                command.CommandText = String.Copy("INSERT INTO Branch VALUES('2','Branch2','City2','Address1','11','Banker22','Banker22','" + commonDALObj.GetHashedText("B1@nnnnn") + "','e@m.l')");
                 rowaff = command.ExecuteNonQuery();
 
                 command.CommandText = String.Copy("DELETE FROM Customer");
@@ -233,41 +233,7 @@ namespace IBITest.Layers.DAL
                 command.CommandText = String.Copy("DELETE FROM BranchTransferRequest");
                 rowaff = command.ExecuteNonQuery();
 
-                command.CommandText = String.Copy("INSERT INTO BranchTransferRequest (RequestID, SubmissionDate,Status, AccountNumber, FromBranch, ToBranch, CustomerID) VALUES(1,'2015/12/12','T',1,1,2,1)");
-                rowaff = command.ExecuteNonQuery();
-                command.CommandText = String.Copy("INSERT INTO BranchTransferRequest (RequestID, SubmissionDate,Status, AccountNumber, FromBranch, ToBranch, CustomerID) VALUES(2,'2015/12/12','S',2,2,1,2)");
-                rowaff = command.ExecuteNonQuery();
-                command.CommandText = String.Copy("INSERT INTO BranchTransferRequest (RequestID, SubmissionDate,Status, AccountNumber, FromBranch, ToBranch, CustomerID) VALUES(3,'2015/12/12','T',3,3,1,3)");
-                rowaff = command.ExecuteNonQuery();
-
-                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('1','1','1','2015/9/17', '2015/2/2', 'S', 'Customer')");
-                rowaff = command.ExecuteNonQuery();
-
-                command.CommandText = String.Copy("INSERT INTO NewAccountRequest (RequestID, BranchCode,CustomerID, SubmissionDate, ServiceDate, Status, CustomerName) VALUES('2','2','2','2016/9/17', ' "+ DateTime.Now.ToString() +"', 'A', 'Customer')");
-                rowaff = command.ExecuteNonQuery();
-
-                command.CommandText = String.Copy("DELETE FROM ClosingRequest");
-                rowaff = command.ExecuteNonQuery();
-
-                command.CommandText = String.Copy("INSERT INTO ClosingRequest (RequestID,SubmissionDate, Status, AccountNumber, CustomerID ) VALUES(1,'2016/9/17','T',1,1)");
-                rowaff = command.ExecuteNonQuery();
-               
-                command.CommandText = String.Copy("INSERT INTO ClosingRequest (RequestID,SubmissionDate, Status, AccountNumber, CustomerID ) VALUES(2,'2016/9/17','S',2,2)");
-                rowaff = command.ExecuteNonQuery();
                 
-                command.CommandText = String.Copy("INSERT INTO ClosingRequest (RequestID,SubmissionDate, Status, AccountNumber, CustomerID ) VALUES(3,'2016/9/17','T',3,3)");
-                rowaff = command.ExecuteNonQuery();
-
-                command.CommandText = String.Copy("DELETE FROM Account");
-                rowaff = command.ExecuteNonQuery();
-
-                command.CommandText = String.Copy("INSERT INTO Account (AccountNumber, AccountType, OpeningDate, Status, Balance, BranchCode, CustomerID ) VALUES(1,'S','2016/9/17','Active','500','1','1')");
-                rowaff = command.ExecuteNonQuery();
-                command.CommandText = String.Copy("INSERT INTO Account (AccountNumber, AccountType, OpeningDate, Status, Balance, BranchCode, CustomerID ) VALUES(2,'L','2016/9/17','Active','500','1','1')");
-                rowaff = command.ExecuteNonQuery();
-                if(rowaff==0)
-                    System.Windows.Forms.MessageBox.Show(rowaff.ToString());
-
                 //insert into user profile too !!
             }
         }

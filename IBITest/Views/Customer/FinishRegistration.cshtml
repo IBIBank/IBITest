@@ -5,6 +5,9 @@
     Layout = "~/Views/Shared/_IBIBankLayout.cshtml";
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
 <script>
     function CheckUserAvailability()
     {
@@ -80,7 +83,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.UserID)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="UserID must be between 8-15 characters and begin with a Caps. Check availability before proceeding">
             @Html.EditorFor(model => model.UserID)
             @Html.ValidationMessageFor(model => model.UserID)
             <a onclick="CheckUserAvailability()">Check Availability</a>
@@ -92,7 +95,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.Password)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Password must be between 8-15 characters and must contain at least one uppercase character, at least one digit and at least one special character.">
             @Html.EditorFor(model => model.Password)
             @Html.ValidationMessageFor(model => model.Password)
         </div>
@@ -132,7 +135,7 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.TransactionPassword)
         </div>
-        <div class="editor-field">
+        <div class="editor-field" title="Password must be between 8-15 characters and must contain at least one uppercase character, at least one digit and at least one special character. This will be required for transferring funds online.">
             @Html.EditorFor(model => model.TransactionPassword)
             @Html.ValidationMessageFor(model => model.TransactionPassword)
         </div>
