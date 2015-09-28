@@ -7,7 +7,7 @@ namespace IBITest.Models
 {
     public class BranchMiniViewModel
     {
-        public Int64 BranchCode { get; set; }
+        public long BranchCode { get; set; }
         public string BranchName { get; set; }
     }
 }

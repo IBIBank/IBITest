@@ -10,7 +10,7 @@ namespace IBITest.Models
     public class Customer
     {
         [Required]
-        public Int64 CustomerID { get; set; }
+        public long CustomerID { get; set; }
         [Required]
         public string CustomerName { get; set; }
 

@@ -174,8 +174,8 @@
 <h2>Approve Or Reject Requests</h2>
 <label>Request type</label>
 @Html.DropDownList("RequestTypeDropdownList", new SelectList(ViewBag.requestTypeList, "Value", "Text"),"--Select--", new{@id="dropdown",@onchange="javascript:getListOfRequests(this.value)" })
-<div class="datagird">
-<table class="datagrid" border="1" id="mytable">
+<div class="datagrid">
+<table border="1" id="mytable">
 </table>
 </div>
 <br />

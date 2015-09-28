@@ -742,7 +742,11 @@ namespace IBITest.Layers.DAL
                 SqlDataReader reader = command.ExecuteReader();
 
                 reader.Read();
-                payeeID = Convert.ToInt16(reader[0]) + 1;
+
+                if(!reader.IsDBNull(0))
+                     payeeID = Convert.ToInt16(reader[0]) + 1;
+                else
+                    payeeID = 1;
 
                 reader.Close();
 

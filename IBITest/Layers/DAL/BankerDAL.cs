@@ -204,7 +204,7 @@ namespace IBITest.Layers.DAL
                 }
 
                 else
-                    c.CustomerID = 1;
+                    c.CustomerID = 1001;
 
                 reader.Close();
             }
@@ -553,7 +553,7 @@ namespace IBITest.Layers.DAL
                     accountNumber = Convert.ToInt64(reader[0]) + 1;
                 }
                 else
-                    accountNumber = 1;
+                    accountNumber = 100000001;
 
                 reader.Close();
 

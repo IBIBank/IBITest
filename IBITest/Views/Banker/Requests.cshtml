@@ -72,7 +72,7 @@
 </div>
 <div id="divImageHolder" style="width:400px"></div>
 
-<p> Refresh page after processing requests !</p>
+
 
 
 <script>        
@@ -185,10 +185,6 @@
     function FilterRequests(SelectValue) {
         Clear();
         if (SelectValue != 0) {
-
-            
-
-
             var url = "/Banker/GetRequestsByStatus/";
             $.ajax({
                 url: url,
